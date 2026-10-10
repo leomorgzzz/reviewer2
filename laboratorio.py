@@ -119,7 +119,8 @@ class Lab:
         win = self.win
         alto, ancho = win.getmaxyx()
         win.erase()
-        panel_w = 34 if ancho >= L.ANCHO + 36 else 0
+        # el panel va primero: el mapa se recorre con el personaje
+        panel_w = 34 if ancho >= 80 + 34 and alto >= 26 else 0
         vista_w = ancho - panel_w - 1
         vista_h = alto - (3 if panel_w else 6)
         px, py = self.exp["pos"]
@@ -145,10 +146,10 @@ class Lab:
                     d.put(win, sy, sx, patron, d.c("oscuro"))
         # nombres de cuartos
         for nombre, x0, y0, x1, y1 in L.CUARTOS:
-            if nombre == "PASILLO":
+            if nombre == "PASILLO" or not 0 <= y0 - oy < vista_h:
                 continue
             n = f" {tr(nombre.replace('{lugar}', self.lugar))} "
-            d.put(win, y0 - oy, x0 - ox + 2, n, d.c("tenue", curses.A_BOLD))
+            d.put(win, y0 - oy, x0 - ox + 2, n, d.c("tenue", curses.A_BOLD), vista_w)
         # estaciones
         for nombre, (x, y, glifo, color, etiqueta, etapa) in L.ESTACIONES.items():
             sx, sy = x - ox, y - oy

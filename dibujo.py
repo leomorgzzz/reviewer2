@@ -47,6 +47,45 @@ def init_colores():
         curses.init_pair(i, _color(c256, c8), fondo)
         _PARES[nombre] = i
     _SIGUIENTE[0] = len(_PALETA) + 1
+    _paleta_consola()
+
+
+def _rgb(c256):
+    """Índice xterm-256 → (r, g, b) de 0 a 255."""
+    if c256 >= 232:
+        v = 8 + 10 * (c256 - 232)
+        return v, v, v
+    n = c256 - 16
+    niveles = (0, 95, 135, 175, 215, 255)
+    return niveles[n // 36], niveles[n // 6 % 6], niveles[n % 6]
+
+
+def _paleta_consola():
+    """La consola de Windows solo tiene 16 colores y los trae muy saturados:
+    se cambian por los de _PALETA (el primero de cada color de respaldo) y
+    grises neutros. Las versiones brillantes, que salen con A_BOLD, quedan
+    iguales para que la negrita no sature. PDCurses la restaura al salir."""
+    if os.name != "nt" or curses.COLORS >= 256 or not curses.can_change_color():
+        return
+    tabla = {curses.COLOR_BLACK: (28, 28, 28), curses.COLOR_WHITE: _rgb(245)}
+    for c256, c8 in _PALETA.values():
+        if c8 not in tabla:
+            tabla[c8] = _rgb(c256)
+    for c8, rgb in tabla.items():
+        r, g, b = (v * 1000 // 255 for v in rgb)
+        try:
+            curses.init_color(c8, r, g, b)
+            if c8 not in (curses.COLOR_BLACK, curses.COLOR_WHITE) and curses.COLORS >= 16:
+                curses.init_color(c8 + 8, r, g, b)
+        except curses.error:
+            return
+    if curses.COLORS >= 16:
+        for n, c256 in ((8, 240), (15, 254)):
+            r, g, b = (v * 1000 // 255 for v in _rgb(c256))
+            try:
+                curses.init_color(n, r, g, b)
+            except curses.error:
+                return
 
 
 def _color(c256, c8):

@@ -10,7 +10,7 @@ análisis, y al final el Revisor 2 califica el manuscrito y el cuaderno.
 Los errores se arrastran: un ARN degradado aprobado en el QC sale como ruido en
 los resultados.
 
-**Descargar:** [Windows](https://github.com/leomorgzzz/revisor2/releases/latest/download/Revisor2-Windows.exe) · [macOS](https://github.com/leomorgzzz/revisor2/releases/latest/download/Revisor2-macOS.zip) · doble clic y a jugar.
+**Descargar:** [Windows](https://github.com/leomorgzzz/revisor2/releases/latest/download/Revisor2-Instalador-Windows.exe) · [macOS](https://github.com/leomorgzzz/revisor2/releases/latest/download/Revisor2-macOS.zip) · instala y a jugar.
 
 ## Capturas
 
@@ -24,12 +24,15 @@ los resultados.
 
 ### Windows
 
-1. Descarga **[Revisor2-Windows.exe](https://github.com/leomorgzzz/revisor2/releases/latest/download/Revisor2-Windows.exe)**.
-2. Ábrelo con doble clic. Se abre en pantalla completa.
+1. Descarga **[Revisor2-Instalador-Windows.exe](https://github.com/leomorgzzz/revisor2/releases/latest/download/Revisor2-Instalador-Windows.exe)** y ábrelo.
+2. Sigue el instalador (no pide permisos de administrador). Al terminar, el
+   juego queda en el menú Inicio y, si quieres, en el escritorio. Se abre en
+   pantalla completa.
 
-No hay que instalar nada más. Windows puede avisar «Windows protegió su PC»
-porque el programa no está firmado: **Más información → Ejecutar de todas
-formas**.
+El instalador no está firmado (firmarlo cuesta una licencia anual), así que la
+primera vez Windows puede avisar «Windows protegió su PC»: **Más información →
+Ejecutar de todas formas**. Solo pasa al instalar. Para desinstalar:
+**Configuración → Aplicaciones**.
 
 ### macOS
 
@@ -58,6 +61,14 @@ Archivos que crea:
 - `~/.revisor2.json`: la partida (en Windows, `~` es `C:\Users\<tu usuario>`);
 - `~/.revisor2_idioma`: el idioma;
 - `~/Documentos/revisor2-protocolos/`: los protocolos exportados.
+
+## Salir de pantalla completa
+
+| Sistema | Tecla |
+|---|---|
+| Windows | Alt+Enter (o F11 en Windows Terminal) |
+| macOS | Ctrl+Cmd+F |
+| Linux | F11 en la mayoría de las terminales |
 
 ## Controles
 

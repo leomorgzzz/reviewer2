@@ -53,6 +53,8 @@ def _pantalla_completa():
         time.sleep(0.05)
     else:
         return
+    if clase.value == "ConsoleWindowClass":
+        _fuente_chica()
     alt, enter, soltar = 0x12, 0x0D, 0x0002
     user32.keybd_event(alt, 0, 0, 0)
     user32.keybd_event(enter, 0, 0, 0)
@@ -61,6 +63,41 @@ def _pantalla_completa():
     time.sleep(0.6)
     while msvcrt.kbhit():                   # por si la terminal dejó pasar el Enter
         msvcrt.getwch()
+
+
+
+def _fuente_chica():
+    """En la consola clásica de Windows (conhost) achica la fuente para que en
+    pantalla completa quepan unas 190×50 celdas: el mapa entero y el panel.
+    Con la escala de pantalla al 125-150 % la fuente de siempre deja muy pocas."""
+    import ctypes
+    from ctypes import wintypes
+
+    class COORD(ctypes.Structure):
+        _fields_ = [("X", ctypes.c_short), ("Y", ctypes.c_short)]
+
+    class FUENTE(ctypes.Structure):
+        _fields_ = [("cbSize", wintypes.ULONG), ("nFont", wintypes.DWORD),
+                    ("dwFontSize", COORD), ("FontFamily", ctypes.c_uint),
+                    ("FontWeight", ctypes.c_uint), ("FaceName", ctypes.c_wchar * 32)]
+
+    kernel32, user32 = ctypes.windll.kernel32, ctypes.windll.user32
+    try:
+        user32.SetProcessDPIAware()             # tamaños en píxeles reales
+    except AttributeError:
+        pass
+    salida = kernel32.GetStdHandle(-11)
+    f = FUENTE()
+    f.cbSize = ctypes.sizeof(FUENTE)
+    if not kernel32.GetCurrentConsoleFontEx(salida, False, ctypes.byref(f)):
+        return
+    ancho, alto = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
+    tam = max(12, min(ancho // 105, alto // 50))  # Consolas: ancho ≈ 0.55 × alto
+    if f.dwFontSize.Y and f.dwFontSize.Y <= tam:
+        return
+    f.nFont, f.dwFontSize, f.FontFamily, f.FontWeight = 0, COORD(0, tam), 54, 400
+    f.FaceName = "Consolas"
+    kernel32.SetCurrentConsoleFontEx(salida, False, ctypes.byref(f))
 
 
 def _con_aviso_de_error(funcion):
@@ -130,7 +167,7 @@ def esperar_tamano(win):
             return
         win.erase()
         d.put(win, 0, 0, f"Agranda la terminal a 80×24 o más (ahora {ancho}×{alto}).")
-        d.put(win, 1, 0, "Lo ideal: pantalla completa (F11).")
+        d.put(win, 1, 0, "Lo ideal: pantalla completa (F11 o Alt+Enter).")
         win.refresh()
         d.tecla(win)
 
@@ -146,7 +183,7 @@ def portada(win, y0):
     lecturas = "@lectura_1  ACGTTGCAGGATCCATTGCA  +  IIIIIHHHGGFFF"
     d.put(win, y0 + 6, (ancho - len(lecturas)) // 2, lecturas, d.c("tenue"))
     if ancho < 120 or alto < 36:
-        aviso = f"Consejo: pon la terminal en pantalla completa (F11). Ahora: {ancho}×{alto}"
+        aviso = f"Consejo: pon la terminal en pantalla completa (F11 o Alt+Enter). Ahora: {ancho}×{alto}"
         d.put(win, alto - 2, (ancho - len(aviso)) // 2, aviso, d.c("agua"))
 
 

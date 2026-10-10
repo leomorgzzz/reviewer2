@@ -3,7 +3,7 @@
 T = {
     # revisor2.py
     "dfc7db0b6b": "· design RNA-seq experiments that survive peer review ·",
-    "99814a8847": "Tip: make the terminal full screen (F11). Now: {0}×{1}",
+    "d909a0e527": "Tip: make the terminal full screen (F11 or Alt+Enter). Now: {0}×{1}",
     "d9f3bb6131": "Free lab: describe YOUR experiment. You design it at the desk, Reviewer 2 critiques it with general rules (no hidden traps) and you export the complete protocol.",
     "92cc3cbf6d": "Organism and tissue (e.g. Mouse, liver)",
     "a68ddc7b77": "What do you want to measure?",
@@ -15,7 +15,7 @@ T = {
     "06d92aef37": "Play",
     "ace64087bd": "Practice",
     "13ba5f8555": "Enlarge the terminal to 80×24 or more (now {0}×{1}).",
-    "a017becbe0": "Best: full screen (F11).",
+    "6f158f541f": "Best: full screen (F11 or Alt+Enter).",
     "d1b6202f33": "Difficulty",
     "ee5555ec56": "↑↓ choose · Enter accept · Esc back",
     "b8cb6f8bec": "Continue",

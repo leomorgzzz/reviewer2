@@ -657,9 +657,12 @@ def generar(dis, caso, comentarios=None, resultado=None, dificultad="normal", ex
     refs.update(datos.claves_fuente(datos.RUTAS[dis["ruta"]]["fuente"]))
     if comentarios:
         md += ["", "## 12. Dictamen del Revisor 2", ""]
-        etiquetas = {"fatal": "🟥 FATAL", "mayor": "🟧 MAYOR", "menor": "🟨 menor", "bien": "🟩 bien"}
+        # cuadro de color (HTML en línea; GitHub lo muestra sin color) + gravedad
+        etiquetas = {"fatal": ("#af8787", "FATAL"), "mayor": ("#d78787", "MAYOR"),
+                     "menor": ("#afaf87", "menor"), "bien": ("#87af87", "bien")}
         for x in comentarios:
-            md.append(f"- **{tr(etiquetas[x['grav']])}** — {tr(x['texto'])} "
+            color, grav = etiquetas[x["grav"]]
+            md.append(f'- <span style="color:{color}">■</span> **{tr(grav)}** — {tr(x["texto"])} '
                       f"{tr(cit(*x['fuente'].split()))}")
         if resultado and resultado.get("estado") == "ok" and not caso.get("libre"):
             md += ["", f"Resultado simulado: {resultado['sig']} genes significativos, "

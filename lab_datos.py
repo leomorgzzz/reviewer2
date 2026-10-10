@@ -40,9 +40,9 @@ ESTACIONES = {
     "gel":          (99, 4, "▤", "agua", "gel", 3),
     "bioanalizador": (83, 10, "◩", "agua", "Bioanalyzer", 3),
     "secuenciador": (120, 6, "◙", "g3", "secuenciador", 5),
-    "buzon":        (8, 30, "✉", "mal", "buzón", 7),
+    "buzon":        (8, 30, "≡", "mal", "buzón", 7),
     "campana":      (36, 26, "⌂", "g1", "campana de extracción", 2),
-    "congelador":   (70, 26, "❄", "agua", "congelador −80 °C", None),
+    "congelador":   (70, 26, "*", "agua", "congelador −80 °C", None),
     "kits":         (36, 38, "▥", "g5", "estante de kits", 4),
     "computadora":  (104, 27, "▣", "bien", "computadora", 6),
     "cuaderno":     (104, 37, "▤", "titulo", "cuaderno", None),
@@ -102,7 +102,7 @@ _LUGAR = {
 
 def _seguro(ch):
     """Caracteres que toda terminal dibuja en una celda: ASCII, cajas y bloques.
-    Los demás (☺ ✉ ❄ ◎ ♣ ▣…) a veces salen de una fuente de emoji más ancha
+    Los demás (☺ ◎ ♣ ▣…) a veces salen de una fuente de emoji más ancha
     y tapan la celda de la derecha."""
     return ord(ch) < 0x2500 or 0x2500 <= ord(ch) <= 0x259F or ch in "·−°"
 
