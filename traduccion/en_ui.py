@@ -57,7 +57,7 @@ T = {
     "060aea03f8": "Next case: {0}. {1}",
     "a9a89d7f50": "Free review",
     "585d381b43": "Committee Exam (20 questions)",
-    "2e1381abbb": "★  Training: start here",
+    "c5c24a330e": "*  Training: start here",
     "6e2fa80e9c": "Delete the saved game?",
     "cbf0f06ccd": "Yes, explain RNA-seq from scratch",
     "6b591cbe64": "No, I know how it works",
@@ -103,7 +103,7 @@ T = {
     "c44fefc20f": "RIN {0} (< 7)",
     "0b5e0be372": "(own hypothesis)",
     # laboratorio.py
-    "a1e1513773": "Talk to the researcher (♙ ) and Dr. Lazo (☻ ) in the office.",
+    "79207e659c": "Talk to the researcher (☺ ) and Dr. Lazo (☻ ) in the office.",
     "703dead775": "STAGES",
     "22b2ad7f94": "E/Enter: {0}",
     "cb6634cc22": "Day {0}",
@@ -124,7 +124,7 @@ T = {
     "20f0ad6b01": "  6. <titulo>Sequencer</>: platform, read, depth. Wait.",
     "ed65cbd14d": "  7. <titulo>Computer</> (bioinformatics): analysis, results, decide.",
     "81de6af765": "  8. <titulo>Mailbox</>: send to Reviewer 2.",
-    "05da7f3b57": "<titulo!>Investigate</>: the researcher (♙ ), Dr. Lazo (☻ ), the technician, the calendar and the freezer have information that is not in the request.",
+    "af6ae3a037": "<titulo!>Investigate</>: the researcher (☺ ), Dr. Lazo (☻ ), the technician, the calendar and the freezer have information that is not in the request.",
     "a68bd97947": "You can go back to any stage from the computer (it costs days and money), or rewrite the design on the sheet. N opens the notebook, where the protocol can also be exported.",
     # manual.py
     "c0ff1fa6b2": "Catalog of transcriptomics methods",

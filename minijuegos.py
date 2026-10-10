@@ -228,7 +228,7 @@ def terminal(lab, titulo, contexto, prompt, opciones, validar, solucion, intento
                 color = "bien"
             else:
                 color = "texto"
-            marca = "▸ " if i == sel else "x " if i in fallidas else "  "
+            marca = "► " if i == sel else "x " if i in fallidas else "  "
             lineas_op += [(i, l) for l in d.envolver_partes(
                 [(marca + tr(prompt) + cmd, color, curses.A_BOLD)], w - 4, 4)]
             lineas_op += [(i, l) for l in d.envolver_partes(

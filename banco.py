@@ -99,7 +99,7 @@ PREGUNTAS = {
                "Lecturas largas: útiles para isoformas completas.", ""),
     "c_iontorrent": ("Fundamentos", "Ion Torrent detecta la incorporación de un nucleótido "
                      "midiendo…",
-                     ["El H⁺ liberado (cambio de pH)", "Fluorescencia", "Corriente en un nanoporo",
+                     ["El H+ liberado (cambio de pH)", "Fluorescencia", "Corriente en un nanoporo",
                       "Luz de luciferasa"],
                      "Su error típico está en homopolímeros. (454 usaba luz: pirosecuenciación.)",
                      "general"),

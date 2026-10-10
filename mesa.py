@@ -200,7 +200,7 @@ class Mesa:
             else:
                 i = t[1]
                 fila = FILAS[i]
-                marca = "▸ " if i == self.sel else "  "
+                marca = "► " if i == self.sel else "  "
                 if fila[0] == "enviar":
                     color = "bien" if costo <= tope else "mal"
                     d.put(win, y, 1, marca + fila[2],
@@ -209,13 +209,13 @@ class Mesa:
                     et = self.etiqueta(fila)
                     val = self.valor(fila)
                     attr_e = d.c("titulo", curses.A_BOLD) if i == self.sel else d.c("texto")
-                    flechas = "◂ " if fila[0] in ("opcion", "numero") and i == self.sel else "  "
+                    flechas = "◄ " if fila[0] in ("opcion", "numero") and i == self.sel else "  "
                     xv = 1 + min(36, ancho_izq // 2)
                     d.put(win, y, 1, f"{marca}{et}", attr_e, xv - 1)
                     if fila[0] == "lotes":
                         self._lotes_corto(y, xv)
                     else:
-                        d.put(win, y, xv, flechas + val + (" ▸" if flechas.strip() else ""),
+                        d.put(win, y, xv, flechas + val + (" ►" if flechas.strip() else ""),
                               d.c("agua" if fila[0] != "extra" else
                                   ("bien" if fila[1] in dis["extras"] else "oscuro"),
                                   curses.A_BOLD if i == self.sel else 0), ancho_izq)
@@ -438,7 +438,7 @@ def mesa_lotes(win, caso, dis, pistas=False, dif="normal", titulo=None):
             d.put(win, 4, x + 2, f"{lleno}/{cap}" if cap else f"{lleno}",
                   d.c("mal" if cap and lleno > cap else "tenue"))
             for j, (g, r) in enumerate(muestras[: alto - 14]):
-                marca = "▸" if (li == col and j == fil) else " "
+                marca = "►" if (li == col and j == fil) else " "
                 etiqueta = f"{caso['abrev'][g]}{r + 1} {caso['grupos'][g]}"[: ancho_col - 5]
                 attr = d.c(d.COLORES_GRUPO[g % 6],
                            curses.A_REVERSE if (li == col and j == fil) else 0)
@@ -528,7 +528,7 @@ def grafica_volcan(volcan, h, w):
         elif sig:
             ch, col = "×", "mal"
         elif real:
-            ch, col = "∘", "agua"
+            ch, col = "°", "agua"
         else:
             ch, col = "·", "oscuro"
         if prio[col] >= prio[lz[y][x][1]] or lz[y][x][0] == " ":
@@ -536,7 +536,7 @@ def grafica_volcan(volcan, h, w):
     mid = (w - 1) // 2
     for y in range(h):
         if lz[y][mid][0] == " ":
-            lz[y][mid] = ("┊", "oscuro")
+            lz[y][mid] = ("¦", "oscuro")
     return lz
 
 
@@ -606,7 +606,7 @@ def pantalla_resultados(win, caso, dis, res):
                 d.trozos(win, vy + 1 + i, vx + 1, fila)
             d.trozos(win, vy + gh + 1, vx, [("• ", "bien"), ("verdadero  ", "tenue"),
                                             ("× ", "mal"), ("falso positivo  ", "tenue"),
-                                            ("∘ ", "agua"), ("real no detectado  ", "tenue"),
+                                            ("° ", "agua"), ("real no detectado  ", "tenue"),
                                             ("· ", "oscuro"), ("sin cambio", "tenue")])
         d.put(win, alto - 1, 1, "En un experimento real no sabrías qué es verdadero: aquí sí. "
               "[Enter] ver el dictamen"[: ancho - 2], d.c("tenue"))

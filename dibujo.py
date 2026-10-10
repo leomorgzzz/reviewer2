@@ -119,9 +119,9 @@ def c(nombre, extra=0, fondo=None):
 
 
 def estrellas(n):
-    """★★☆ con un espacio tras cada una: muchas terminales dibujan ★ y ☆ a doble
-    ancho (son de ancho ambiguo) y sin el espacio se enciman con lo que sigue."""
-    return "★ " * n + "☆ " * (3 - n)
+    """Calificación de 0 a 3: «* * · ». Sin ★ ni ☆, que la consola de Windows
+    dibuja como «?»."""
+    return "* " * n + "· " * (3 - n)
 
 
 def put(win, y, x, texto, attr=0, fin=None):
@@ -248,7 +248,7 @@ def limpiar_area(win, y, x, h, w):
 
 
 def barra(win, y, x, ancho, valor, maximo, attr, banda=None):
-    """Barra de nivel. banda=(min, max) marca el rango objetivo con ┆."""
+    """Barra de nivel. banda=(min, max) marca el rango objetivo con ¦."""
     llenos = 0 if maximo <= 0 else round(ancho * max(0, min(valor, maximo)) / maximo)
     put(win, y, x, "█" * llenos, attr)
     put(win, y, x + llenos, "░" * (ancho - llenos), c("oscuro"))
@@ -257,7 +257,7 @@ def barra(win, y, x, ancho, valor, maximo, attr, banda=None):
             if v is None:
                 continue
             bx = x + min(ancho - 1, round(ancho * v / maximo))
-            put(win, y, bx, "┆", c("titulo", curses.A_BOLD))
+            put(win, y, bx, "¦", c("titulo", curses.A_BOLD))
 
 
 def envolver(texto, ancho):
@@ -382,7 +382,7 @@ def menu(win, titulo, opciones, y=None, x=None, ancho=None, ayuda=None,
             color = colores[idx] if colores else "texto"
             attr = c("titulo", curses.A_BOLD) if idx == sel else c(color)
             for j, linea in enumerate(partes[idx]):
-                marca = ("▸ " if idx == sel else "  ") if j == 0 else "    "
+                marca = ("► " if idx == sel else "  ") if j == 0 else "    "
                 put(win, y + 1 + fila, x + 2, (marca + linea)[: ancho - 4], attr)
                 fila += 1
         if ayuda:
@@ -499,7 +499,7 @@ def navegador(win, titulo, entradas, contenido, ayuda_lista=None, colores=None, 
         ini = max(0, min(sel - visibles_l // 2, len(entradas) - visibles_l))
         for i, e in enumerate(entradas[ini:ini + visibles_l]):
             idx = ini + i
-            marca = "▸ " if idx == sel else "  "
+            marca = "► " if idx == sel else "  "
             color = colores[idx] if colores else "texto"
             attr = c("titulo", curses.A_BOLD | curses.A_REVERSE) if idx == sel else c(color)
             put(win, 2 + i, x0 + 1, (marca + e)[: lw - 2].ljust(lw - 2), attr)

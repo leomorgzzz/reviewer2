@@ -139,7 +139,7 @@ LECCIONES = [
         "escondida. Lo resuelves en el <titulo!>laboratorio</>: te mueves con flechas/WASD y "
         "usas cada estación con E.",
         "",
-        "  <titulo>Oficina</>      investigador ♙ y Dra. Lazo ☻ (investigar), papel de diseño",
+        "  <titulo>Oficina</>      investigador ☺ y Dra. Lazo ☻ (investigar), papel de diseño",
         "  <titulo>Bioterio…</>    unidades experimentales, calendario, técnico",
         "  <titulo>Lab húmedo</>   campana de extracción, congelador, estante de kits",
         "  <titulo>Cuarto de QC</> NanoDrop, gel, Bioanalyzer",
@@ -189,7 +189,7 @@ def capacitacion(win, juego):
             caso = casos.CASOS[0]
             d.popup(win, "Te acompaño en el primer encargo con avisos después de cada "
                          "etapa. Empieza en la oficina: habla conmigo (☻ ) y con el "
-                         "investigador (♙ ), luego escribe el diseño en el papel (▤ ).",
+                         "investigador (☺ ), luego escribe el diseño en el papel (▬ ).",
                     MENTORA)
             juego["caso_actual"] = caso["id"]
             laboratorio.Lab(win, juego, caso, practica=True).jugar()

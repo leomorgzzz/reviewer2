@@ -96,7 +96,7 @@ class Formulario:
                 d.put(win, y, 1, f"── {et} " + "─" * max(0, ancho_izq - len(et) - 5), d.c("tenue"))
             else:
                 es = i == self.sel
-                marca = "▸ " if es else "  "
+                marca = "► " if es else "  "
                 if f["tipo"] == "accion":
                     d.put(win, y, 1, marca + tr(f["etiqueta"]),
                           d.c(f.get("color", "bien"), curses.A_BOLD | (curses.A_REVERSE if es else 0)))
@@ -113,7 +113,7 @@ class Formulario:
                     val = tr(self._valor(f))
                     flechas = es and f["tipo"] in ("opcion", "numero")
                     color = f.get("color", "tenue") if f["tipo"] == "info" else "agua"
-                    d.put(win, y, xv, ("◂ " if flechas else "  ") + val + (" ▸" if flechas else ""),
+                    d.put(win, y, xv, ("◄ " if flechas else "  ") + val + (" ►" if flechas else ""),
                           d.c(color, curses.A_BOLD if es else 0), ancho_izq)
             y += 1
         if ancho >= 120:
@@ -546,7 +546,7 @@ def _animar_asignacion(lab, modo):
     rng = random.Random()
     if modo == "azar":
         rng.shuffle(grupos)
-    icono = {"bioterio": "ʘ", "cultivo": "◍", "clinica": "♙", "invernadero": "♧"}[
+    icono = {"bioterio": "ö", "cultivo": "¤", "clinica": "☺", "invernadero": "♣"}[
         X.info(caso)["lugar"]]
     cuadros = []
     por_fila = min(12, n)
@@ -692,14 +692,14 @@ def _barra_tiempo(lab, titulo, explicacion):
 
 def _fases(lab):
     tubo = [
-        "        ╭────╮",
+        "        ┌────┐",
         "        │    │",
-        "  1 ──▸ │░░░░│  fase superior, transparente",
+        "  1 ──► │░░░░│  fase superior, transparente",
         "        │░░░░│",
-        "  2 ──▸ │▔▔▔▔│  interfase blanca, delgada",
-        "  3 ──▸ │▓▓▓▓│  fase inferior, rosa",
+        "  2 ──► │────│  interfase blanca, delgada",
+        "  3 ──► │▓▓▓▓│  fase inferior, rosa",
         "        │▓▓▓▓│",
-        "        ╰─▓▓─╯",
+        "        └─▓▓─┘",
         "",
         "Después de agregar cloroformo y centrifugar 15 min a 12 000 g a 4 °C, el tubo se "
         "separa en tres fases. ¿Cuál pipeteas para seguir?",
@@ -877,12 +877,12 @@ def _gel(win, exp, caso, celulas, planta):
         col = []
         col.append("▀▀▀" if q["gdna"] else "   ")
         col.append("   ")
-        col.append("███" if rin >= 8 else ("▆▆▆" if rin >= 6 else ("▂▂▂" if rin >= 4 else "░░░")))
+        col.append("███" if rin >= 8 else ("▓▓▓" if rin >= 6 else ("▬▬▬" if rin >= 4 else "░░░")))
         col.append("░░░" if rin < 6 else "   ")
-        col.append("▆▆▆" if rin >= 8 else ("▅▅▅" if rin >= 6 else ("▂▂▂" if rin >= 4 else "░░░")))
+        col.append("▓▓▓" if rin >= 8 else ("▒▒▒" if rin >= 6 else ("▬▬▬" if rin >= 4 else "░░░")))
         col.append("░░░" if rin < 7 else "   ")
         col.append("▒▒▒" if rin < 5 else ("░░░" if rin < 7 else "   "))
-        col.append("▂▂▂")
+        col.append("▬▬▬")
         for i, c in enumerate(col):
             d.put(win, y0 + 1 + i, x, c, d.c("texto" if c.strip() else "oscuro"))
     d.put(win, y0 + 11, 2, "Bandas nítidas (la grande ~2× la chica) = íntegro · barrido hacia "
@@ -938,7 +938,7 @@ def _decisiones(win, exp, caso, claves, sel):
     ini = max(0, min(sel - (alto - 10) // 2, len(claves) - (alto - 10)))
     for i, k in enumerate(claves[ini: ini + alto - 9], start=ini):
         q = exp["qc"][k]
-        marca = "▸ " if i == sel else "  "
+        marca = "► " if i == sel else "  "
         d.trozos(win, y, 4, [(marca, "titulo"), (f"{_nombre(caso, k):<6}", "texto"),
                              (f"{q['estado']:<10}", colores[q["estado"]], curses.A_BOLD)])
         y += 1
@@ -1087,7 +1087,7 @@ def kits(lab):
 
 
 PASOS_BIBLIOTECA = {
-    "polyA": ["Capturar el ARN poli(A) con perlas oligo-dT", "Fragmentar el ARN (calor + Mg²⁺)",
+    "polyA": ["Capturar el ARN poli(A) con perlas oligo-dT", "Fragmentar el ARN (calor + Mg²+)",
               "Primera hebra de cDNA con hexámeros al azar", "Segunda hebra (con dUTP si es con hebra)",
               "Reparar extremos y agregar cola A", "Ligar adaptadores con índices",
               "PCR de enriquecimiento", "Limpieza con perlas"],
@@ -1111,10 +1111,10 @@ def _traza_biblioteca(lab):
     win = lab.win
     traza = ["  FU",
              "   │                    ▄█▄",
-             "   │                   ▟███▙",
-             "   │   ▄▖              █████▖",
-             "   │   █▌             ▟██████▙",
-             "   │   █▌           ▗▟████████▙▖",
+             "   │                   ▐███▌",
+             "   │   ▄▄              █████▄",
+             "   │   █▌             ▐██████▌",
+             "   │   █▌           ▄▐████████▌▄",
              "   └──────────────────────────────────── pb",
              "      125         300   400   600   1000"]
     lab.dibujar()

@@ -29,23 +29,23 @@ PUERTAS = [(x, 15) for x in (17, 18, 56, 57, 95, 96, 131, 132)] + \
 
 # estación -> (x, y, glifo, color, etiqueta, etapa que habilita o None)
 ESTACIONES = {
-    "papel":        (6, 4, "▤", "titulo", "papel de diseño", 0),
-    "librero":      (6, 8, "▥", "agua", "librero", None),
-    "investigador": (20, 10, "♙", "g2", "investigador", None),
+    "papel":        (6, 4, "▬", "titulo", "papel de diseño", 0),
+    "librero":      (6, 8, "▒", "agua", "librero", None),
+    "investigador": (20, 10, "☺", "g2", "investigador", None),
     "replica":      (6, 12, "☻", "bien", "Dra. Lazo", None),
-    "unidades":     (42, 4, "▦", "g4", "unidades", 1),
-    "calendario":   (62, 4, "▣", "titulo", "calendario", None),
-    "tecnico":      (38, 13, "♙", "g0", "técnico", None),
-    "nanodrop":     (83, 4, "◫", "agua", "NanoDrop", 3),
-    "gel":          (99, 4, "▤", "agua", "gel", 3),
-    "bioanalizador": (83, 10, "◩", "agua", "Bioanalyzer", 3),
+    "unidades":     (42, 4, "▓", "g4", "unidades", 1),
+    "calendario":   (62, 4, "■", "titulo", "calendario", None),
+    "tecnico":      (38, 13, "☺", "g0", "técnico", None),
+    "nanodrop":     (83, 4, "◘", "agua", "NanoDrop", 3),
+    "gel":          (99, 4, "▬", "agua", "gel", 3),
+    "bioanalizador": (83, 10, "▪", "agua", "Bioanalyzer", 3),
     "secuenciador": (120, 6, "◙", "g3", "secuenciador", 5),
     "buzon":        (8, 30, "≡", "mal", "buzón", 7),
     "campana":      (36, 26, "⌂", "g1", "campana de extracción", 2),
     "congelador":   (70, 26, "*", "agua", "congelador −80 °C", None),
-    "kits":         (36, 38, "▥", "g5", "estante de kits", 4),
-    "computadora":  (104, 27, "▣", "bien", "computadora", 6),
-    "cuaderno":     (104, 37, "▤", "titulo", "cuaderno", None),
+    "kits":         (36, 38, "▒", "g5", "estante de kits", 4),
+    "computadora":  (104, 27, "■", "bien", "computadora", 6),
+    "cuaderno":     (104, 37, "▬", "titulo", "cuaderno", None),
 }
 INICIO = (18, 18)
 
@@ -60,49 +60,49 @@ def _fila(x, y, texto, color):
 _COMUN = (
     # oficina: escritorio, sillas, plantas
     _fila(12, 2, "▄▄▄▄▄▄▄▄▄▄", "oscuro") + _fila(14, 3, "╨  ╨", "tenue")
-    + [(1, 1, "♧", "bien"), (34, 1, "♧", "bien"), (34, 13, "♧", "bien")]
+    + [(1, 1, "♣", "bien"), (34, 1, "♣", "bien"), (34, 13, "♣", "bien")]
     + _fila(26, 13, "▄▄▄", "tenue")
     # cuarto de QC: mesadas
     + _fila(81, 6, "════════════════════════════", "tenue")
     + _fila(81, 12, "════════════════════════════", "tenue")
-    + [(109, 2, "◎", "agua"), (111, 2, "◎", "agua")]
+    + [(109, 2, "○", "agua"), (111, 2, "○", "agua")]
     # secuenciación: equipos y rack
-    + _fila(130, 3, "▛▀▀▜ ▛▀▀▜", "g3") + _fila(130, 4, "▙▄▄▟ ▙▄▄▟", "g3")
+    + _fila(130, 3, "█▀▀█ █▀▀█", "g3") + _fila(130, 4, "█▄▄█ █▄▄█", "g3")
     + _fila(119, 11, "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓", "oscuro")
     + _fila(119, 12, "· servidor de datos ·", "tenue")
     # buzón: sillas y mesita
     + _fila(4, 36, "▄▄▄▄▄▄", "oscuro") + _fila(4, 37, "╨    ╨", "tenue")
-    + [(27, 23, "♧", "bien"), (2, 43, "♧", "bien")]
+    + [(27, 23, "♣", "bien"), (2, 43, "♣", "bien")]
     # laboratorio húmedo: mesadas, tarja, centrífuga, termociclador
     + _fila(34, 30, "══════════════════════════════════════════════════════", "tenue")
     + _fila(34, 34, "══════════════════════════════════════════════════════", "tenue")
-    + [(64, 26, "◎", "agua"), (66, 26, "◎", "agua")]
-    + _fila(56, 38, "▙▟", "g5") + _fila(80, 38, "╰╯", "agua")
+    + [(64, 26, "○", "agua"), (66, 26, "○", "agua")]
+    + _fila(56, 38, "██", "g5") + _fila(80, 38, "└┘", "agua")
     + _fila(34, 42, "▒▒▒▒▒▒▒▒▒▒▒▒", "oscuro")
     # bioinformática: escritorios con monitores y servidores
-    + _fila(122, 26, "▛▜  ▛▜  ▛▜", "agua") + _fila(122, 27, "▀▀▀▀▀▀▀▀▀▀", "oscuro")
-    + _fila(122, 36, "▛▜  ▛▜  ▛▜", "agua") + _fila(122, 37, "▀▀▀▀▀▀▀▀▀▀", "oscuro")
+    + _fila(122, 26, "██  ██  ██", "agua") + _fila(122, 27, "▀▀▀▀▀▀▀▀▀▀", "oscuro")
+    + _fila(122, 36, "██  ██  ██", "agua") + _fila(122, 37, "▀▀▀▀▀▀▀▀▀▀", "oscuro")
     + [(146, y, "▓", "oscuro") for y in range(24, 43)]
 )
 # lo que hay en el cuarto de unidades depende del lugar
 _LUGAR = {
-    "bioterio": _fila(48, 8, "▦ ▦ ▦ ▦ ▦ ▦ ▦ ▦", "g4") + _fila(48, 9, "jaulas", "tenue")
-                + _fila(66, 11, "▦ ▦ ▦ ▦", "g4"),
-    "cultivo": _fila(66, 8, "▛▀▀▀▀▜", "agua") + _fila(66, 9, "▙▄▄▄▄▟", "agua")
+    "bioterio": _fila(48, 8, "▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓", "g4") + _fila(48, 9, "jaulas", "tenue")
+                + _fila(66, 11, "▓ ▓ ▓ ▓", "g4"),
+    "cultivo": _fila(66, 8, "█▀▀▀▀█", "agua") + _fila(66, 9, "█▄▄▄▄█", "agua")
                + _fila(66, 10, "incubadora", "tenue")
                + _fila(44, 8, "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀", "g4") + _fila(44, 9, "campana de cultivo", "tenue"),
     "clinica": _fila(66, 8, "▌▌▌▌▌▌", "agua") + _fila(66, 9, "racks −80", "tenue")
                + _fila(50, 11, "▄▄▄▄▄▄", "oscuro"),
-    "invernadero": _fila(46, 7, "♧ ♧ ♧ ♧ ♧ ♧", "bien") + _fila(46, 8, "▒▒▒▒▒▒▒▒▒▒▒", "oscuro")
-                   + _fila(62, 7, "♧ ♧ ♧ ♧ ♧ ♧", "bien") + _fila(62, 8, "▒▒▒▒▒▒▒▒▒▒▒", "oscuro")
-                   + _fila(46, 11, "♧ ♧ ♧ ♧ ♧ ♧", "bien") + _fila(46, 12, "▒▒▒▒▒▒▒▒▒▒▒", "oscuro")
-                   + _fila(62, 11, "♧ ♧ ♧ ♧ ♧ ♧", "bien") + _fila(62, 12, "▒▒▒▒▒▒▒▒▒▒▒", "oscuro"),
+    "invernadero": _fila(46, 7, "♣ ♣ ♣ ♣ ♣ ♣", "bien") + _fila(46, 8, "▒▒▒▒▒▒▒▒▒▒▒", "oscuro")
+                   + _fila(62, 7, "♣ ♣ ♣ ♣ ♣ ♣", "bien") + _fila(62, 8, "▒▒▒▒▒▒▒▒▒▒▒", "oscuro")
+                   + _fila(46, 11, "♣ ♣ ♣ ♣ ♣ ♣", "bien") + _fila(46, 12, "▒▒▒▒▒▒▒▒▒▒▒", "oscuro")
+                   + _fila(62, 11, "♣ ♣ ♣ ♣ ♣ ♣", "bien") + _fila(62, 12, "▒▒▒▒▒▒▒▒▒▒▒", "oscuro"),
 }
 
 
 def _seguro(ch):
     """Caracteres que toda terminal dibuja en una celda: ASCII, cajas y bloques.
-    Los demás (♙ ◎ ♧ ▣…) a veces salen de una fuente de emoji más ancha
+    Los demás (☺ ○ ♣ ■…) a veces salen de una fuente de emoji más ancha
     y tapan la celda de la derecha."""
     return ord(ch) < 0x2500 or 0x2500 <= ord(ch) <= 0x259F or ch in "·−°"
 
@@ -188,7 +188,7 @@ PLATAFORMAS = {
                           "muestras se compra una fracción de carril en un núcleo."),
     "iontorrent": dict(nombre="Ion Torrent (Ion GeneStudio S5)", lecturas=["SE75", "SE50"],
                        cap=80, dias=1, corrida=2200,
-                       texto="Detecta H⁺: rápida, lecturas sencillas; errores en "
+                       texto="Detecta H+: rápida, lecturas sencillas; errores en "
                              "homopolímeros. Solo lectura sencilla en este juego."),
     "pacbio": dict(nombre="PacBio Revio (HiFi)", lecturas=["LARGA"], cap=30, dias=2,
                    corrida=6000,
@@ -367,7 +367,7 @@ INFO = {
         congelador="Pellets de exactamente un millón de células (contadas).",
         calendario="Sin límite.",
         tecnico="Las células con MYC alto son más grandes y tienen más ARN por célula.",
-        preguntas={"¿Cuántas células por muestra?": "Exactamente 10⁶, contadas."}),
+        preguntas={"¿Cuántas células por muestra?": "Exactamente 10^6, contadas."}),
     "cribado": dict(
         lugar="cultivo", aleatorizable=True, unidad=0, extraccion={"trizol", "columna"},
         hipotesis=["Cada compuesto tiene una firma transcripcional distinta que revela su "

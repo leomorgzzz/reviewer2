@@ -28,7 +28,7 @@ T = {
     "45518e561b": "Expression microarrays",
     "63b208706b": "Thousands of probes (0.6-2.5 kb cDNA or 25-50 nt oligos) fixed on a surface; fluorescently labeled cDNA hybridizes to its probe and the intensity estimates abundance.",
     "b6f47d50bc": "Organisms with a commercial array and questions about known genes; today largely replaced by RNA-seq.",
-    "0f8c5e672c": "Only measures what has a probe; saturation at the top and background noise at the bottom (dynamic range ~10³ versus ~10⁵ for RNA-seq); cross-hybridization.",
+    "7f19fed014": "Only measures what has a probe; saturation at the top and background noise at the bottom (dynamic range ~10³ versus ~10^5 for RNA-seq); cross-hybridization.",
     "6ab8407842": "One sample per array (or two colors).",
     "41ee51951a": "RMA (background, quantile normalization, summarization) → limma.",
     "a54cbb8dc1": "Color-barcoded probes counted directly, without reverse transcription or amplification.",

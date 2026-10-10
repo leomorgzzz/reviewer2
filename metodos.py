@@ -55,7 +55,7 @@ METODOS = [
      "Organismos con arreglo comercial y preguntas de genes conocidos; hoy casi "
      "reemplazados por RNA-seq.",
      "Solo mide lo que tiene sonda; saturación arriba y ruido de fondo abajo (rango "
-     "dinámico ~10³ contra ~10⁵ del RNA-seq); hibridación cruzada.",
+     "dinámico ~10³ contra ~10^5 del RNA-seq); hibridación cruzada.",
      "Una muestra por arreglo (o dos colores).",
      "RMA (fondo, normalización por cuantiles, resumen) → limma.",
      "SCN95 SHA96 WAN09"),
@@ -391,7 +391,7 @@ MANUAL = {
         "  <agua>Illumina</>   síntesis con terminadores reversibles; lecturas cortas "
         "(50-300 nt), muy exactas, cientos de millones a miles de millones por corrida. "
         "MiSeq: pocas muestras / amplicones; NextSeq: medianas; NovaSeq: proyectos grandes.",
-        "  <agua>Ion Torrent</> detecta el H⁺ liberado al incorporar un nucleótido; lecturas de "
+        "  <agua>Ion Torrent</> detecta el H+ liberado al incorporar un nucleótido; lecturas de "
         "200-600 nt; errores en homopolímeros.",
         "  <agua>454</>         pirosecuenciación; lecturas largas para su época; descontinuada.",
         "  <agua>PacBio</>      molécula única en tiempo real; lecturas largas (típicamente "
@@ -630,7 +630,7 @@ MANUAL = {
     "bibliotecas": ("13 · Preparación de bibliotecas", "Laboratorio", [
         "Pasos de una biblioteca típica de Illumina:",
         "  1. Enriquecer: oligo-dT (poli(A)) o eliminar ARNr (ribodepleción).",
-        "  2. Fragmentar el ARN (calor + Mg²⁺) a ~200-500 nt.",
+        "  2. Fragmentar el ARN (calor + Mg²+) a ~200-500 nt.",
         "  3. Primera hebra de cDNA con hexámeros al azar (sesgo en las primeras "
         "bases: Hansen 2010).",
         "  4. Segunda hebra (con dUTP si es con hebra).",
@@ -676,7 +676,7 @@ MANUAL = {
     ]),
     "spike": ("16 · Spike-ins (ERCC)", "Laboratorio", [
         "92 ARN sintéticos con cola poli(A), de 250-2 000 nt, en concentraciones "
-        "conocidas que cubren ~10⁶ veces (NIST SRM 2374). Mezclas 1 y 2 con razones "
+        "conocidas que cubren ~10^6 veces (NIST SRM 2374). Mezclas 1 y 2 con razones "
         "conocidas entre subgrupos.",
         "",
         "Usos:",

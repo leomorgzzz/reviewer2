@@ -38,7 +38,7 @@ T = {
     "c3ee930ccd": "MiSeq and NovaSeq",
     "875c938d94": "Ion Torrent and 454",
     "4e7be141bc": "HiSeq and NextSeq",
-    "a350bc65d0": "The released H⁺ (pH change)",
+    "a77405a992": "The released H+ (pH change)",
     "e33220658f": "Fluorescence",
     "51dbb79b9e": "Current in a nanopore",
     "0e94692569": "Luciferase light",

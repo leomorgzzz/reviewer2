@@ -251,10 +251,10 @@ CASOS = [
         capacidad=None, presupuesto=22000, max_replicas=6, rin=8,
         intro=[
             "En la fibrosis pulmonar idiopática aparece un tipo de célula epitelial "
-            "<titulo>transicional</> (KRT5⁻/KRT17⁺) que es solo el ~5 % del tejido.",
+            "<titulo>transicional</> (KRT5−/KRT17+) que es solo el ~5 % del tejido.",
             "Un RNA-seq de tejido completo diluye su señal en el 95 % restante.",
             "Tengo 6 pulmones con fibrosis y 6 sanos. Mi estudiante ya hizo un análisis "
-            "piloto con 3 contra 3: «miles de genes con p < 10⁻⁵⁰, cada célula es un "
+            "piloto con 3 contra 3: «miles de genes con p < 10^-50, cada célula es un "
             "dato».",
             "<tenue>Pista de la Dra. Lazo:</> 10 000 células de una persona siguen "
             "siendo UNA persona.",

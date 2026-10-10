@@ -80,7 +80,7 @@ class Lab:
                 ((x, y) for y in range(L.ALTO) for x in range(L.ANCHO) if self.plano[y][x] == "."),
                 key=lambda p: abs(p[0] - px) + abs(p[1] - py)))
         self.terminar = False
-        self.mensaje = "Habla con el investigador (♙ ) y con la Dra. Lazo (☻ ) en la oficina."
+        self.mensaje = "Habla con el investigador (☺ ) y con la Dra. Lazo (☻ ) en la oficina."
 
     @property
     def tope(self):
@@ -159,7 +159,7 @@ class Lab:
             hecha = etapa is not None and etapa < self.exp["etapa"]
             attr = d.c(color, curses.A_BOLD | (curses.A_REVERSE if destacada else 0))
             d.put(win, sy, sx, glifo, attr)
-            d.put(win, sy, sx + 2, tr(etiqueta) + (" ✓ " if hecha else " "),
+            d.put(win, sy, sx + 2, tr(etiqueta) + (" √ " if hecha else " "),
                   d.c("bien" if hecha else ("titulo" if destacada else "tenue")), vista_w)
         # jugador
         d.put(win, py - oy, px - ox, "@", d.c("titulo", curses.A_BOLD))
@@ -203,9 +203,9 @@ class Lab:
         y += 1
         for i, (nombre, est, cuarto) in enumerate(L.ETAPAS):
             if i < exp["etapa"]:
-                marca, color = "✓", "bien"
+                marca, color = "√", "bien"
             elif i == exp["etapa"]:
-                marca, color = "▸", "titulo"
+                marca, color = "►", "titulo"
             else:
                 marca, color = "·", "oscuro"
             d.put(win, y, x + 2, f"{marca} {tr(nombre)}"[: w - 4],
@@ -222,7 +222,7 @@ class Lab:
 
     def panel_corto(self, y):
         exp = self.exp
-        marcas = "".join("✓" if i < exp["etapa"] else ("▸" if i == exp["etapa"] else "·")
+        marcas = "".join("√" if i < exp["etapa"] else ("►" if i == exp["etapa"] else "·")
                          for i in range(len(L.ETAPAS)))
         nombre = L.ETAPAS[min(exp["etapa"], 7)][0]
         d.put(self.win, y, 1, f"{self.caso['titulo']} · día {exp['dia']} · "
@@ -265,7 +265,7 @@ class Lab:
             "  7. <titulo>Computadora</> (bioinformática): análisis, resultados, decidir.",
             "  8. <titulo>Buzón</>: mandar al Revisor 2.",
             "",
-            "<titulo!>Investigar</>: el investigador (♙ ), la Dra. Lazo (☻ ), el técnico, el "
+            "<titulo!>Investigar</>: el investigador (☺ ), la Dra. Lazo (☻ ), el técnico, el "
             "calendario y el congelador tienen información que no viene en el encargo.",
             "",
             "Puedes regresar a cualquier etapa desde la computadora (cuesta días y dinero), "

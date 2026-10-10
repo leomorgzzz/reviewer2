@@ -110,7 +110,7 @@ def _muestreo(dis, caso):
     if "ercc" in dis["extras"] and caso["objetivo"] == "global":
         p.append("- **Contar las células** de cada muestra: los spike-ins se agregarán "
                  "por número de células (p. ej. 1 µL de dilución 1:100 de ERCC por cada "
-                 "10⁶ células), no por masa de ARN.")
+                 "10^6 células), no por masa de ARN.")
     return p
 
 
@@ -165,7 +165,7 @@ def _biblioteca(dis, caso):
               "2. " + tr("Captura de ARN poli(A) con perlas oligo-dT (dos rondas)."
                           if lib == "polyA" else
                           "Ribodepleción con sondas + RNasa H (incluye ARNr mitocondrial)."),
-              tr("3. Fragmentación (calor + Mg²⁺) a ~200-300 nt")
+              tr("3. Fragmentación (calor + Mg²+) a ~200-300 nt")
               + (tr(" (acortar o saltar si el ARN ya está degradado).") if caso.get("rin", 9) < 4 else "."),
               "4. Primera hebra con hexámeros al azar.",
               tr("5. Segunda hebra ") + tr("con dUTP (biblioteca con hebra)." if hebra else "(sin hebra)."),

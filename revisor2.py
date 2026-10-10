@@ -229,7 +229,7 @@ def elegir_dificultad(win, actual="normal"):
         d.caja(win, y0, x0, h, w, "Dificultad")
         for i, k in enumerate(claves):
             dif = revisor.DIFICULTADES[k]
-            marca = "▸ " if i == sel else "  "
+            marca = "► " if i == sel else "  "
             attr = d.c(colores[k], curses.A_BOLD | (curses.A_REVERSE if i == sel else 0))
             d.put(win, y0 + 2 + i, x0 + 4, f"{marca}{dif['nombre']:<10}", attr)
         dif = revisor.DIFICULTADES[claves[sel]]
@@ -525,7 +525,7 @@ def hub(win, juego):
         opciones = ["Jugar", "Estudiar", "Practicar", "Protocolos exportados", "Opciones",
                     "Guardar y salir"]
         if not juego["tutorial"]:
-            opciones.insert(0, "★  Capacitación: empieza aquí")
+            opciones.insert(0, "*  Capacitación: empieza aquí")
         ancho_menu = 36
         if ancho >= 96:
             xm = ancho // 2 - ancho_menu - 2
@@ -536,7 +536,7 @@ def hub(win, juego):
         if sel is None:
             continue
         o = opciones[sel]
-        if o.startswith("★"):
+        if o.startswith("*"):
             tutorial.capacitacion(win, juego)
         elif o == "Jugar":
             menu_jugar(win, juego)

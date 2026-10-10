@@ -100,7 +100,7 @@ def alineamiento(win, velocidad="normal"):
             (genoma_y - 2, 10 + 8 + dx, lectura[8:], "titulo"),
             _sub("el alineador con splicing (STAR, HISAT2) la parte en dos")])
     union = base + [(genoma_y - 2, 10, lectura[:8], "bien"),
-                    (genoma_y - 2, 18, "╰" + "┄" * 18 + "╯", "bien"),
+                    (genoma_y - 2, 18, "└" + "─" * 18 + "┘", "bien"),
                     (genoma_y - 2, 38, lectura[8:], "bien")]
     for _ in range(4):
         cuadros.append(union + [_sub("unión exón-exón detectada: así se ven isoformas y "
