@@ -236,4 +236,9 @@ T = {
     "d86b67b108": "Hi, <titulo!>{0}</>. Welcome to the <titulo!>Sequencing Core</>. I'm Dr. Lazo, head of the core.",
     "958adaa7ec": "Your name: {0}",
     "2e93e7541a": "Hi, <titulo!>{0}</>. I'm Dr. Lazo and I'm going to teach you to design RNA-seq experiments that survive <mal!>Reviewer 2</>.",
+    # mensajes fuera del juego (instalación y errores)
+    "f89879a6a7": "Installing windows-curses (first time only)...",
+    "1a972cb090": "Could not install windows-curses. Try in a terminal:\n    py -m pip install windows-curses",
+    "8d4c2081d0": "The game closed because of an error. It was saved to ~/revisor2-error.txt",
+    "f5399e2ff3": "Press Enter to exit...",
 }

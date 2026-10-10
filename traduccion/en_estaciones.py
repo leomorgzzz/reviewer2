@@ -358,7 +358,7 @@ T = {
     "4f83fe5ca1": "+${0} per sample × {1} = +${2}",
     "fd905bbd56": "<titulo!>Design formula</>",
     "0de0db287a": "It's chosen in R, in the terminal: «Choose the formula in R».",
-    "d305467542": "Examples: ~ condicion · ~ lote + condicion · ~ donante + condicion · ~ genotipo + tratamiento + genotipo:tratamiento",
+    "d305467542": "Examples: ~ condition · ~ batch + condition · ~ donor + condition · ~ genotype + treatment + genotype:treatment",
     "b5dcbd0a1b": "Re-extract {0}",
     "791979ecf6": "Reverse transcribe",
     # terminal de elegir comandos
@@ -373,4 +373,5 @@ T = {
     "b0e7797ea9": "— to choose —",
     "1469540a57": "RIN 0 degraded → 10 intact; above 8 is suitable for RNA-seq.",
     "afc03265a6": "QC room · intact, pure RNA without contaminating DNA",
+    "1dadbe0290": "Profile of a library on the Bioanalyzer (High Sensitivity DNA).",
 }

@@ -18,12 +18,13 @@ def _asegurar_curses():
     import importlib
     import site
     import subprocess
-    print("Instalando windows-curses (solo la primera vez)...")
+    from idioma import tr                   # no depende de curses
+    print(tr("Instalando windows-curses (solo la primera vez)..."))
     try:
         subprocess.check_call([sys.executable, "-m", "pip", "install", "windows-curses"])
     except (OSError, subprocess.CalledProcessError):
-        sys.exit("No se pudo instalar windows-curses. Prueba en una terminal:\n"
-                 "    py -m pip install windows-curses")
+        sys.exit(tr("No se pudo instalar windows-curses. Prueba en una terminal:\n"
+                    "    py -m pip install windows-curses"))
     site.addsitedir(site.getusersitepackages())
     importlib.invalidate_caches()
 
@@ -145,8 +146,9 @@ def _con_aviso_de_error(funcion):
         except OSError:
             pass
         print(texto)
-        print("El juego se cerró por un error. Se guardó en ~/revisor2-error.txt")
-        input("Pulsa Enter para salir...")
+        from idioma import tr
+        print(tr("El juego se cerró por un error. Se guardó en ~/revisor2-error.txt"))
+        input(tr("Pulsa Enter para salir..."))
 
 
 _asegurar_curses()
@@ -414,8 +416,8 @@ def estado(win, juego, y, x):
         d.trozos(win, y + 1 + i, x, partes)
     yy = y + len(casos.CASOS) + 2
     if juego["examen"] is not None:
-        d.put(win, yy, x, f"Examen: mejor {juego['examen']}/20"
-              + ("  · Revisor 1" if juego["examen"] >= 16 else ""),
+        d.put(win, yy, x, idioma.tr(f"Examen: mejor {juego['examen']}/20")
+              + (idioma.tr("  · Revisor 1") if juego["examen"] >= 16 else ""),
               d.c("bien" if juego["examen"] >= 16 else "tenue"))
 
 

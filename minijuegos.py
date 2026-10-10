@@ -83,7 +83,7 @@ def ordenar(lab, titulo, intro, pasos):
     hechos, errores = [], 0
     while restantes:
         lab.dibujar()
-        texto = intro + "\n\n" + "\n".join(f"<bien>{i + 1}. {p}</>" for i, p in enumerate(hechos))
+        texto = tr(intro) + "\n\n" + "\n".join(f"<bien>{i + 1}. {tr(p)}</>" for i, p in enumerate(hechos))
         d.popup(win, texto, titulo, ancho=76, esperar=False)
         op = d.menu(win, f"Paso {len(hechos) + 1} de {len(pasos)}: ¿qué sigue?", restantes,
                     y=win.getmaxyx()[0] - len(restantes) - 4)
@@ -98,8 +98,8 @@ def ordenar(lab, titulo, intro, pasos):
         restantes.remove(correcto)
     lab.dibujar()
     d.popup(win, ("<bien!>Procedimiento correcto.</>" if not errores else
-                  f"<titulo!>Terminado con {errores} error(es).</> Así va el orden:\n\n"
-                  + "\n".join(f"{i + 1}. {p}" for i, p in enumerate(pasos))), titulo, ancho=76)
+                  tr(f"<titulo!>Terminado con {errores} error(es).</> Así va el orden:\n\n")
+                  + "\n".join(f"{i + 1}. {tr(p)}" for i, p in enumerate(pasos))), titulo, ancho=76)
     return errores
 
 
@@ -270,7 +270,7 @@ def terminal(lab, titulo, contexto, prompt, opciones, validar, solucion, intento
             if valor is not None:
                 historia.append(f"<agua>{msg}</>")
                 lab.dibujar()
-                d.popup(win, "\n".join(historia[-12:]), titulo, ancho=min(100, ancho - 2))
+                d.popup(win, "\n".join(tr(h) for h in historia[-12:]), titulo, ancho=min(100, ancho - 2))
                 return valor, errores
             errores += 1
             fallidas.add(sel)

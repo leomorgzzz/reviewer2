@@ -11,6 +11,7 @@ import random
 import time
 
 import dibujo as d
+from idioma import tr
 
 # ms por cuadro, ms de pausa final
 VELOCIDADES = {"lenta": (160, 1600), "normal": (90, 900), "rápida": (35, 300)}
@@ -32,7 +33,8 @@ def reproducir(win, cuadros, velocidad="normal", titulo=None):
             d.caja(win, y0, x0, h, w, titulo)
             for fy, fx, texto, color in cuadro:
                 if 0 <= fy < h - 2:
-                    d.put(win, y0 + 1 + fy, x0 + 2 + fx, texto[: max(0, w - 4 - fx)],
+                    # se traduce antes de recortar: recortado ya no coincide
+                    d.put(win, y0 + 1 + fy, x0 + 2 + fx, tr(texto)[: max(0, w - 4 - fx)],
                           d.c(color, curses.A_BOLD if color not in ("tenue", "oscuro") else 0))
             win.refresh()
             d.pausa(pausa if i == len(cuadros) - 1 else paso, t)
@@ -44,6 +46,7 @@ def reproducir(win, cuadros, velocidad="normal", titulo=None):
 
 
 def _sub(texto, color="tenue"):
+    texto = tr(texto)                   # se centra con el largo ya traducido
     return (AREA_H - 3, max(0, (AREA_W - 4 - len(texto)) // 2), texto, color)
 
 
@@ -112,10 +115,11 @@ def alineamiento(win, velocidad="normal"):
 
 # ------------------------------------------------------------------ sello
 def sello(win, texto, color, velocidad="normal"):
+    texto = tr(texto)                   # se centra con el largo ya traducido
     ancho = max(22, len(texto) + 6)
     arte = ["╔" + "═" * (ancho - 2) + "╗",
             "║" + texto.center(ancho - 2) + "║",
-            "║" + "— Revisor 2 —".center(ancho - 2) + "║",
+            "║" + tr("— Revisor 2 —").center(ancho - 2) + "║",
             "╚" + "═" * (ancho - 2) + "╝"]
     x = (AREA_W - 4 - ancho) // 2
     cuadros = []

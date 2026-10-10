@@ -10,6 +10,7 @@ La calificación parte de 100 y descuenta:
 Un caso queda resuelto con 60 o más y sin dictamen de RECHAZO.
 """
 
+from idioma import tr
 import datos
 import lab_datos as L
 
@@ -221,11 +222,11 @@ def pantalla(win, exp, caso, res, comentarios, nota, nombre):
         v, tope = nota["por_area"][a], TOPE_AREA[a]
         barra = "█" * round(20 * v / tope) + "░" * (20 - round(20 * v / tope))
         color = "bien" if v >= tope * 0.85 else "titulo" if v >= tope * 0.5 else "mal"
-        l.append(f"  {nombre_a:<12} <{color}>{barra}</> {v}/{tope}")
+        l.append(f"  {tr(nombre_a):<12} <{color}>{barra}</> {v}/{tope}")
     if nota["descuentos"]:
         l += ["", "<titulo!>Dónde perdiste puntos</>"]
         for area, pts, texto in sorted(nota["descuentos"], key=lambda x: x[1]):
-            l.append(f"  <mal>{pts:>3}</> <tenue>[{area}]</> {texto}")
+            l.append(f"  <mal>{pts:>3}</> <tenue>[{tr(area)}]</> {tr(texto)}")
     dif = comparar(exp, caso)
     ideal = IDEALES.get(caso["id"])
     if ideal:
@@ -243,13 +244,13 @@ def pantalla(win, exp, caso, res, comentarios, nota, nombre):
             l.append("  Tu diseño coincide con el ideal en lo esencial.")
         ci = costo_ideal(caso)
         if ci:
-            l.append(f"  Costo del ideal: ~${ci:,} · tú gastaste ${exp['gastado']:,}"
-                     + (f" (+${sum(exp['ampliaciones']):,} de ampliación)"
+            l.append(tr(f"  Costo del ideal: ~${ci:,} · tú gastaste ${exp['gastado']:,}")
+                     + (tr(f" (+${sum(exp['ampliaciones']):,} de ampliación)")
                         if exp.get("ampliaciones") else ""))
     menores = [c for c in comentarios if c["grav"] == "menor"]
     if menores and nota["resuelto"]:
         l += ["", "<titulo!>Para la próxima (aunque salió bien)</>"]
         for c in menores:
-            l.append(f"  · {c['texto']}")
+            l.append(f"  · {tr(c['texto'])}")
     l += ["", f"<tenue>Días de experimento: {exp['dia']} · gastado ${exp['gastado']:,}</>"]
     d.visor(win, f"Calificación · {caso['titulo']}", l, ayuda="Enter continuar")

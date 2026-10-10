@@ -17,6 +17,10 @@ T = {
     "de3634ef7b": "**no**.",
 }
 L = {
+    # palabras sueltas en minúsculas (extraer.py las toma por claves y no las lista)
+    "jaulas": "cages", "incubadora": "incubator", "genoma": "genome",
+    # áreas de la calificación («[laboratorio] …»)
+    "laboratorio": "lab", "resultados": "results", "eficiencia": "efficiency",
     # textos armados con «·» y citas con página
     "{0} · {1}": "{0} · {1}",
     "{0} [{1}]": "{0} [{1}]",
@@ -34,6 +38,9 @@ L = {
     "etanol100": "100 % ethanol", "ninguno": "none", "correcto": "correct",
     "excesivo": "excessive", "fuerte": "strong", "leve": "mild", "rin": "RIN",
     "donante": "donor", "sexo": "sex", "operador": "operator",
+    # columnas de la hoja de muestras en la terminal de R del juego
+    "condicion": "condition", "grupo": "group", "replica_biologica": "biological_replicate",
+    "genotipo": "genotype", "tratamiento": "treatment", "tiempo": "time",
     "aprobada": "approved", "excluida": "excluded", "pendiente": "pending",
     # etiquetas del plano y cuartos en minúsculas
     "unidades": "units", "calendario": "calendar", "librero": "bookshelf",

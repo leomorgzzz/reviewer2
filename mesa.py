@@ -333,7 +333,7 @@ class Mesa:
             elif d.es(k, "t"):
                 manual.catalogo(self.win)
             elif d.es(k, "p") and self.pistas:
-                d.popup(self.win, "\n".join("· " + p for p in revisor.pistas(self.caso)),
+                d.popup(self.win, "\n".join("· " + tr(p) for p in revisor.pistas(self.caso)),
                         "Pistas del caso", ancho=76)
             elif d.es(k, "q") or k == d.ESC:
                 if d.menu(self.win, "¿Salir de la mesa?", ["Seguir diseñando",
@@ -590,7 +590,7 @@ def pantalla_resultados(win, caso, dis, res):
                 d.trozos(win, py + 1 + i, px + 1, fila)
             ley = [("letra = grupo: ", "tenue")]
             for g, n in enumerate(caso["grupos"][:6]):
-                ley.append((f"{caso['abrev'][g]} {n}  ", "texto"))
+                ley.append((f"{caso['abrev'][g]} {tr(n)}  ", "texto"))
             d.trozos(win, py + gh + 1, px, ley, px + gw)
             ley = [("color = lote: ", "tenue")]
             for l in range(len(sim.tabla_lotes(dis, caso))):
@@ -620,7 +620,7 @@ def mostrar_dictamen(win, caso, comentarios, cal, meta, libre=False, nombre=None
                      con_nota=False):
     nombres = {"fatal": ("FATAL", "mal"), "mayor": ("MAYOR", "mal"),
                "menor": ("menor", "titulo"), "bien": ("bien", "bien")}
-    lineas = [f"<{cal['color']}!>{cal['dictamen']}</>", ""]
+    lineas = [f"<{cal['color']}!>{tr(cal['dictamen'])}</>", ""]
     if con_nota:
         lineas.append("<tenue>Tu calificación y la retroalimentación vienen en la siguiente "
                       "pantalla.</>")
@@ -638,8 +638,8 @@ def mostrar_dictamen(win, caso, comentarios, cal, meta, libre=False, nombre=None
     for x in comentarios:
         et, color = nombres[x["grav"]]
         fuente = datos.cita(*x["fuente"].split())
-        lineas.append(f"<{color}!>[{et}]</> {x['texto']}"
-                      + (f" <tenue>({fuente})</>" if fuente else ""))
+        lineas.append(f"<{color}!>[{tr(et)}]</> {tr(x['texto'])}"
+                      + (f" <tenue>({tr(fuente)})</>" if fuente else ""))
         lineas.append("")
     titulo = f"Dictamen del {REVISOR} para {nombre}" if nombre else f"Dictamen del {REVISOR}"
     d.visor(win, titulo, lineas, ayuda="Enter/Esc continuar")

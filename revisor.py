@@ -8,6 +8,7 @@ Cada comentario es dict(grav, texto, fuente) con grav:
   bien   → algo que hiciste bien (el Revisor 2 también reconoce, a regañadientes)
 """
 
+from idioma import tr
 import datos
 import simulacion as sim
 from casos import ORDEN_LECTURA
@@ -69,17 +70,17 @@ def revisar(dis, caso, res, dif="normal", exp=None):
     # si las réplicas se perdieron en el QC, el error es del laboratorio
     excluidas = dis["replicas"] > reps
     _area("laboratorio" if excluidas else "diseño")
-    previo = ("Al excluir muestras en el QC, un grupo se quedó con menos réplicas. "
+    previo = (tr("Al excluir muestras en el QC, un grupo se quedó con menos réplicas. ")
               if excluidas else "")
     if reps == 1:
-        c.append(_c("fatal", previo + "Una sola réplica biológica por grupo: no hay manera de "
-                    "estimar la variación entre individuos, así que ningún valor p es "
-                    "válido. Esto es un estudio exploratorio, no un experimento.",
+        c.append(_c("fatal", previo + tr("Una sola réplica biológica por grupo: no hay manera de "
+                                         "estimar la variación entre individuos, así que ningún valor p es "
+                                         "válido. Esto es un estudio exploratorio, no un experimento."),
                     "CON16 SCH16"))
     elif reps == 2:
-        c.append(_c("mayor", previo + "Dos réplicas por grupo: la varianza de cada gen se estima "
-                    "con un grado de libertad. Mínimo 3; Schurch 2016 recomienda al "
-                    "menos 6.", "SCH16 CON16"))
+        c.append(_c("mayor", previo + tr("Dos réplicas por grupo: la varianza de cada gen se estima "
+                                         "con un grado de libertad. Mínimo 3; Schurch 2016 recomienda al "
+                                         "menos 6."), "SCH16 CON16"))
     elif reps >= 6:
         c.append(_c("bien", f"{reps} réplicas biológicas por grupo: suficiente para "
                     "detectar la mayoría de los cambios moderados (Schurch 2016: ≥ 6, "
@@ -405,10 +406,10 @@ def revisar_lab(exp, caso, res):
     excl = [k for k, q in exp.get("qc", {}).items() if q["estado"] == "excluida"]
     if excl:
         # si dejó un grupo con menos de 3 réplicas ya lo descuenta la regla de réplicas
-        c.append(_c("bien", f"Excluiste {len(excl)} muestra(s) por mala calidad y lo reportas."
+        c.append(_c("bien", tr(f"Excluiste {len(excl)} muestra(s) por mala calidad y lo reportas.")
                     + ("" if sim.replicas_efectivas(dis, caso) >= 3 else
-                       " Re-extraer habría salvado la réplica, o diseñar con margen "
-                       "(una o dos réplicas de más)."),
+                       tr(" Re-extraer habría salvado la réplica, o diseñar con margen "
+                          "(una o dos réplicas de más).")),
                     "CON16"))
     # biblioteca
     _area("laboratorio")
@@ -455,10 +456,10 @@ def revisar_lab(exp, caso, res):
         correcto = 2 if "hebra" in exp["dis"]["extras"] else 0
         if s != correcto:
             c.append(_c("mayor" if exp["dis"].get("factor_hebra", 1) < 0.6 else "menor",
-                        f"Contaste con featureCounts -s {s}, pero tu biblioteca es "
-                        + ("con hebra reversa (dUTP): era -s 2." if correcto == 2 else
-                           "sin hebra: era -s 0.")
-                        + " Revisa siempre infer_experiment.py antes de contar.",
+                        tr(f"Contaste con featureCounts -s {s}, pero tu biblioteca es ")
+                        + tr("con hebra reversa (dUTP): era -s 2." if correcto == 2 else
+                             "sin hebra: era -s 0.")
+                        + tr(" Revisa siempre infer_experiment.py antes de contar."),
                         "WAN12 LIA14"))
     if mjs.get("formula_orden"):
         c.append(_c("menor", "En la fórmula la condición no quedó al final: DESeq2 prueba "

@@ -192,7 +192,7 @@ def _pagar(lab, monto, concepto):
     while True:
         queda = lab.tope - exp["gastado"]
         if monto <= queda:
-            op = _menu(lab, f"{concepto}: ${monto:,}", [
+            op = _menu(lab, tr(concepto) + f": ${monto:,}", [
                 f"Pagar (te quedan ${queda - monto:,} de ${lab.tope:,})",
                 "Todavía no: quiero ajustar"])
             if op != 0:
@@ -280,8 +280,9 @@ def replica(lab):
     d.dialogo(lab.win, [
         f"<titulo!>{progreso.nombre(lab.juego)}</>, lo que me preocupa de este caso: "
         f"{L.pista_replica(lab.caso)}",
-        f"<titulo!>Siguiente paso: {nombre}</> ({cuarto.replace('{lugar}', lab.lugar.lower())}). "
-        + consejos.get(etapa, ""),
+        # se traducen por separado: la plantilla no coincide con el consejo pegado
+        tr(f"<titulo!>Siguiente paso: {nombre}</> ({cuarto.replace('{lugar}', lab.lugar.lower())}). ")
+        + tr(consejos.get(etapa, "")),
     ], MENTORA, fondo=lab.dibujar)
 
 
@@ -312,8 +313,8 @@ def cuaderno(lab):
     if exp["pregunta"] is not None:
         l.append(f"<agua>Pregunta:</> {lab.preguntas_papel()[exp['pregunta']]}")
     if exp["hipotesis"] is not None:
-        l.append(f"<agua>Hipótesis:</> {info['hipotesis'][exp['hipotesis']]}"
-                 + ("  <mal>(cambiada después de ver datos)</>" if exp["harking"] else ""))
+        l.append(tr(f"<agua>Hipótesis:</> {info['hipotesis'][exp['hipotesis']]}")
+                 + (tr("  <mal>(cambiada después de ver datos)</>") if exp["harking"] else ""))
     if exp["unidad"] is not None:
         l.append(f"<agua>Unidad experimental:</> {L.UNIDADES[info['lugar']][exp['unidad']]}")
     if exp["etapa"] >= 1:
@@ -329,10 +330,10 @@ def cuaderno(lab):
         l.append(f"<agua>QC:</> {est.count('aprobada')} aprobadas · {est.count('excluida')} "
                  f"excluidas · {exp['reextracciones']} re-extracciones")
     if exp["etapa"] >= 5:
-        l.append(f"<agua>Biblioteca:</> {datos.BIBLIOTECAS[dis['biblioteca']]['nombre']} · "
-                 f"{exp['pcr']} ciclos · extras: "
-                 + (", ".join(datos.EXTRAS[e]["nombre"] for e in dis["extras"]
-                              if e in ("hebra", "umi", "ercc")) or "ninguno"))
+        l.append(tr(f"<agua>Biblioteca:</> {datos.BIBLIOTECAS[dis['biblioteca']]['nombre']} · "
+                    f"{exp['pcr']} ciclos · extras: ")
+                 + (", ".join(tr(datos.EXTRAS[e]["nombre"]) for e in dis["extras"]
+                              if e in ("hebra", "umi", "ercc")) or tr("ninguno")))
     if exp["etapa"] >= 6:
         l.append(f"<agua>Secuenciación:</> {L.PLATAFORMAS[exp['plataforma']]['nombre']} · "
                  f"{datos.LECTURAS[dis['lectura']]['nombre']} · {dis['profundidad']} M")
@@ -459,7 +460,7 @@ def papel(lab):
                                  ("qué medir", exp["objetivo"]), ("unidad", exp["unidad"]))
                   if v is None]
         if faltan:
-            _decir(lab, "Falta elegir: " + ", ".join(faltan) + ".")
+            _decir(lab, tr("Falta elegir: ") + ", ".join(tr(f) for f in faltan) + ".")
             continue
         break
     dis["pseudo"] = exp["unidad"] != info["unidad"]
@@ -479,7 +480,7 @@ def papel(lab):
         if dis["replicas"] < 3:
             notas.append("Menos de 3 réplicas no permite estadística.")
         if notas:
-            _decir(lab, "Firmado. Pero ojo:\n\n" + "\n".join("· " + n for n in notas))
+            _decir(lab, tr("Firmado. Pero ojo:\n\n") + "\n".join("· " + tr(n) for n in notas))
             return
     _decir(lab, f"Diseño firmado. Siguiente: las unidades experimentales en el "
                 f"{lab.lugar.lower()}.")
@@ -707,7 +708,7 @@ def _fases(lab):
         "separa en tres fases. ¿Cuál pipeteas para seguir?",
     ]
     lab.dibujar()
-    d.popup(lab.win, "\n".join(tubo), "Separación de fases", ancho=62, esperar=False)
+    d.popup(lab.win, "\n".join(tr(l) for l in tubo), "Separación de fases", ancho=62, esperar=False)
     op = d.menu(lab.win, "¿Qué fase tomas?", y=lab.win.getmaxyx()[0] - 7,
                 opciones=["1 · Superior acuosa (transparente)",
                                                "2 · Interfase", "3 · Inferior orgánica (rosa)"])
@@ -901,7 +902,7 @@ def _bioanalyzer(win, exp, caso, k, celulas, planta):
     h, w = min(14, alto - 8), min(70, ancho - 8)
     y0, x0 = 4, 6
     grande = "26S" if planta else "28S"
-    d.put(win, y0 - 1, 2, f"Bioanalyzer · muestra {_nombre(caso, k)} · "
+    d.put(win, y0 - 1, 2, tr(f"Bioanalyzer · muestra {_nombre(caso, k)} · ")
           + (f"DV200 {q['dv200']} %" if ffpe else f"RIN {q['rin']}"),
           d.c("agua", curses.A_BOLD))
     rin = q["rin"]
@@ -983,7 +984,7 @@ def _terminar_qc(lab):
                 txt.append(f"Aprobaste muestras con problemas: {', '.join(malas)}.")
             if buenas_fuera:
                 txt.append(f"Excluiste muestras que estaban bien: {', '.join(buenas_fuera)}.")
-            _decir(lab, " ".join(txt) + " (Lo verás en el dictamen.)")
+            _decir(lab, " ".join(tr(t) for t in txt) + tr(" (Lo verás en el dictamen.)"))
     X.avanzar(exp, 3)
     lab.guardar()
     _decir(lab, "QC terminado y anotado. Siguiente: la biblioteca, en el estante de kits del "
@@ -1120,8 +1121,8 @@ def _traza_biblioteca(lab):
              "   └──────────────────────────────────── pb",
              "      125         300   400   600   1000"]
     lab.dibujar()
-    d.popup(win, "\n".join(traza) + "\n\nPerfil de una biblioteca en el Bioanalyzer "
-                 "(High Sensitivity DNA).", "QC de la biblioteca", ancho=66, esperar=False)
+    d.popup(win, "\n".join(traza) + "\n\n" + tr("Perfil de una biblioteca en el Bioanalyzer "
+                                                 "(High Sensitivity DNA)."), "QC de la biblioteca", ancho=66, esperar=False)
     op = d.menu(win, "¿Qué ves?", y=win.getmaxyx()[0] - 7,
                 opciones=["Un pico pequeño a ~125 pb: dímeros de adaptador",
                                    "Todo bien: un solo pico a 300-400 pb",
@@ -1129,8 +1130,8 @@ def _traza_biblioteca(lab):
     if op == 0:
         limpia = _menu(lab, "¿Qué haces?", ["Otra limpieza con perlas 0.8×",
                                              "Secuenciar así"]) == 0
-        _decir(lab, "Bien visto: los dímeros se secuencian igual y gastan lecturas."
-               + (" Con la limpieza desaparecen." if limpia else ""), TECNICO)
+        _decir(lab, tr("Bien visto: los dímeros se secuencian igual y gastan lecturas.")
+               + (tr(" Con la limpieza desaparecen.") if limpia else ""), TECNICO)
         return limpia
     _decir(lab, "Mira el pico de ~125 pb: son dímeros de adaptador (adaptador pegado a "
                 "adaptador, sin inserto). Se van a secuenciar y gastar lecturas.", TECNICO)
@@ -1174,8 +1175,8 @@ def secuenciador(lab):
                                for k in L.PLATAFORMAS[exp["plataforma"]]["lecturas"]],
              get=lambda: dis["lectura"], set=lambda v: dis.__setitem__("lectura", v),
              ficha=lambda v: [f"<titulo!>{datos.LECTURAS[v]['nombre']}</>", datos.LECTURAS[v]["texto"],
-                              "Disponibles en esta plataforma: "
-                              + ", ".join(datos.LECTURAS[x]["nombre"] for x in
+                              tr("Disponibles en esta plataforma: ")
+                              + ", ".join(tr(datos.LECTURAS[x]["nombre"]) for x in
                                           L.PLATAFORMAS[exp["plataforma"]]["lecturas"])]),
         dict(tipo="opcion", etiqueta="Lecturas por muestra",
              opciones=[(p, f"{p} M") for p in datos.PROFUNDIDADES],

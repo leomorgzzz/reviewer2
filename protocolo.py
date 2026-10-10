@@ -542,6 +542,27 @@ def _lab_qc(exp, caso):
             "|---|---|---|---|---|---|"] + filas
 
 
+def _traducir_md(md):
+    """Traduce el protocolo menos el código: dentro de ``` solo los comentarios
+    de línea completa. El código usa las columnas y niveles de la hoja de
+    muestras (condicion, Vehículo…), que se exporta en español; traducirlo
+    dejaba un script que no corría."""
+    salida, en_codigo = [], False
+    for l in md:
+        if l.startswith("```"):
+            en_codigo = not en_codigo
+            salida.append(l)
+        elif en_codigo and not l.lstrip().startswith("#"):
+            salida.append(l)
+        elif l.startswith("| id |"):
+            # la hoja de muestras: _tabla ya tradujo las celdas y las columnas
+            # son las del CSV
+            salida.append(l)
+        else:
+            salida.append(tr(l))
+    return salida
+
+
 def generar(dis, caso, comentarios=None, resultado=None, dificultad="normal", exp=None,
             autor=None):
     """Escribe el .md y el .csv; devuelve la ruta del .md."""
@@ -568,9 +589,9 @@ def generar(dis, caso, comentarios=None, resultado=None, dificultad="normal", ex
 
     md = [f"# Protocolo de transcriptómica: {caso['pregunta'] if not caso.get('libre') else caso['organismo']}",
           "",
-          (f"*Responsable: {autor}.* " if autor else "") +
-          f"*Generado por REVISOR 2 el {hoy}.* Organismo: **{caso['organismo']}**. "
-          f"Muestra: {caso['muestra']}.",
+          (tr(f"*Responsable: {autor}.* ") if autor else "") +
+          tr(f"*Generado por REVISOR 2 el {hoy}.* Organismo: **{caso['organismo']}**. "
+             f"Muestra: {caso['muestra']}."),
           "",
           "## 1. Pregunta y unidad experimental",
           "",
@@ -670,9 +691,9 @@ def generar(dis, caso, comentarios=None, resultado=None, dificultad="normal", ex
                        f"{resultado['sens']:.0%}, FDR observado {resultado['fdr']:.0%}."]
     md += ["", "## Referencias", ""]
     for k in sorted(refs):
-        md.append(f"- {datos.FUENTES[k]}")
+        md.append(f"- {tr(datos.FUENTES[k])}")
     md.append("")
-    md = [tr(l) for l in md]
+    md = _traducir_md(md)
     with open(ruta_md, "w", encoding="utf-8") as f:
         f.write("\n".join(md))
     with open(ruta_csv, "w", encoding="utf-8") as f:

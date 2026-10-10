@@ -460,7 +460,7 @@ def visor(win, titulo, contenido, ayuda=None, salir=None, color=None, ancho_max=
         mas = len(planas) > visibles
         pie = ayuda or "Esc/Q/Enter volver"
         if mas:
-            pie = "↑↓ desplazar · " + pie
+            pie = tr("↑↓ desplazar · ") + tr(pie)
         put(win, h, x0 + 2, f" {pie} "[: w - 16], c("tenue"))
         if mas:
             marca = f" {min(100, round(100 * (pos + visibles) / len(planas)))}% "
@@ -520,6 +520,8 @@ def navegador(win, titulo, entradas, contenido, ayuda_lista=None, colores=None, 
     ↑↓ elegir · PgUp/PgDn o espacio desplazar · Esc/Q volver.
     salir: teclas extra que cierran y se devuelven."""
     sel, pos = 0, 0
+    # se traducen antes de recortarlas: un título recortado ya no coincide
+    entradas = [tr(e) for e in entradas]
     while True:
         alto, ancho = win.getmaxyx()
         w = min(ancho - 2, 130)
@@ -548,8 +550,8 @@ def navegador(win, titulo, entradas, contenido, ayuda_lista=None, colores=None, 
         for i, partes in enumerate(planas[pos:pos + visibles]):
             trozos(win, 2 + i, x0 + lw + 2, partes, fin=x0 + w - 2)
         mas = len(planas) > visibles
-        pie = "↑↓ elegir · " + ("PgDn/espacio bajar · PgUp subir · " if mas else "") + "Esc/Q volver"
-        put(win, h, x0 + 2, f" {ayuda_lista or pie} "[: w - 14], c("tenue"))
+        pie = tr("↑↓ elegir · ") + (tr("PgDn/espacio bajar · PgUp subir · ") if mas else "") + tr("Esc/Q volver")
+        put(win, h, x0 + 2, f" {tr(ayuda_lista) if ayuda_lista else pie} "[: w - 14], c("tenue"))
         if mas:
             marca = f" {min(100, round(100 * (pos + visibles) / len(planas)))}% "
             put(win, h, x0 + w - len(marca) - 2, marca, c("agua"))
