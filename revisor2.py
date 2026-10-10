@@ -106,8 +106,13 @@ FUENTE = {
     "V": ["█   █", "▀▄ ▄▀", " ▀█▀ "], "I": ["█", "█", "█"],
     "S": ["▄▀▀▀", " ▀▀▄", "▄▄▄▀"], "O": ["▄▀▀▄", "█  █", "▀▄▄▀"],
     "2": ["▀▀▀▄", "▄▀▀ ", "█▄▄▄"], " ": ["  ", "  ", "  "],
+    "W": ["█   █", "█ █ █", "▀▄▀▄▀"],
 }
 MENTORA = tutorial.MENTORA
+
+
+def nombre_juego():
+    return "REVIEWER 2" if idioma.ACTUAL == "en" else "REVISOR 2"
 
 
 def logo(palabra):
@@ -132,7 +137,7 @@ def esperar_tamano(win):
 
 def portada(win, y0):
     alto, ancho = win.getmaxyx()
-    filas = logo("REVISOR 2")
+    filas = logo(nombre_juego())
     x0 = (ancho - len(filas[0])) // 2
     for i, l in enumerate(filas):
         d.put(win, y0 + i, x0, l, d.c(["g0", "texto", "g1"][i], curses.A_BOLD))
@@ -443,7 +448,7 @@ def hub(win, juego):
         alto, ancho = win.getmaxyx()
         win.erase()
         if alto < 34:
-            filas = logo("REVISOR 2")
+            filas = logo(nombre_juego())
             for i, l in enumerate(filas):
                 d.put(win, i, (ancho - len(filas[0])) // 2, l,
                       d.c(["g0", "texto", "g1"][i], curses.A_BOLD))
