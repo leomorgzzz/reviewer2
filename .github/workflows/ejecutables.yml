@@ -1,5 +1,6 @@
-# Compila el juego para Windows y macOS (con Python incluido) y lo publica
-# en Releases. Se activa al subir una etiqueta: git tag v1.0 && git push --tags
+# Compila el juego (con Python incluido) y lo publica en Releases: en Windows
+# un instalador, en macOS un .zip. Se activa al subir una etiqueta:
+# git tag v1.0 && git push --tags
 name: Ejecutables
 
 on:
@@ -15,7 +16,7 @@ jobs:
       matrix:
         include:
           - os: windows-latest
-            archivo: Revisor2-Windows.exe
+            archivo: Revisor2-Instalador-Windows.exe
           - os: macos-latest
             archivo: Revisor2-macOS.zip
     runs-on: ${{ matrix.os }}
@@ -26,13 +27,35 @@ jobs:
           python-version: "3.12"
       - run: pip install pyinstaller
       - if: runner.os == 'Windows'
-        run: pip install windows-curses
-      - run: pyinstaller --onefile --name Revisor2 --add-data=traduccion:traduccion revisor2.py
-      - if: runner.os == 'Windows'
         shell: bash
-        run: mv dist/Revisor2.exe "${{ matrix.archivo }}"
+        run: |
+          pip install windows-curses
+          version="${GITHUB_REF_NAME#v}"
+          numeros=$(echo "$version.0.0.0" | cut -d. -f1-4 | tr . ,)
+          cat > version.txt <<FIN
+          VSVersionInfo(
+            ffi=FixedFileInfo(filevers=($numeros), prodvers=($numeros)),
+            kids=[StringFileInfo([StringTable('040A04B0', [
+              StringStruct('CompanyName', 'leomorgzzz'),
+              StringStruct('FileDescription', 'Revisor 2'),
+              StringStruct('ProductName', 'Revisor 2'),
+              StringStruct('FileVersion', '$version'),
+              StringStruct('ProductVersion', '$version'),
+              StringStruct('LegalCopyright', 'MIT · leomorgzzz'),
+              StringStruct('OriginalFilename', 'Revisor2.exe')])]),
+              VarFileInfo([VarStruct('Translation', [0x040A, 1200])])])
+          FIN
+          pyinstaller --onedir --noconfirm --name Revisor2 --icon icono.ico \
+            --version-file version.txt --add-data=traduccion:traduccion revisor2.py
+          if ! command -v iscc >/dev/null; then
+            [ -f "/c/Program Files (x86)/Inno Setup 6/ISCC.exe" ] || choco install innosetup -y --no-progress
+            export PATH="$PATH:/c/Program Files (x86)/Inno Setup 6"
+          fi
+          iscc "//DVersion=$version" instalador.iss
       - if: runner.os == 'macOS'
-        run: cd dist && zip "../${{ matrix.archivo }}" Revisor2
+        run: |
+          pyinstaller --onefile --name Revisor2 --add-data=traduccion:traduccion revisor2.py
+          cd dist && zip "../${{ matrix.archivo }}" Revisor2
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.archivo }}
@@ -48,6 +71,6 @@ jobs:
       - env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" Revisor2-Windows.exe Revisor2-macOS.zip \
+          gh release create "$GITHUB_REF_NAME" Revisor2-Instalador-Windows.exe Revisor2-macOS.zip \
             --repo "$GITHUB_REPOSITORY" --title "Revisor2 $GITHUB_REF_NAME" \
-            --notes "Descarga el archivo de tu sistema y ábrelo con doble clic."
+            --notes "Windows: descarga el instalador y ábrelo. macOS: descarga el .zip y abre Revisor2."
