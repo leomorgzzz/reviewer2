@@ -54,6 +54,15 @@ def construir_plano(lugar, lugar_clave=None):
     return g
 
 
+def _eje(p, c, vista, total):
+    if vista >= total:
+        return -(vista - total) // 2            # el plano cabe: centrado
+    margen = vista // 5
+    if c is None or not c + margen <= p < c + vista - margen:
+        c = p - vista // 2
+    return max(0, min(c, total - vista))
+
+
 class Lab:
     def __init__(self, win, juego, caso, practica=False):
         self.win, self.juego, self.caso = win, juego, caso
@@ -80,6 +89,7 @@ class Lab:
                 ((x, y) for y in range(L.ALTO) for x in range(L.ANCHO) if self.plano[y][x] == "."),
                 key=lambda p: abs(p[0] - px) + abs(p[1] - py)))
         self.terminar = False
+        self._camara = {}         # (ancho, alto) de la vista -> última esquina
         self.mensaje = "Habla con el investigador (☺ ) y con la Dra. Lazo (☻ ) en la oficina."
 
     @property
@@ -124,26 +134,39 @@ class Lab:
         vista_w = ancho - panel_w - 1
         vista_h = alto - (3 if panel_w else 6)
         px, py = self.exp["pos"]
-        ox = max(0, min(px - vista_w // 2, L.ANCHO - vista_w)) if vista_w < L.ANCHO else -(vista_w - L.ANCHO) // 2
-        oy = max(0, min(py - vista_h // 2, L.ALTO - vista_h)) if vista_h < L.ALTO else -(vista_h - L.ALTO) // 2
+        ox, oy = self.camara(px, py, vista_w, vista_h)
         siguiente = L.ETAPAS[min(self.exp["etapa"], 7)][1]
         for sy in range(vista_h):
             y = oy + sy
             if not 0 <= y < L.ALTO:
                 continue
-            for sx in range(vista_w):
+            # las celdas seguidas del mismo color van en un solo put; los
+            # íconos que pueden salir anchos (☺ ♣…) van solos
+            corrida, color_c, x0 = [], None, 0
+            for sx in range(max(0, -ox), min(vista_w, L.ANCHO - ox)):
                 x = ox + sx
-                if not 0 <= x < L.ANCHO:
-                    continue
                 c = self.plano[y][x]
                 if c == "#":
-                    d.put(win, sy, sx, "█", d.c("oscuro"))
+                    ch, color = "█", "oscuro"
                 elif c == "m":
                     ch, color = self.muebles[(x, y)]
-                    d.put(win, sy, sx, ch, d.c(color))
                 elif c == ".":
-                    patron = "·" if (x * 3 + y * 5) % 11 == 0 and (x, y) not in self.liso else " "
-                    d.put(win, sy, sx, patron, d.c("oscuro"))
+                    ch = "·" if (x * 3 + y * 5) % 11 == 0 and (x, y) not in self.liso else " "
+                    color = "oscuro"
+                else:
+                    ch, color = " ", "oscuro"
+                solo = not L.seguro(ch)
+                if corrida and (color != color_c or solo):
+                    d.put(win, sy, x0, "".join(corrida), d.c(color_c))
+                    corrida = []
+                if not corrida:
+                    color_c, x0 = color, sx
+                corrida.append(ch)
+                if solo:
+                    d.put(win, sy, x0, ch, d.c(color))
+                    corrida = []
+            if corrida:
+                d.put(win, sy, x0, "".join(corrida), d.c(color_c))
         # nombres de cuartos
         for nombre, x0, y0, x1, y1 in L.CUARTOS:
             if nombre == "PASILLO" or not 0 <= y0 - oy < vista_h:
@@ -175,6 +198,15 @@ class Lab:
         d.put(win, alto - 1, 1, "Flechas/WASD mover · E usar · N cuaderno · M manual · "
               "H ayuda · Q salir"[: ancho - 2], d.c("tenue"))
         win.refresh()
+
+    def camara(self, px, py, vista_w, vista_h):
+        """Esquina de la vista. Se queda quieta mientras el jugador no se
+        acerque a un borde y entonces lo recentra: si se moviera en cada paso,
+        toda la pantalla cambiaría y en Windows redibujarla entera es lento."""
+        ox, oy = self._camara.get((vista_w, vista_h), (None, None))
+        ox, oy = _eje(px, ox, vista_w, L.ANCHO), _eje(py, oy, vista_h, L.ALTO)
+        self._camara[(vista_w, vista_h)] = (ox, oy)
+        return ox, oy
 
     def panel(self, x, w, alto):
         win, exp, caso = self.win, self.exp, self.caso

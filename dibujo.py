@@ -3,6 +3,7 @@
 import curses
 import os
 import textwrap
+import time
 
 from idioma import tr
 
@@ -119,8 +120,8 @@ def c(nombre, extra=0, fondo=None):
 
 
 def estrellas(n):
-    """Calificación de 0 a 3: «* * · ». Sin ★ ni ☆, que la consola de Windows
-    dibuja como «?»."""
+    """Calificación de 0 a 3: «* * · ». Sin estrellas Unicode, que la consola
+    de Windows dibuja como «?»."""
     return "* " * n + "· " * (3 - n)
 
 
@@ -267,8 +268,16 @@ def envolver(texto, ancho):
     return salida
 
 
-def tecla(win):
-    """Lee una tecla; devuelve int de curses o str de un carácter."""
+MOVIMIENTO = (curses.KEY_UP, curses.KEY_DOWN, curses.KEY_LEFT, curses.KEY_RIGHT,
+              "w", "a", "s", "d", "W", "A", "S", "D")
+
+
+def tecla(win, texto=False):
+    """Lee una tecla; devuelve int de curses o str de un carácter. Al dejar
+    presionada una flecha, las repeticiones que se juntaron mientras se
+    dibujaba se descartan: si no, en Windows (donde dibujar tarda más) el
+    personaje sigue avanzando después de soltarla. texto=True no descarta
+    nada (para escribir)."""
     while True:
         try:
             k = win.get_wch()
@@ -276,7 +285,37 @@ def tecla(win):
             continue
         if k == curses.KEY_RESIZE and os.name == "nt":
             curses.resize_term(0, 0)        # PDCurses no actualiza el tamaño solo
+        if not texto and k in MOVIMIENTO:
+            _descartar_repetidas(win, k)
         return k
+
+
+def _descartar_repetidas(win, k):
+    win.nodelay(True)
+    try:
+        while True:
+            try:
+                sig = win.get_wch()
+            except curses.error:
+                return
+            if sig != k:
+                # la primera tecla distinta se devuelve a la cola
+                if isinstance(sig, int):
+                    curses.ungetch(sig)
+                else:
+                    curses.unget_wch(sig)
+                return
+    finally:
+        win.nodelay(False)
+
+
+def pausa(ms, desde):
+    """Espera a que pasen ms desde `desde` (time.monotonic()). Lo que tardó
+    dibujar el cuadro ya cuenta: en la consola de Windows dibujar es lento y
+    con una pausa fija las animaciones duraban mucho más."""
+    resto = ms - int((time.monotonic() - desde) * 1000)
+    if resto > 0:
+        curses.napms(resto)
 
 
 def es(k, *opciones):
@@ -458,7 +497,7 @@ def entrada(win, pregunta, inicial="", largo=40):
             put(win, y0 + 4, x0 + 2, " Enter aceptar · Esc cancelar ", c("tenue"))
             win.move(y0 + 2, x0 + 2 + len(visible))
             win.refresh()
-            k = tecla(win)
+            k = tecla(win, texto=True)
             if k in ENTER:
                 return texto.strip()
             if k == ESC:

@@ -11,6 +11,7 @@ cuando el jugador se aleja de la estación.
 import curses
 import math
 import random
+import time
 
 import animaciones as anim
 import calificacion
@@ -657,6 +658,7 @@ def _barra_tiempo(lab, titulo, explicacion):
     curses.flushinp()
     try:
         while True:
+            t = time.monotonic()
             alto, ancho = win.getmaxyx()
             y0, x0 = alto // 2 - 3, (ancho - ancho_b - 6) // 2
             d.limpiar_area(win, y0, x0, 7, ancho_b + 6)
@@ -669,7 +671,7 @@ def _barra_tiempo(lab, titulo, explicacion):
             d.put(win, y0 + 3, x0 + 3 + int(pos * (ancho_b - 1)), "▲", d.c("titulo", curses.A_BOLD))
             d.put(win, y0 + 5, x0 + 3, "ESPACIO para detener", d.c("tenue"))
             win.refresh()
-            curses.napms(45)
+            d.pausa(45, t)
             k = win.getch()
             if k == ord(" ") or k in (10, 13):
                 break

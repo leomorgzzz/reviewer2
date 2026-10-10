@@ -8,6 +8,7 @@ Cualquier tecla salta la animación.
 
 import curses
 import random
+import time
 
 import dibujo as d
 
@@ -26,6 +27,7 @@ def reproducir(win, cuadros, velocidad="normal", titulo=None):
     curses.flushinp()
     try:
         for i, cuadro in enumerate(cuadros):
+            t = time.monotonic()
             d.limpiar_area(win, y0, x0, h, w)
             d.caja(win, y0, x0, h, w, titulo)
             for fy, fx, texto, color in cuadro:
@@ -33,7 +35,7 @@ def reproducir(win, cuadros, velocidad="normal", titulo=None):
                     d.put(win, y0 + 1 + fy, x0 + 2 + fx, texto[: max(0, w - 4 - fx)],
                           d.c(color, curses.A_BOLD if color not in ("tenue", "oscuro") else 0))
             win.refresh()
-            curses.napms(pausa if i == len(cuadros) - 1 else paso)
+            d.pausa(pausa if i == len(cuadros) - 1 else paso, t)
             if win.getch() != -1:
                 break
     finally:

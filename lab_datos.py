@@ -100,7 +100,7 @@ _LUGAR = {
 }
 
 
-def _seguro(ch):
+def seguro(ch):
     """Caracteres que toda terminal dibuja en una celda: ASCII, cajas y bloques.
     Los demás (☺ ○ ♣ ■…) a veces salen de una fuente de emoji más ancha
     y tapan la celda de la derecha."""
@@ -115,7 +115,7 @@ def mobiliario(lugar_clave):
     iconos = [(x, y, ch) for x, y, ch, _c in muebles] + \
              [(x, y, ch) for x, y, ch, *_r in ESTACIONES.values()]
     huecos = [(x + 1, y, " ", "oscuro") for x, y, ch in iconos
-              if not _seguro(ch) and (x + 1, y) not in ocupado]
+              if not seguro(ch) and (x + 1, y) not in ocupado]
     return muebles + huecos
 
 

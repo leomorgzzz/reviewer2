@@ -13,6 +13,7 @@ para la simulación y el Revisor 2.
 
 import curses
 import random
+import time
 
 import dibujo as d
 from idioma import tr
@@ -41,6 +42,7 @@ def deslizador(lab, titulo, texto, minimo, maximo, unidad, zona, paso=None, form
     curses.flushinp()
     try:
         while True:
+            t = time.monotonic()
             y0, x0, h, w = _caja(win, len(lineas) + 9, ancho_b + 8, titulo)
             for i, l in enumerate(lineas):
                 d.put(win, y0 + 1 + i, x0 + 2, l, d.c("texto"))
@@ -57,7 +59,7 @@ def deslizador(lab, titulo, texto, minimo, maximo, unidad, zona, paso=None, form
             d.put(win, yb + 3, x0 + 4, f"{formato.format(pos)} {unidad}", d.c("titulo", curses.A_BOLD))
             d.put(win, y0 + h - 2, x0 + 2, "ESPACIO para detener", d.c("tenue"))
             win.refresh()
-            curses.napms(40)
+            d.pausa(40, t)
             k = win.getch()
             if k in (ord(" "), 10, 13):
                 break
