@@ -43,11 +43,21 @@ def init_colores():
         fondo = -1
     except curses.error:
         fondo = curses.COLOR_BLACK
-    muchos = curses.COLORS >= 256
     for i, (nombre, (c256, c8)) in enumerate(_PALETA.items(), start=1):
-        curses.init_pair(i, c256 if muchos else c8, fondo)
+        curses.init_pair(i, _color(c256, c8), fondo)
         _PARES[nombre] = i
     _SIGUIENTE[0] = len(_PALETA) + 1
+
+
+def _color(c256, c8):
+    """Color según lo que dé la terminal. Con 16 colores (la consola de
+    Windows) los grises usan blanco brillante, gris claro y gris oscuro en
+    vez de A_DIM, que ahí casi nunca se nota."""
+    if curses.COLORS >= 256:
+        return c256
+    if curses.COLORS >= 16 and c8 == curses.COLOR_WHITE:
+        return 15 if c256 >= 250 else 7 if c256 >= 244 else 8
+    return c8
 
 
 def c(nombre, extra=0, fondo=None):
@@ -64,7 +74,7 @@ def c(nombre, extra=0, fondo=None):
             _SIGUIENTE[0] += 1
         return curses.color_pair(_FONDOS[clave]) | extra
     attr = curses.color_pair(_PARES[nombre])
-    if nombre in ("tenue", "oscuro", "base") and curses.COLORS < 256:
+    if nombre in ("tenue", "oscuro", "base") and curses.COLORS < 16:
         attr |= curses.A_DIM
     return attr | extra
 
