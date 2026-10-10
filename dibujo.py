@@ -1,6 +1,7 @@
 """Colores, cajas, barras, menús y ventanas emergentes con curses."""
 
 import curses
+import os
 import textwrap
 
 from idioma import tr
@@ -221,9 +222,12 @@ def tecla(win):
     """Lee una tecla; devuelve int de curses o str de un carácter."""
     while True:
         try:
-            return win.get_wch()
+            k = win.get_wch()
         except curses.error:
             continue
+        if k == curses.KEY_RESIZE and os.name == "nt":
+            curses.resize_term(0, 0)        # PDCurses no actualiza el tamaño solo
+        return k
 
 
 def es(k, *opciones):

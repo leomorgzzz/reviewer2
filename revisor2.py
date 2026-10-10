@@ -1,9 +1,36 @@
 #!/usr/bin/env python3
 """REVISOR 2 — diseña experimentos de RNA-seq que sobrevivan a la revisión."""
 
-import curses
 import locale
 import os
+import sys
+
+
+def _asegurar_curses():
+    """Python en Windows no trae curses: la primera vez se instala
+    windows-curses con pip."""
+    try:
+        import curses  # noqa: F401
+        return
+    except ImportError:
+        if os.name != "nt":
+            raise
+    import importlib
+    import site
+    import subprocess
+    print("Instalando windows-curses (solo la primera vez)...")
+    try:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "windows-curses"])
+    except (OSError, subprocess.CalledProcessError):
+        sys.exit("No se pudo instalar windows-curses. Prueba en una terminal:\n"
+                 "    py -m pip install windows-curses")
+    site.addsitedir(site.getusersitepackages())
+    importlib.invalidate_caches()
+
+
+_asegurar_curses()
+
+import curses  # noqa: E402
 
 import animaciones as anim
 import casos
@@ -408,7 +435,8 @@ def main(win):
     # algunas terminales se desfasan y dejan restos de líneas anteriores
     win.idcok(False)
     win.idlok(False)
-    curses.set_escdelay(25)
+    if hasattr(curses, "set_escdelay"):
+        curses.set_escdelay(25)
     esperar_tamano(win)
     juego = titulo(win)
     if juego is None:

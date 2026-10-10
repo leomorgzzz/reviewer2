@@ -20,6 +20,18 @@ los resultados.
 
 ## Instalación
 
+### Windows
+
+1. Instala Python 3 desde [python.org](https://www.python.org/downloads/). En el
+   instalador marca «Add python.exe to PATH».
+2. Descarga el juego: botón verde **Code → Download ZIP** y descomprímelo.
+3. Abre `jugar.bat` con doble clic. La primera vez instala `windows-curses`
+   (necesita internet).
+
+Se ve mejor en Windows Terminal (viene en Windows 11) con la ventana maximizada.
+
+### Linux y macOS
+
 ```bash
 git clone https://github.com/leomorgzzz/revisor2.git
 cd revisor2
@@ -29,12 +41,12 @@ revisor2
 
 Sin instalar: `python3 revisor2.py`. Quitar el comando: `./instalar.sh --quitar`.
 
-Requiere Python 3 (solo biblioteca estándar). Funciona desde 80×24; se ve mejor
-en pantalla completa.
+Requiere Python 3 (en Linux y macOS, solo la biblioteca estándar). Funciona
+desde 80×24; se ve mejor en pantalla completa.
 
 Archivos que crea:
 
-- `~/.revisor2.json`: la partida;
+- `~/.revisor2.json`: la partida (en Windows, `~` es `C:\Users\<tu usuario>`);
 - `~/.revisor2_idioma`: el idioma;
 - `~/Documentos/revisor2-protocolos/`: los protocolos exportados.
 
