@@ -100,6 +100,7 @@ FUENTES = {
     "CHA93": "Chang, Puryear & Cairney 1993 — A simple and efficient method for isolating RNA from pine trees (CTAB). Plant Mol Biol Rep 11:113",
     "KRU11": "Krueger, Andrews & Osborne 2011 — Large scale loss of data in low-diversity Illumina sequencing libraries can be recovered by deferred cluster calling. PLoS One 6:e16607",
     "ROT11": "Rothberg et al. 2011 — An integrated semiconductor device enabling non-optical genome sequencing (Ion Torrent). Nature 475:348",
+    "VDB17": "van den Brink et al. 2017 — Single-cell sequencing reveals dissociation-induced gene expression in tissue subpopulations. Nat Methods 14:935",
     "GOO16": "Goodwin, McPherson & McCombie 2016 — Coming of age: ten years of next-generation sequencing technologies. Nat Rev Genet 17:333",
 }
 
@@ -130,7 +131,7 @@ _CORTOS = {
     "KER98": "Kerr 1998", "NOS18": "Nosek 2018", "SIM11": "Simmons 2011",
     "CHO93": "Chomczynski 1993", "DEA95": "DeAngelis 1995", "ILLDD": "guía de dilución de Illumina",
     "CHA93": "Chang 1993", "KRU11": "Krueger 2011", "ROT11": "Rothberg 2011",
-    "GOO16": "Goodwin 2016",
+    "GOO16": "Goodwin 2016", "VDB17": "van den Brink 2017",
 }
 
 

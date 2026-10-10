@@ -447,7 +447,7 @@ T = {
     "58faf72127": "PacBio Iso-Seq (HiFi)",
     "de239d0727": "COR08 KWA13",
     "500f1ac209": "CLIP-seq (HITS-CLIP, iCLIP, eCLIP)",
-    "2dd975083a": "16 · Spike-ins (ERCC)",
+    "7ab7704774": "26 · Spike-ins (ERCC)",
     "43348cd9c5": "BAM",
     "fedb3975d7": "BH / FDR",
     "1336a87d3a": "cDNA",
@@ -707,4 +707,7 @@ T = {
     "1f8f12702a": "Krueger 2011",
     "fcec620b3a": "Rothberg 2011",
     "3085eb4416": "Goodwin 2016",
+    "d59a88237f": "VDB17",
+    "14aca251a1": "van den Brink et al. 2017 — Single-cell sequencing reveals dissociation-induced gene expression in tissue subpopulations. Nat Methods 14:935",
+    "38109730bf": "van den Brink 2017",
 }

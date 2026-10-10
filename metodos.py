@@ -401,7 +401,7 @@ MANUAL = {
         "",
         "Tercera generación = secuenciación de molécula única. La tasa de error de ~16 % "
         "corresponde a las primeras versiones; las actuales son mucho menores.",
-        f"<tenue>Fuente: {cita('STA19', 'general')}</>",
+        f"<tenue>Fuente: {cita('STA19', 'GOO16')}</>",
     ]),
     "f_extraccion": ("9 · Extracción y calidad del ARN", "Fundamentos", [
         "Aislamiento de ARN total (célula, tejido animal o vegetal):",
@@ -418,7 +418,7 @@ MANUAL = {
         "(degradado) a 10 (intacto). Arriba de 8 se considera adecuado para RNA-seq.",
     ]),
     # ===================================================== DISEÑO
-    "pregunta": ("1 · La pregunta manda", "Diseño", [
+    "pregunta": ("11 · La pregunta manda", "Diseño", [
         "Todo diseño empieza por escribir la pregunta en una línea: <titulo>qué</> "
         "se compara, <titulo>en qué</> (organismo, tejido, tipo celular) y <titulo>qué "
         "se mide</> (nivel de gen, isoforma, splicing, miRNA, célula única, ubicación).",
@@ -437,7 +437,7 @@ MANUAL = {
         "es tu réplica.",
         f"<tenue>Fuente: {cita('CON16', 'AUE10')}</>",
     ]),
-    "replicas": ("2 · Réplicas biológicas y técnicas", "Diseño", [
+    "replicas": ("12 · Réplicas biológicas y técnicas", "Diseño", [
         "<titulo!>Réplica biológica</>: otra unidad experimental independiente (otro "
         "ratón, otro paciente, otro cultivo sembrado y tratado por separado). Captura "
         "la variación que importa para generalizar.",
@@ -457,7 +457,7 @@ MANUAL = {
         "Encoge la varianza y fabrica falsos positivos.",
         f"<tenue>Fuente: {cita('SCH16', 'MAR08', 'CON16', 'SQU21')}</>",
     ]),
-    "profundidad": ("3 · Profundidad de secuenciación", "Diseño", [
+    "profundidad": ("13 · Profundidad de secuenciación", "Diseño", [
         "Más lecturas mejoran la medición de genes poco expresados, pero con "
         "rendimientos decrecientes.",
         "",
@@ -476,7 +476,7 @@ MANUAL = {
         "dice si más profundidad ayudaría.",
         f"<tenue>Fuente: {cita('LIU14', 'CON16', 'ENC', 'ZHE17')}</>",
     ]),
-    "potencia": ("4 · Potencia y tamaño de muestra", "Diseño", [
+    "potencia": ("14 · Potencia y tamaño de muestra", "Diseño", [
         "La <titulo>potencia</> es la probabilidad de detectar un cambio real. Depende "
         "de: tamaño del efecto (fold change), número de réplicas, variación biológica "
         "(dispersión), cuentas del gen (profundidad × expresión) y el umbral (FDR).",
@@ -493,7 +493,7 @@ MANUAL = {
         "Difícil).",
         f"<tenue>Fuente: {cita('CON16', 'HAR13', 'CHI14')}</>",
     ]),
-    "lotes": ("5 · Efectos de lote", "Diseño", [
+    "lotes": ("15 · Efectos de lote", "Diseño", [
         "Un <titulo>lote</> es todo lo que se procesa junto: día de extracción, kit, "
         "persona, corrida de secuenciación, carril. Cada lote deja una huella en la "
         "expresión de miles de genes.",
@@ -514,7 +514,7 @@ MANUAL = {
         "corrige las cuentas (para visualizar; para la prueba es mejor la fórmula).",
         f"<tenue>Fuente: {cita('LEE10', 'AUE10', 'LEK07', 'RIS14', 'ZHN20')}</>",
     ]),
-    "aleatorizar": ("6 · Aleatorizar y bloquear", "Diseño", [
+    "aleatorizar": ("16 · Aleatorizar y bloquear", "Diseño", [
         "Los tres principios de Fisher que Auer & Doerge 2010 llevaron al RNA-seq:",
         "  <titulo!>Réplica</>: varias unidades por grupo para estimar la variación.",
         "  <titulo!>Aleatorización</>: el azar decide qué unidad recibe qué tratamiento "
@@ -527,7 +527,7 @@ MANUAL = {
         "diseño balanceado). Así el carril no se confunde con nada.",
         f"<tenue>Fuente: {cita('AUE10', 'CON16')}</>",
     ]),
-    "formula": ("7 · La fórmula de diseño", "Diseño", [
+    "formula": ("17 · La fórmula de diseño", "Diseño", [
         "La fórmula le dice al modelo qué explica la expresión de cada gen. El "
         "<titulo>último término</> es el que se prueba por defecto en DESeq2.",
         "",
@@ -549,7 +549,7 @@ MANUAL = {
         "  res <- results(dds, contrast = c(\"condicion\", \"trat\", \"ctrl\"), alpha = 0.05)",
         f"<tenue>Fuente: {cita('DESV', 'LOV14')}</>",
     ]),
-    "pareado": ("8 · Diseños pareados", "Diseño", [
+    "pareado": ("18 · Diseños pareados", "Diseño", [
         "Si cada individuo aporta una muestra de cada condición (tumor y normal; antes "
         "y después), la diferencia se mide dentro del individuo.",
         "",
@@ -562,7 +562,7 @@ MANUAL = {
         "poco al contraste pero sí a la dispersión.",
         f"<tenue>Fuente: {cita('DESV', 'LOV14')}</>",
     ]),
-    "factorial": ("9 · Diseños factoriales e interacción", "Diseño", [
+    "factorial": ("19 · Diseños factoriales e interacción", "Diseño", [
         "Dos factores cruzados (genotipo × tratamiento) dan cuatro grupos.",
         "",
         "  efecto del tratamiento en WT  = WT.trat − WT.ctrl",
@@ -581,7 +581,7 @@ MANUAL = {
         f"<tenue>Fuente: {cita('DESV', 'AUE10')}</>",
     ]),
     # ===================================================== LABORATORIO
-    "muestreo": ("10 · Toma y conservación de la muestra", "Laboratorio", [
+    "muestreo": ("20 · Toma y conservación de la muestra", "Laboratorio", [
         "El ARN se degrada en minutos (RNasas). Lo que pase entre el animal y el "
         "congelador decide la calidad.",
         "",
@@ -594,9 +594,9 @@ MANUAL = {
         "  • FFPE: fijación estandarizada; cortar el bloque fresco.",
         "  • Hoja de muestras desde el día 1: ID, grupo, sexo, edad, fecha, operador, "
         "lote, RIN… es tu colData.",
-        f"<tenue>Fuente: {cita('CON16', 'LUE19', 'general')}</>",
+        f"<tenue>Fuente: {cita('CON16', 'LUE19', 'VDB17')}</>",
     ]),
-    "extraccion": ("11 · Extracción de ARN", "Laboratorio", [
+    "extraccion": ("21 · Extracción de ARN", "Laboratorio", [
         "Métodos:",
         "  • Fenol-cloroformo (TRIzol): alto rendimiento, conserva ARN pequeños.",
         "  • Columnas de sílice (RNeasy): limpio, pierde < 200 nt salvo kits miRNA.",
@@ -610,9 +610,9 @@ MANUAL = {
         "",
         "Extrae todas las muestras con el mismo kit y, si no caben en un día, en "
         "lotes balanceados.",
-        f"<tenue>Fuente: {cita('CON16', 'general')}</>",
+        f"<tenue>Fuente: {cita('CON16', 'CHO93')}</>",
     ]),
-    "calidad_arn": ("12 · Control de calidad del ARN", "Laboratorio", [
+    "calidad_arn": ("22 · Control de calidad del ARN", "Laboratorio", [
         "<titulo!>Cantidad</>: Qubit (fluorescencia, específico de ARN) mejor que "
         "NanoDrop (absorbancia, cuenta ADN y sales).",
         "<titulo!>Pureza</> (NanoDrop): A260/280 ≈ 2.0 (proteína baja); A260/230 > 1.8 "
@@ -627,7 +627,7 @@ MANUAL = {
         "considéralo como covariable.",
         f"<tenue>Fuente: {cita('SCR06', 'ILL14', 'CON16')}</>",
     ]),
-    "bibliotecas": ("13 · Preparación de bibliotecas", "Laboratorio", [
+    "bibliotecas": ("23 · Preparación de bibliotecas", "Laboratorio", [
         "Pasos de una biblioteca típica de Illumina:",
         "  1. Enriquecer: oligo-dT (poli(A)) o eliminar ARNr (ribodepleción).",
         "  2. Fragmentar el ARN (calor + Mg²+) a ~200-500 nt.",
@@ -647,7 +647,7 @@ MANUAL = {
         "preparar la biblioteca.",
         f"<tenue>Fuente: {cita('CON16', 'HAN10', 'ZHA14', 'JIA11')}</>",
     ]),
-    "hebra": ("14 · Bibliotecas con hebra", "Laboratorio", [
+    "hebra": ("24 · Bibliotecas con hebra", "Laboratorio", [
         "Sin hebra, una lectura en una región con genes en ambas hebras es ambigua.",
         "",
         "Método dUTP: la segunda hebra lleva dUTP y se degrada antes del PCR; solo "
@@ -662,7 +662,7 @@ MANUAL = {
         "gratis en kits modernos: úsalo siempre que puedas.",
         f"<tenue>Fuente: {cita('LEV10', 'PAR09', 'WAN12')}</>",
     ]),
-    "umi": ("15 · UMIs y duplicados", "Laboratorio", [
+    "umi": ("25 · UMIs y duplicados", "Laboratorio", [
         "Un <titulo>UMI</> es una secuencia al azar pegada a cada molécula ANTES del "
         "PCR. Dos lecturas con la misma posición y el mismo UMI son copias de PCR; "
         "con distinto UMI son moléculas distintas.",
@@ -674,7 +674,7 @@ MANUAL = {
         "Herramienta: UMI-tools (corrige errores de secuencia en el UMI).",
         f"<tenue>Fuente: {cita('KIV12', 'FU18', 'SMI17')}</>",
     ]),
-    "spike": ("16 · Spike-ins (ERCC)", "Laboratorio", [
+    "spike": ("26 · Spike-ins (ERCC)", "Laboratorio", [
         "92 ARN sintéticos con cola poli(A), de 250-2 000 nt, en concentraciones "
         "conocidas que cubren ~10^6 veces (NIST SRM 2374). Mezclas 1 y 2 con razones "
         "conocidas entre subgrupos.",
@@ -689,7 +689,7 @@ MANUAL = {
         "RUVg con los ERCC como controles negativos.",
         f"<tenue>Fuente: {cita('JIA11', 'LOV12', 'RIS14')}</>",
     ]),
-    "secuenciacion": ("17 · Secuenciación", "Laboratorio", [
+    "secuenciacion": ("27 · Secuenciación", "Laboratorio", [
         "QC de la biblioteca: tamaño (Bioanalyzer, pico ~300-400 pb), concentración "
         "molar (qPCR KAPA); sin dímeros de adaptador.",
         "",
@@ -702,9 +702,9 @@ MANUAL = {
         "",
         "Planear carriles: lecturas totales = muestras × profundidad / (1 − pérdidas).",
         "Demultiplexar con bcl-convert/bcl2fastq → un FASTQ por muestra (R1, R2).",
-        f"<tenue>Fuente: {cita('CON16', 'STA19', 'general')}</>",
+        f"<tenue>Fuente: {cita('CON16', 'STA19', 'GOO16')}</>",
     ]),
-    "lecturas": ("18 · Tipo y longitud de lectura", "Laboratorio", [
+    "lecturas": ("28 · Tipo y longitud de lectura", "Laboratorio", [
         "  SE 50-75   genes en organismos bien anotados, small RNA, 3′ tag",
         "  PE 2×100   isoformas, splicing, mejor mapeo en regiones repetidas",
         "  PE 2×150   de novo, fusiones, variantes",
@@ -716,7 +716,7 @@ MANUAL = {
         f"<tenue>Fuente: {cita('CON16')}</>",
     ]),
     # ===================================================== ANÁLISIS
-    "qc_lecturas": ("19 · Control de calidad de lecturas", "Análisis", [
+    "qc_lecturas": ("29 · Control de calidad de lecturas", "Análisis", [
         "FastQC por muestra y MultiQC para verlas todas juntas. Qué mirar:",
         "  • Calidad por posición (Phred ≥ 30 = 1 error en 1 000; suele caer al final).",
         "  • Contenido por base: las primeras ~10 bases oscilan por el sesgo de "
@@ -730,7 +730,7 @@ MANUAL = {
         "  fastqc -t 8 -o qc/ fastq/*.fastq.gz && multiqc qc/",
         f"<tenue>Fuente: {cita('AND10', 'EWE16', 'CON16', 'HAN10')}</>",
     ]),
-    "recorte": ("20 · Recorte de adaptadores y calidad", "Análisis", [
+    "recorte": ("30 · Recorte de adaptadores y calidad", "Análisis", [
         "Quitar adaptadores (si el fragmento es más corto que la lectura) y extremos "
         "de baja calidad; descartar lecturas muy cortas.",
         "",
@@ -742,7 +742,7 @@ MANUAL = {
         "agresivo ayuda poco; el de adaptadores sí es necesario en small RNA.",
         f"<tenue>Fuente: {cita('CHE18', 'MAR11', 'CON16')}</>",
     ]),
-    "alineamiento": ("21 · Alineamiento y cuantificación", "Análisis", [
+    "alineamiento": ("31 · Alineamiento y cuantificación", "Análisis", [
         "<titulo!>Contra el genoma</> (con splicing): STAR o HISAT2 → BAM → cuentas por gen "
         "con featureCounts/HTSeq. Permite QC de cobertura y descubrir uniones.",
         "  STAR --runThreadN 8 --genomeDir idx --readFilesIn R1 R2 \\",
@@ -761,7 +761,7 @@ MANUAL = {
         "Esperado en humano: 70-90 % de lecturas alineadas al genoma.",
         f"<tenue>Fuente: {cita('DOB13', 'KIM19', 'LIA14', 'PAT17', 'BRA16', 'SON15', 'CON16')}</>",
     ]),
-    "qc_post": ("22 · Control de calidad después de alinear", "Análisis", [
+    "qc_post": ("32 · Control de calidad después de alinear", "Análisis", [
         "RSeQC, Qualimap, Picard CollectRnaSeqMetrics. Qué mirar:",
         "  • % alineado (70-90 % en humano), % multimapeo.",
         "  • Distribución: exones / intrones / intergénico (poli(A): mayoría exónica; "
@@ -775,7 +775,7 @@ MANUAL = {
         "isogénicas, > 0.8 entre donantes), PCA, agrupamiento jerárquico.",
         f"<tenue>Fuente: {cita('WAN12', 'OKO16', 'CON16', 'ENC')}</>",
     ]),
-    "normalizacion": ("23 · Normalización", "Análisis", [
+    "normalizacion": ("33 · Normalización", "Análisis", [
         "Las cuentas dependen de la profundidad, de la composición de cada "
         "biblioteca y de la longitud del gen.",
         "",
@@ -794,7 +794,7 @@ MANUAL = {
         "log-CPM.",
         f"<tenue>Fuente: {cita('CON16', 'LOV14', 'TMM', 'LOV12')}</>",
     ]),
-    "exploracion": ("24 · Exploración: PCA y agrupamiento", "Análisis", [
+    "exploracion": ("34 · Exploración: PCA y agrupamiento", "Análisis", [
         "Antes de cualquier prueba:",
         "  vsd <- vst(dds, blind = TRUE)",
         "  plotPCA(vsd, intgroup = c(\"condicion\", \"lote\"))",
@@ -810,7 +810,7 @@ MANUAL = {
         "el número de su lote.",
         f"<tenue>Fuente: {cita('DESV', 'CON16')}</>",
     ]),
-    "pruebas": ("25 · Expresión diferencial", "Análisis", [
+    "pruebas": ("35 · Expresión diferencial", "Análisis", [
         "Las cuentas son <titulo>binomiales negativas</>: varianza = μ + α·μ². Con 3-6 "
         "réplicas la α de cada gen se estima mal, así que DESeq2, edgeR y limma "
         "comparten información entre genes (shrinkage / bayes empírico).",
@@ -829,7 +829,7 @@ MANUAL = {
         "  res <- lfcShrink(dds, coef = \"condicion_trat_vs_ctrl\", type = \"apeglm\")",
         f"<tenue>Fuente: {cita('LOV14', 'ROB10', 'LAW14', 'SCH16', 'ZHU19')}</>",
     ]),
-    "bh": ("26 · Pruebas múltiples y FDR", "Análisis", [
+    "bh": ("36 · Pruebas múltiples y FDR", "Análisis", [
         "Con 20 000 genes y p < 0.05, ~1 000 salen «significativos» aunque nada "
         "cambie.",
         "",
@@ -847,7 +847,7 @@ MANUAL = {
         "filtrar después.",
         f"<tenue>Fuente: {cita('BH95', 'BOU10', 'DESV')}</>",
     ]),
-    "visualizacion": ("27 · Gráficas de resultados", "Análisis", [
+    "visualizacion": ("37 · Gráficas de resultados", "Análisis", [
         "  • <titulo>MA</> (log2FC vs media de cuentas): los genes con pocas cuentas "
         "tienen fold changes enormes y ruidosos; con apeglm se encogen.",
         "  • <titulo>Volcán</> (log2FC vs −log10 p): a la vez tamaño y certeza.",
@@ -858,7 +858,7 @@ MANUAL = {
         "tabla completa como material suplementario.",
         f"<tenue>Fuente: {cita('DESV', 'ZHU19')}</>",
     ]),
-    "enriquecimiento": ("28 · Enriquecimiento funcional", "Análisis", [
+    "enriquecimiento": ("38 · Enriquecimiento funcional", "Análisis", [
         "<titulo!>ORA</> (sobre-representación): ¿la lista de genes DE tiene más genes de "
         "una vía de lo esperado? Prueba hipergeométrica. El universo debe ser los "
         "genes PROBADOS, no el genoma. Sesgo: los genes largos se detectan más → "
@@ -872,7 +872,7 @@ MANUAL = {
         "factores de transcripción (DoRothEA/decoupleR).",
         f"<tenue>Fuente: {cita('SUB05', 'YOU10', 'LAN08', 'NEW19')}</>",
     ]),
-    "splicing": ("29 · Isoformas y splicing", "Análisis", [
+    "splicing": ("39 · Isoformas y splicing", "Análisis", [
         "Tres niveles:",
         "  • Expresión diferencial de transcritos (DTE): Salmon + DESeq2/edgeR por "
         "transcrito (o swish de fishpond).",
@@ -886,7 +886,7 @@ MANUAL = {
         "genoma. Validación: RT-PCR con primers en exones flanqueantes.",
         f"<tenue>Fuente: {cita('SHE14', 'AND12', 'CON16')}</>",
     ]),
-    "novo": ("30 · Transcriptoma de novo", "Análisis", [
+    "novo": ("40 · Transcriptoma de novo", "Análisis", [
         "Sin genoma de referencia:",
         "  1. Lecturas pareadas, con hebra, de buena calidad; recorte de adaptadores.",
         "  2. Ensamblar con TODAS las muestras juntas (Trinity; normalización in "
@@ -900,7 +900,7 @@ MANUAL = {
         "de «gen» de Trinity → DESeq2/edgeR.",
         f"<tenue>Fuente: {cita('GRA11', 'CON16')}</>",
     ]),
-    "celula_unica": ("31 · Análisis de célula única", "Análisis", [
+    "celula_unica": ("41 · Análisis de célula única", "Análisis", [
         "  1. Cuentas: Cell Ranger / STARsolo / alevin-fry (UMIs por célula).",
         "  2. QC por célula: nº de UMIs, nº de genes, % mitocondrial; dobletes "
         "(scDblFinder); ARN ambiental (SoupX, CellBender).",
@@ -916,16 +916,16 @@ MANUAL = {
         "de células como réplicas → miles de falsos positivos (Squair 2021).",
         f"<tenue>Fuente: {cita('LUE19', 'SQU21', 'CRO20', 'WOL18', 'HAO21')}</>",
     ]),
-    "validacion": ("32 · Validación", "Análisis", [
+    "validacion": ("42 · Validación", "Análisis", [
         "  • RT-qPCR de unos genes DE en muestras nuevas (réplicas biológicas "
         "independientes, no las mismas), siguiendo MIQE.",
         "  • Proteína (western, ELISA, inmunofluorescencia) si la conclusión es "
         "sobre proteína.",
         "  • Funcional: knockdown/sobreexpresión del gen candidato.",
         "  • Reanálisis en datos públicos (GEO, GTEx, TCGA).",
-        f"<tenue>Fuente: {cita('BUS09', 'general')}</>",
+        f"<tenue>Fuente: {cita('BUS09')}</>",
     ]),
-    "reproducible": ("33 · Reproducibilidad y depósito", "Análisis", [
+    "reproducible": ("43 · Reproducibilidad y depósito", "Análisis", [
         "  • Flujo de trabajo versionado: nf-core/rnaseq (Nextflow) o Snakemake, con "
         "contenedores (Docker/Singularity/conda).",
         "  • Registra versiones de software, genoma y anotación, y los parámetros.",
@@ -936,7 +936,7 @@ MANUAL = {
         "  • Datos humanos: consentimiento y acceso controlado (dbGaP/EGA) si aplica.",
         f"<tenue>Fuente: {cita('EWE20', 'FGED')}</>",
     ]),
-    "metodos": ("0 · Mapa de métodos de transcriptómica", "Diseño", [
+    "metodos": ("10 · Mapa de métodos de transcriptómica", "Diseño", [
         "La sección «Catálogo de métodos» de este manual tiene una ficha para cada "
         "tecnología:",
         "",
