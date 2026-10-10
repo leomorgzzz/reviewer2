@@ -103,7 +103,7 @@ T = {
     "c44fefc20f": "RIN {0} (< 7)",
     "0b5e0be372": "(own hypothesis)",
     # laboratorio.py
-    "79207e659c": "Talk to the researcher (☺ ) and Dr. Lazo (☻ ) in the office.",
+    "a1e1513773": "Talk to the researcher (♙ ) and Dr. Lazo (☻ ) in the office.",
     "703dead775": "STAGES",
     "22b2ad7f94": "E/Enter: {0}",
     "cb6634cc22": "Day {0}",
@@ -124,7 +124,7 @@ T = {
     "20f0ad6b01": "  6. <titulo>Sequencer</>: platform, read, depth. Wait.",
     "ed65cbd14d": "  7. <titulo>Computer</> (bioinformatics): analysis, results, decide.",
     "81de6af765": "  8. <titulo>Mailbox</>: send to Reviewer 2.",
-    "af6ae3a037": "<titulo!>Investigate</>: the researcher (☺ ), Dr. Lazo (☻ ), the technician, the calendar and the freezer have information that is not in the request.",
+    "05da7f3b57": "<titulo!>Investigate</>: the researcher (♙ ), Dr. Lazo (☻ ), the technician, the calendar and the freezer have information that is not in the request.",
     "a68bd97947": "You can go back to any stage from the computer (it costs days and money), or rewrite the design on the sheet. N opens the notebook, where the protocol can also be exported.",
     # manual.py
     "c0ff1fa6b2": "Catalog of transcriptomics methods",

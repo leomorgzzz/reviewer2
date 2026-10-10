@@ -44,33 +44,54 @@ def _pantalla_completa():
         return
     import ctypes
     import msvcrt
-    user32 = ctypes.windll.user32
+    kernel32, user32 = ctypes.windll.kernel32, ctypes.windll.user32
+    try:
+        user32.SetProcessDPIAware()             # tamaños en píxeles reales
+    except AttributeError:
+        pass
     clase = ctypes.create_unicode_buffer(64)
-    for _ in range(20):                     # la ventana tarda un poco en aparecer
-        user32.GetClassNameW(user32.GetForegroundWindow(), clase, 64)
-        if clase.value in ("ConsoleWindowClass", "CASCADIA_HOSTING_WINDOW_CLASS"):
-            break
-        time.sleep(0.05)
+    consola = kernel32.GetConsoleWindow()
+    user32.GetClassNameW(consola, clase, 64)
+    if consola and clase.value == "ConsoleWindowClass":
+        # consola clásica (el acceso directo del instalador): se maximiza
+        # (siempre funciona) y luego pantalla completa; la fuente se ajusta
+        # al tamaño que quedó
+        user32.ShowWindow(consola, 3)           # SW_MAXIMIZE
+        user32.SetForegroundWindow(consola)
+        time.sleep(0.2)
+        nada = ctypes.c_uint32()
+        if not kernel32.SetConsoleDisplayMode(kernel32.GetStdHandle(-11), 1, ctypes.byref(nada)):
+            _alt_enter(user32)
+        time.sleep(0.5)
+        _ajustar_fuente()
     else:
-        return
-    if clase.value == "ConsoleWindowClass":
-        _fuente_chica()
+        for _ in range(20):                 # Windows Terminal tarda un poco en aparecer
+            user32.GetClassNameW(user32.GetForegroundWindow(), clase, 64)
+            if clase.value == "CASCADIA_HOSTING_WINDOW_CLASS":
+                break
+            time.sleep(0.05)
+        else:
+            return
+        _alt_enter(user32)
+        time.sleep(0.6)
+    while msvcrt.kbhit():                   # por si la terminal dejó pasar el Enter
+        msvcrt.getwch()
+
+
+def _alt_enter(user32):
     alt, enter, soltar = 0x12, 0x0D, 0x0002
     user32.keybd_event(alt, 0, 0, 0)
     user32.keybd_event(enter, 0, 0, 0)
     user32.keybd_event(enter, 0, soltar, 0)
     user32.keybd_event(alt, 0, soltar, 0)
-    time.sleep(0.6)
-    while msvcrt.kbhit():                   # por si la terminal dejó pasar el Enter
-        msvcrt.getwch()
 
 
-
-def _fuente_chica():
-    """En la consola clásica de Windows (conhost) achica la fuente para que en
-    pantalla completa quepan unas 190×50 celdas: el mapa entero y el panel.
-    Con la escala de pantalla al 125-150 % la fuente de siempre deja muy pocas."""
+def _ajustar_fuente():
+    """En la consola clásica de Windows cambia el tamaño de la fuente hasta que
+    la ventana mida unas 190-215 columnas: cabe el mapa entero con el panel y
+    el texto no queda ni enorme ni diminuto, sea cual sea la pantalla."""
     import ctypes
+    import time
     from ctypes import wintypes
 
     class COORD(ctypes.Structure):
@@ -81,24 +102,32 @@ def _fuente_chica():
                     ("dwFontSize", COORD), ("FontFamily", ctypes.c_uint),
                     ("FontWeight", ctypes.c_uint), ("FaceName", ctypes.c_wchar * 32)]
 
-    kernel32, user32 = ctypes.windll.kernel32, ctypes.windll.user32
-    try:
-        user32.SetProcessDPIAware()             # tamaños en píxeles reales
-    except AttributeError:
-        pass
+    class BUFER(ctypes.Structure):
+        _fields_ = [("dwSize", COORD), ("dwCursorPosition", COORD),
+                    ("wAttributes", wintypes.WORD), ("srWindow", wintypes.SMALL_RECT),
+                    ("dwMaximumWindowSize", COORD)]
+
+    kernel32 = ctypes.windll.kernel32
     salida = kernel32.GetStdHandle(-11)
-    f = FUENTE()
+    f, b = FUENTE(), BUFER()
     f.cbSize = ctypes.sizeof(FUENTE)
     if not kernel32.GetCurrentConsoleFontEx(salida, False, ctypes.byref(f)):
         return
-    ancho, alto = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
-    tam = max(12, min(ancho // 105, alto // 50))  # Consolas: ancho ≈ 0.55 × alto
-    if f.dwFontSize.Y and f.dwFontSize.Y <= tam:
-        return
-    f.nFont, f.dwFontSize, f.FontFamily, f.FontWeight = 0, COORD(0, tam), 54, 400
-    f.FaceName = "Consolas"
-    kernel32.SetCurrentConsoleFontEx(salida, False, ctypes.byref(f))
-
+    tam = f.dwFontSize.Y or 16
+    for _ in range(16):
+        if not kernel32.GetConsoleScreenBufferInfo(salida, ctypes.byref(b)):
+            return
+        columnas = b.srWindow.Right - b.srWindow.Left + 1
+        if columnas > 215:
+            tam += 1
+        elif columnas < 190 and tam > 10:
+            tam -= 1
+        else:
+            return
+        f.nFont, f.dwFontSize, f.FontFamily, f.FontWeight = 0, COORD(0, tam), 54, 400
+        f.FaceName = "Consolas"
+        kernel32.SetCurrentConsoleFontEx(salida, False, ctypes.byref(f))
+        time.sleep(0.08)
 
 def _con_aviso_de_error(funcion):
     """En el ejecutable, un error no cierra la ventana sin decir nada: se

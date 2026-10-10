@@ -80,7 +80,7 @@ class Lab:
                 ((x, y) for y in range(L.ALTO) for x in range(L.ANCHO) if self.plano[y][x] == "."),
                 key=lambda p: abs(p[0] - px) + abs(p[1] - py)))
         self.terminar = False
-        self.mensaje = "Habla con el investigador (☺ ) y con la Dra. Lazo (☻ ) en la oficina."
+        self.mensaje = "Habla con el investigador (♙ ) y con la Dra. Lazo (☻ ) en la oficina."
 
     @property
     def tope(self):
@@ -125,7 +125,7 @@ class Lab:
         vista_h = alto - (3 if panel_w else 6)
         px, py = self.exp["pos"]
         ox = max(0, min(px - vista_w // 2, L.ANCHO - vista_w)) if vista_w < L.ANCHO else -(vista_w - L.ANCHO) // 2
-        oy = max(0, min(py - vista_h // 2, L.ALTO - vista_h)) if vista_h < L.ALTO else 0
+        oy = max(0, min(py - vista_h // 2, L.ALTO - vista_h)) if vista_h < L.ALTO else -(vista_h - L.ALTO) // 2
         siguiente = L.ETAPAS[min(self.exp["etapa"], 7)][1]
         for sy in range(vista_h):
             y = oy + sy
@@ -265,7 +265,7 @@ class Lab:
             "  7. <titulo>Computadora</> (bioinformática): análisis, resultados, decidir.",
             "  8. <titulo>Buzón</>: mandar al Revisor 2.",
             "",
-            "<titulo!>Investigar</>: el investigador (☺ ), la Dra. Lazo (☻ ), el técnico, el "
+            "<titulo!>Investigar</>: el investigador (♙ ), la Dra. Lazo (☻ ), el técnico, el "
             "calendario y el congelador tienen información que no viene en el encargo.",
             "",
             "Puedes regresar a cualquier etapa desde la computadora (cuesta días y dinero), "

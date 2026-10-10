@@ -31,11 +31,11 @@ PUERTAS = [(x, 15) for x in (17, 18, 56, 57, 95, 96, 131, 132)] + \
 ESTACIONES = {
     "papel":        (6, 4, "▤", "titulo", "papel de diseño", 0),
     "librero":      (6, 8, "▥", "agua", "librero", None),
-    "investigador": (20, 10, "☺", "g2", "investigador", None),
+    "investigador": (20, 10, "♙", "g2", "investigador", None),
     "replica":      (6, 12, "☻", "bien", "Dra. Lazo", None),
     "unidades":     (42, 4, "▦", "g4", "unidades", 1),
     "calendario":   (62, 4, "▣", "titulo", "calendario", None),
-    "tecnico":      (38, 13, "☺", "g0", "técnico", None),
+    "tecnico":      (38, 13, "♙", "g0", "técnico", None),
     "nanodrop":     (83, 4, "◫", "agua", "NanoDrop", 3),
     "gel":          (99, 4, "▤", "agua", "gel", 3),
     "bioanalizador": (83, 10, "◩", "agua", "Bioanalyzer", 3),
@@ -60,7 +60,7 @@ def _fila(x, y, texto, color):
 _COMUN = (
     # oficina: escritorio, sillas, plantas
     _fila(12, 2, "▄▄▄▄▄▄▄▄▄▄", "oscuro") + _fila(14, 3, "╨  ╨", "tenue")
-    + [(1, 1, "♣", "bien"), (34, 1, "♣", "bien"), (34, 13, "♣", "bien")]
+    + [(1, 1, "♧", "bien"), (34, 1, "♧", "bien"), (34, 13, "♧", "bien")]
     + _fila(26, 13, "▄▄▄", "tenue")
     # cuarto de QC: mesadas
     + _fila(81, 6, "════════════════════════════", "tenue")
@@ -72,7 +72,7 @@ _COMUN = (
     + _fila(119, 12, "· servidor de datos ·", "tenue")
     # buzón: sillas y mesita
     + _fila(4, 36, "▄▄▄▄▄▄", "oscuro") + _fila(4, 37, "╨    ╨", "tenue")
-    + [(27, 23, "♣", "bien"), (2, 43, "♣", "bien")]
+    + [(27, 23, "♧", "bien"), (2, 43, "♧", "bien")]
     # laboratorio húmedo: mesadas, tarja, centrífuga, termociclador
     + _fila(34, 30, "══════════════════════════════════════════════════════", "tenue")
     + _fila(34, 34, "══════════════════════════════════════════════════════", "tenue")
@@ -93,16 +93,16 @@ _LUGAR = {
                + _fila(44, 8, "▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀", "g4") + _fila(44, 9, "campana de cultivo", "tenue"),
     "clinica": _fila(66, 8, "▌▌▌▌▌▌", "agua") + _fila(66, 9, "racks −80", "tenue")
                + _fila(50, 11, "▄▄▄▄▄▄", "oscuro"),
-    "invernadero": _fila(46, 7, "♣ ♣ ♣ ♣ ♣ ♣", "bien") + _fila(46, 8, "▒▒▒▒▒▒▒▒▒▒▒", "oscuro")
-                   + _fila(62, 7, "♣ ♣ ♣ ♣ ♣ ♣", "bien") + _fila(62, 8, "▒▒▒▒▒▒▒▒▒▒▒", "oscuro")
-                   + _fila(46, 11, "♣ ♣ ♣ ♣ ♣ ♣", "bien") + _fila(46, 12, "▒▒▒▒▒▒▒▒▒▒▒", "oscuro")
-                   + _fila(62, 11, "♣ ♣ ♣ ♣ ♣ ♣", "bien") + _fila(62, 12, "▒▒▒▒▒▒▒▒▒▒▒", "oscuro"),
+    "invernadero": _fila(46, 7, "♧ ♧ ♧ ♧ ♧ ♧", "bien") + _fila(46, 8, "▒▒▒▒▒▒▒▒▒▒▒", "oscuro")
+                   + _fila(62, 7, "♧ ♧ ♧ ♧ ♧ ♧", "bien") + _fila(62, 8, "▒▒▒▒▒▒▒▒▒▒▒", "oscuro")
+                   + _fila(46, 11, "♧ ♧ ♧ ♧ ♧ ♧", "bien") + _fila(46, 12, "▒▒▒▒▒▒▒▒▒▒▒", "oscuro")
+                   + _fila(62, 11, "♧ ♧ ♧ ♧ ♧ ♧", "bien") + _fila(62, 12, "▒▒▒▒▒▒▒▒▒▒▒", "oscuro"),
 }
 
 
 def _seguro(ch):
     """Caracteres que toda terminal dibuja en una celda: ASCII, cajas y bloques.
-    Los demás (☺ ◎ ♣ ▣…) a veces salen de una fuente de emoji más ancha
+    Los demás (♙ ◎ ♧ ▣…) a veces salen de una fuente de emoji más ancha
     y tapan la celda de la derecha."""
     return ord(ch) < 0x2500 or 0x2500 <= ord(ch) <= 0x259F or ch in "·−°"
 

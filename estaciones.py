@@ -546,7 +546,7 @@ def _animar_asignacion(lab, modo):
     rng = random.Random()
     if modo == "azar":
         rng.shuffle(grupos)
-    icono = {"bioterio": "ʘ", "cultivo": "◍", "clinica": "☺", "invernadero": "♣"}[
+    icono = {"bioterio": "ʘ", "cultivo": "◍", "clinica": "♙", "invernadero": "♧"}[
         X.info(caso)["lugar"]]
     cuadros = []
     por_fila = min(12, n)
