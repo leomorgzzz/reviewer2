@@ -1,0 +1,53 @@
+# Compila el juego para Windows y macOS (con Python incluido) y lo publica
+# en Releases. Se activa al subir una etiqueta: git tag v1.0 && git push --tags
+name: Ejecutables
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  compilar:
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            archivo: Revisor2-Windows.exe
+          - os: macos-latest
+            archivo: Revisor2-macOS.zip
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyinstaller
+      - if: runner.os == 'Windows'
+        run: pip install windows-curses
+      - run: pyinstaller --onefile --name Revisor2 --add-data=traduccion:traduccion revisor2.py
+      - if: runner.os == 'Windows'
+        shell: bash
+        run: mv dist/Revisor2.exe "${{ matrix.archivo }}"
+      - if: runner.os == 'macOS'
+        run: cd dist && zip "../${{ matrix.archivo }}" Revisor2
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.archivo }}
+          path: ${{ matrix.archivo }}
+
+  publicar:
+    needs: compilar
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" Revisor2-Windows.exe Revisor2-macOS.zip \
+            --repo "$GITHUB_REPOSITORY" --title "Revisor2 $GITHUB_REF_NAME" \
+            --notes "Descarga el archivo de tu sistema y ábrelo con doble clic."
