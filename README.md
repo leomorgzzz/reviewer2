@@ -92,3 +92,15 @@ Archivos que crea:
 Cada dato lleva su cita en `datos.FUENTES`: Conesa 2016, Schurch 2016, Liu
 2014, Love 2014, Auer & Doerge 2010, Leek 2010, Lovén 2012, Squair 2021, entre
 otras.
+
+## Pruebas
+
+```bash
+python3 pruebas/correr.py
+```
+
+Revisan que todo importe en los dos idiomas, que cada texto tenga traducción
+(`python3 traduccion/extraer.py --faltan` lista lo que falta), que solo haya
+símbolos que la consola de Windows sabe dibujar, que toda cita exista y que el
+código del protocolo exportado sea el mismo en inglés. Corren solas en GitHub
+en cada push y antes de compilar una versión.
