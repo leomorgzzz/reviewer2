@@ -15,7 +15,11 @@ T = {
     "b658ec24d6": "  miRNA                          →  <agua>small RNA-seq</>",
     "872b72da17": "  • 3′ tag-seq: 3-10 M · small RNA: 2-10 M",
     "de3634ef7b": "**no**.",
+    # referencia a la guía de Illumina
+    "6ee8c5351f": "Illumina — Denature and Dilute Libraries Guide for each sequencer (manufacturer documentation)",
+    "df2d784edb": "Illumina dilution guide",
 }
+
 L = {
     # palabras sueltas en minúsculas (extraer.py las toma por claves y no las lista)
     "jaulas": "cages", "incubadora": "incubator", "genoma": "genome",

@@ -56,7 +56,7 @@ def revisar(dis, caso, res, dif="normal", exp=None):
     costo = datos.costo_total(dis, caso)
     if not exp and costo > presupuesto(caso, dif):
         c.append(_c("fatal", f"El experimento cuesta ${costo:,} y el presupuesto es de "
-                    f"${presupuesto(caso, dif):,}: la agencia no lo financia.", "general"))
+                    f"${presupuesto(caso, dif):,}: la agencia no lo financia.", ""))
     obj = caso["objetivo"]
     lib = dis["biblioteca"]
     b = datos.BIBLIOTECAS[lib]
@@ -100,7 +100,7 @@ def revisar(dis, caso, res, dif="normal", exp=None):
     tiene_lote = formula in ("lote", "par_lote", "tiempo_lote")
     if sim.sobrecupo(dis, caso):
         c.append(_c("fatal", f"Algún lote tiene más de {caso['capacidad']} muestras: el "
-                    "laboratorio no puede procesarlas el mismo día.", "general"))
+                    "laboratorio no puede procesarlas el mismo día.", ""))
     if conf == "total":
         c.append(_c("fatal", "Cada lote contiene un solo grupo: el efecto del lote y el de "
                     "la condición son idénticos en los datos. Ningún análisis puede "
@@ -333,13 +333,13 @@ def revisar_lab(exp, caso, res):
             c.append(_c("menor", "Cambiaste la hipótesis después de ver los datos y lo "
                         "declaraste como análisis exploratorio: correcto, pero la nueva "
                         "hipótesis necesita un experimento confirmatorio independiente.",
-                        "general"))
+                        "NOS18"))
         else:
             c.append(_c("fatal", "HARKing: la hipótesis del manuscrito no es la que "
                         "registraste antes del experimento; la escribiste después de ver "
                         "los resultados y la presentas como si fuera la original. Con los "
                         "mismos datos que la generaron no se puede ponerla a prueba.",
-                        "general"))
+                        "KER98"))
     elif exp.get("hipotesis") not in (None, 0) and not caso.get("libre"):
         h = info["hipotesis"][exp["hipotesis"]]
         c.append(_c("menor", f"La hipótesis «{h}» es vaga, no se puede refutar o no es "
@@ -437,7 +437,7 @@ def revisar_lab(exp, caso, res):
     clo = exp.get("pasos", {}).get("cloroformo")
     if clo is not None and not 0.17 <= clo <= 0.23:
         c.append(_c("menor", f"Usaste {clo:.2f} mL de cloroformo por mL de TRIzol (lo indicado "
-                    "es 0.2): peor separación de fases o menos rendimiento.", "general"))
+                    "es 0.2): peor separación de fases o menos rendimiento.", "CHO93"))
     if mjs.get("nanodrop", 0) >= 2:
         c.append(_c("menor", "El procedimiento del NanoDrop tuvo varios errores (blanco, gota, "
                     "limpieza): las lecturas de pureza pierden confianza.", ""))
@@ -446,10 +446,10 @@ def revisar_lab(exp, caso, res):
                     "CON16"))
     if "perlas" in mjs and not 0.75 <= mjs["perlas"] <= 0.95:
         c.append(_c("menor", f"Limpieza con {mjs['perlas']:.2f}× perlas: fuera del rango que "
-                    "quita dímeros sin perder biblioteca (~0.8-0.9×).", "general"))
+                    "quita dímeros sin perder biblioteca (~0.8-0.9×).", "DEA95"))
     if "carga" in mjs and not 85 <= mjs["carga"] <= 115:
         c.append(_c("menor", f"La celda se cargó al {mjs['carga']} % de lo recomendado: "
-                    "perdiste lecturas.", "general"))
+                    "perdiste lecturas.", "ILLDD"))
     _area("análisis")
     s = mjs.get("hebra_s")
     if s is not None:
@@ -471,7 +471,7 @@ def revisar_lab(exp, caso, res):
             exp.get("corridas", 0) >= 3:
         c.append(_c("menor", f"Corriste {exp['corridas']} análisis distintos después de "
                     f"ver resultados (cambiaste: {', '.join(sorted(set(cambios)))}). "
-                    "Reporta todos y justifica el elegido, o es p-hacking.", "general"))
+                    "Reporta todos y justifica el elegido, o es p-hacking.", "SIM11"))
     return c
 
 

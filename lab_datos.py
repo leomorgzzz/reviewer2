@@ -159,7 +159,7 @@ EXTRACCIONES = {
                        "de los entrecruzamientos de formalina.", fuente="ILL14"),
     "ctab": dict(nombre="CTAB / kit para plantas", celulas=False, guarda_pequenos=True,
                  texto="El CTAB y el PVP separan polisacáridos y polifenoles, que en plantas "
-                       "co-precipitan con el ARN y bajan el A260/230.", fuente="general"),
+                       "co-precipitan con el ARN y bajan el A260/230.", fuente="CHA93"),
     "disociacion": dict(nombre="Disociación a célula única (enzimas en frío)", celulas=True,
                         guarda_pequenos=False,
                         texto="Suspensión de células vivas para célula única: rápida y en frío "
@@ -198,7 +198,7 @@ PLATAFORMAS = {
                      texto="Lecturas muy largas; cDNA o ARN directo (modificaciones)."),
 }
 ORDEN_PLATAFORMAS = list(PLATAFORMAS)
-FUENTE_PLATAFORMAS = cita("STA19", "general")
+FUENTE_PLATAFORMAS = cita("STA19", "GOO16")
 
 # ---------------------------------------------------- unidades experimentales
 UNIDADES = {

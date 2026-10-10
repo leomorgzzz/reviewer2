@@ -102,7 +102,7 @@ PREGUNTAS = {
                      ["El H+ liberado (cambio de pH)", "Fluorescencia", "Corriente en un nanoporo",
                       "Luz de luciferasa"],
                      "Su error típico está en homopolímeros. (454 usaba luz: pirosecuenciación.)",
-                     "general"),
+                     "ROT11"),
     # ------------------------------------------------------------ diseño
     "rep_bio": ("Diseño", "¿Cuál de estas es una réplica BIOLÓGICA?",
                 ["Otro ratón tratado de forma independiente",
@@ -273,7 +273,7 @@ PREGUNTAS = {
              ["Son de baja diversidad: todas las lecturas empiezan igual",
               "Para normalizar", "Para quitar adaptadores", "Porque son más largas"],
              "Con baja diversidad el secuenciador calibra mal los colores en los primeros "
-             "ciclos.", "general"),
+             "ciclos.", "KRU11"),
     "hexameros": ("Laboratorio", "Las primeras ~10 bases de las lecturas de RNA-seq oscilan "
                   "en composición en FastQC porque…",
                   ["El cebado con hexámeros al azar no es al azar",

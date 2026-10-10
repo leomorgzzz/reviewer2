@@ -91,7 +91,16 @@ FUENTES = {
     "WES12": "Westermann, Gorski & Vogel 2012 — Dual RNA-seq of pathogen and host. Nat Rev Microbiol 10:618",
     "SHA96": "Shalon, Smith & Brown 1996 — A DNA microarray system for analyzing complex DNA samples. Genome Res 6:639",
     "LUN03": "Lundholt, Scudder & Pagliaro 2003 — A simple technique for reducing edge effect in cell-based assays. J Biomol Screen 8:566",
-    "general": "Conocimiento general de biología molecular o de la documentación de la herramienta (verificar)",
+    "KER98": "Kerr 1998 — HARKing: Hypothesizing After the Results are Known. Pers Soc Psychol Rev 2:196",
+    "NOS18": "Nosek et al. 2018 — The preregistration revolution. PNAS 115:2600",
+    "SIM11": "Simmons, Nelson & Simonsohn 2011 — False-positive psychology: undisclosed flexibility in data collection and analysis. Psychol Sci 22:1359",
+    "CHO93": "Chomczynski 1993 — A reagent for the single-step simultaneous isolation of RNA, DNA and proteins (TRIzol). BioTechniques 15:532",
+    "DEA95": "DeAngelis, Wang & Hawkins 1995 — Solid-phase reversible immobilization for the isolation of PCR products (SPRI). Nucleic Acids Res 23:4742",
+    "ILLDD": "Illumina — Guía «Denature and Dilute Libraries» de cada secuenciador (documentación del fabricante)",
+    "CHA93": "Chang, Puryear & Cairney 1993 — A simple and efficient method for isolating RNA from pine trees (CTAB). Plant Mol Biol Rep 11:113",
+    "KRU11": "Krueger, Andrews & Osborne 2011 — Large scale loss of data in low-diversity Illumina sequencing libraries can be recovered by deferred cluster calling. PLoS One 6:e16607",
+    "ROT11": "Rothberg et al. 2011 — An integrated semiconductor device enabling non-optical genome sequencing (Ion Torrent). Nature 475:348",
+    "GOO16": "Goodwin, McPherson & McCombie 2016 — Coming of age: ten years of next-generation sequencing technologies. Nat Rev Genet 17:333",
 }
 
 _CORTOS = {
@@ -118,7 +127,10 @@ _CORTOS = {
     "VEL95": "Velculescu 1995", "SHI03": "Shiraki 2003", "GEI08": "Geiss 2008", "ULE03": "Ule 2003",
     "ALP19": "Alpern 2019", "MOL14": "Moll 2014", "WES12": "Westermann 2012",
     "SHA96": "Shalon 1996", "LUN03": "Lundholt 2003",
-    "general": "general (verificar)",
+    "KER98": "Kerr 1998", "NOS18": "Nosek 2018", "SIM11": "Simmons 2011",
+    "CHO93": "Chomczynski 1993", "DEA95": "DeAngelis 1995", "ILLDD": "guía de dilución de Illumina",
+    "CHA93": "Chang 1993", "KRU11": "Krueger 2011", "ROT11": "Rothberg 2011",
+    "GOO16": "Goodwin 2016",
 }
 
 
