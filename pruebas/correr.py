@@ -10,7 +10,9 @@ Revisa lo que se rompió alguna vez y no se ve sin jugar:
   4. toda cita apunta a una referencia que existe;
   5. el Revisor 2 y el protocolo funcionan en todos los casos;
   6. el código R exportado en inglés es el mismo que en español (si se
-     traduce, deja de coincidir con el CSV de muestras y no corre).
+     traduce, deja de coincidir con el CSV de muestras y no corre);
+  7. ningún caso se resuelve eligiendo al azar en el papel de diseño y
+     aceptando lo demás como venga.
 Sale con código 1 si algo falla.
 """
 
@@ -102,7 +104,7 @@ protocolo.CARPETA = carpeta
 for caso in casos.CASOS:
     for dif in revisor.DIFICULTADES:
         for formula in datos.FORMULAS:
-            dis = dict(X.nuevo(caso)["dis"], formula=formula)
+            dis = dict(datos.provisional(X.nuevo(caso)["dis"]), formula=formula)
             try:
                 res = sim.simular(dis, caso, random.Random(1))
                 comentarios = revisor.revisar(dis, caso, res, dif)
@@ -124,6 +126,7 @@ revisar("los comentarios del Revisor citan fuentes que existen", not comentarios
 import calificacion  # noqa: E402
 caso = casos.CASOS[0]
 exp = dict(X.nuevo(caso), extraccion="trizol")
+exp["dis"] = datos.provisional(exp["dis"])
 res = sim.simular(exp["dis"], caso, random.Random(1))
 meta = revisor.meta(caso, "normal")
 nota_limpia = calificacion.calificar(exp, caso, res, revisor.revisar(exp["dis"], caso, res,
@@ -152,7 +155,7 @@ def bloques_de_codigo(ruta):
 
 distintos = []
 for caso in casos.CASOS:
-    dis = X.nuevo(caso)["dis"]
+    dis = datos.provisional(X.nuevo(caso)["dis"])
     rutas = {}
     for idioma_ in ("es", "en"):
         idioma.ACTUAL = idioma_
@@ -162,6 +165,37 @@ for caso in casos.CASOS:
         distintos.append(caso["id"])
 revisar("el código del protocolo en inglés es igual al de español", not distintos,
         ", ".join(distintos))
+
+# ------------------------------------------------ 7. Enter a todo no gana
+# Las opciones salen barajadas, así que «primera opción + Enter» es elegir al
+# azar. Biblioteca, profundidad y ruta no tienen valor de inicio: si el
+# jugador toma cualquiera, tampoco debe bastar con dejar lo demás como viene.
+idioma.ACTUAL = "es"
+idioma._cargar()
+sin_elegir = [c["id"] for c in casos.CASOS
+              if any(X.nuevo(c)["dis"][k] is not None for k in datos.PROVISIONAL)]
+revisar("biblioteca, profundidad y ruta empiezan sin elegir", not sin_elegir,
+        ", ".join(sin_elegir))
+ganados = []
+for caso in casos.CASOS:
+    inf = X.info(caso)
+    r = random.Random(caso["id"])
+    res = None
+    for _ in range(12):
+        exp = X.nuevo(caso)
+        exp.update(hipotesis=r.randrange(len(inf["hipotesis"])), unidad=r.randrange(3),
+                   extraccion=r.choice(sorted(inf["extraccion"])))
+        exp["dis"].update(biblioteca=r.choice(datos.ORDEN_BIBLIOTECAS),
+                          profundidad=r.choice(datos.PROFUNDIDADES),
+                          ruta=r.choice(datos.ORDEN_RUTAS))
+        res = sim.simular(exp["dis"], caso, random.Random(1))
+        com = revisor.revisar(exp["dis"], caso, res, "normal", exp)
+        if calificacion.calificar(exp, caso, res, com, revisor.meta(caso, "normal"))["resuelto"]:
+            ganados.append(f"{caso['id']}: hipótesis {exp['hipotesis']}, "
+                           f"{exp['dis']['biblioteca']}, {exp['dis']['profundidad']} M, "
+                           f"{exp['dis']['ruta']}")
+revisar("elegir al azar y aceptar lo demás no resuelve ningún caso", not ganados,
+        "\n".join(ganados[:10]))
 
 print()
 print(f"{len(fallas)} prueba(s) fallaron." if fallas else "Todo bien.")

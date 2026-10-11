@@ -348,7 +348,8 @@ def revisar_lab(exp, caso, res):
                         "prueba: no predice qué genes cambian. Sin una hipótesis medible el "
                         "experimento no responde nada.", ""))
         else:
-            c.append(_c("menor", f"La hipótesis «{h}» es vaga o no se puede refutar. Una "
+            # mayor y no menor: con una hipótesis vaga cualquier resultado la «confirma»
+            c.append(_c("mayor", f"La hipótesis «{h}» es vaga o no se puede refutar. Una "
                         "buena hipótesis dice qué genes o vías esperas que cambien y en qué "
                         "dirección.", ""))
     # unidad experimental

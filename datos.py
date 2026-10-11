@@ -425,6 +425,19 @@ FACTOR_PLATAFORMA = {"miseq": 8.0, "nextseq": 1.6, "novaseq": 1.0, "iontorrent":
                      "pacbio": 1.5, "nanopore": 1.0}
 
 
+# Biblioteca, profundidad y ruta empiezan sin elegir (None): si tuvieran un
+# valor de inicio, aceptar todo con Enter ya sería un buen diseño. Mientras
+# tanto, los presupuestos y el protocolo usan estos valores provisionales.
+PROVISIONAL = dict(biblioteca="polyA", profundidad=20, ruta="star")
+
+
+def provisional(dis):
+    """El diseño con lo que falta elegir rellenado (solo para estimar)."""
+    if all(dis.get(k) is not None for k in PROVISIONAL):
+        return dis
+    return dict(dis, **{k: v for k, v in PROVISIONAL.items() if dis.get(k) is None})
+
+
 def costo_secuenciacion(dis):
     """USD por muestra en secuenciación."""
     f = FACTOR_PLATAFORMA.get(dis.get("plataforma"), 1.0)

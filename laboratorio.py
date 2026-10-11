@@ -118,7 +118,7 @@ class Lab:
         """Simula con la misma semilla mientras no se repita el laboratorio:
         volver a correr el análisis no cambia los datos."""
         semilla = self.exp.get("semilla", 1) * 7 + self.exp.get("semilla_sec", 0)
-        return sim.simular(self.exp["dis"], self.caso, random.Random(semilla))
+        return sim.simular(datos.provisional(self.exp["dis"]), self.caso, random.Random(semilla))
 
     # --------------------------------------------------------------- dibujo
     def estacion_cerca(self):

@@ -16,8 +16,8 @@ DIAS = {0: 1, 1: 2, 2: 1, 3: 1, 4: 2, 5: 0, 6: 1, 7: 0}
 
 
 def nuevo(caso):
-    dis = dict(biblioteca="polyA", lectura="PE100", profundidad=20, replicas=3, tecnicas=1,
-               extras=[], ruta="star", entrada="crudas", prueba="deseq2", correccion="bh",
+    dis = dict(biblioteca=None, lectura="PE100", profundidad=None, replicas=3, tecnicas=1,
+               extras=[], ruta=None, entrada="crudas", prueba="deseq2", correccion="bh",
                formula="cond", lotes={}, excluidas=[], calidad={})
     dis["lotes"] = sim.lotes_por_orden(dis, caso)
     return dict(
@@ -211,7 +211,7 @@ def aplicar_qc(exp, caso):
 
 
 def costo_etapa(exp, caso, etapa):
-    dis = exp["dis"]
+    dis = datos.provisional(exp["dis"])
     n_bio = len(caso["grupos"]) * dis["replicas"]
     n_lib = datos.n_muestras(dis, caso)
     if etapa == 1:
@@ -249,7 +249,7 @@ def proyeccion(exp, caso):
 
 
 def corridas_necesarias(exp, caso):
-    dis = exp["dis"]
+    dis = datos.provisional(exp["dis"])
     pl = L.PLATAFORMAS.get(exp["plataforma"] or "novaseq")
     n_lib = datos.n_muestras(dis, caso) - len(dis.get("excluidas", ())) * dis["tecnicas"]
     total = n_lib * dis["profundidad"] * 1.1

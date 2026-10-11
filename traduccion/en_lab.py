@@ -219,4 +219,11 @@ T = {
     "1301939eff": "Leave the lab?",
     "e898e54568": "No, stay here",
     "36454e3683": "Yes, save and return to the menu",
+    # est_humedo.py y est_analisis.py: elecciones sin valor de inicio
+    "6410ef45a7": "First choose how many reads per sample you'll sequence.",
+    "f9dea7ba96": "First choose the quantification route.",
+    "1f2685ba9d": "Use ←→ to see each option.",
+    "d8a39af267": "First choose which kit you'll use.",
+    "802ee7e619": "<titulo!>Library kit</>",
+    "aa703d934c": "Use ←→ to browse each box: what it measures, what it costs and when it fits.",
 }

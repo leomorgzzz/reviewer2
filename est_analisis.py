@@ -60,7 +60,8 @@ def secuenciador(lab):
         dict(tipo="opcion", etiqueta="Lecturas por muestra",
              opciones=[(p, f"{p} M") for p in datos.PROFUNDIDADES],
              get=lambda: dis["profundidad"], set=lambda v: dis.__setitem__("profundidad", v),
-             costo=lambda: f"${datos.costo_secuenciacion(dis):,.0f} por muestra → "
+             costo=lambda: dis["profundidad"] and
+                           f"${datos.costo_secuenciacion(dis):,.0f} por muestra → "
                            f"${X.costo_etapa(exp, caso, 5):,} la corrida",
              ficha=lambda v: ["<titulo!>Profundidad</>", "3′ tag 3-10 M · small RNA 2-10 M · "
                               "genes 10-30 M · lncRNA 40-60 M · isoformas 50-100 M · célula "
@@ -86,6 +87,9 @@ def secuenciador(lab):
     while True:
         if Formulario(lab.win, "Secuenciador", filas, pie).jugar() != "correr":
             return
+        if dis["profundidad"] is None:
+            decir(lab, "Primero elige cuántas lecturas por muestra vas a secuenciar.", TECNICO)
+            continue
         if dis["lectura"] not in L.PLATAFORMAS[exp["plataforma"]]["lecturas"]:
             decir(lab, "Esa lectura no existe en esta plataforma.", TECNICO)
             continue
@@ -125,6 +129,8 @@ def computadora(lab):
 
     def ficha_tabla(tabla, extra_fuente=None):
         def f(v):
+            if v is None:
+                return ["Usa ←→ para ver cada opción."]
             x = tabla[v]
             out = [f"<titulo!>{x['nombre']}</>", x["texto"]]
             if "fuente" in x:
@@ -189,6 +195,9 @@ def computadora(lab):
         if accion != "correr":
             lab.guardar()
             return
+        if dis["ruta"] is None:
+            decir(lab, "Primero elige la ruta de cuantificación.")
+            continue
         if dis["ruta"] in ("star", "hisat") and \
                 exp["minijuegos"].get("hebra_para") != [dis["ruta"], "hebra" in dis["extras"]]:
             if not _terminal_hebra(lab):

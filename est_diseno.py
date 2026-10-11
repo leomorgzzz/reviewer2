@@ -93,7 +93,7 @@ def papel(lab):
                               "otra vez: solo ruido técnico, casi Poisson.",
                               f"<tenue>{datos.cita('MAR08')}</>"]),
         dict(tipo="info", etiqueta="Potencia aproximada",
-             texto=lambda: f"{sim.potencia_aprox(dict(dis, profundidad=20), caso):.0%} "
+             texto=lambda: f"{sim.potencia_aprox(dict(datos.provisional(dis), profundidad=20), caso):.0%} "
                            "(a 20 M lecturas)",
              color="agua"),
         dict(tipo="seccion", etiqueta="HOJA DE MUESTRAS: QUÉ VAS A ANOTAR"),

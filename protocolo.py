@@ -572,6 +572,7 @@ def generar(dis, caso, comentarios=None, resultado=None, dificultad="normal", ex
             autor=None):
     """Escribe el .md y el .csv; devuelve la ruta del .md."""
     exp = exp or {}
+    dis = datos.provisional(dis)
     os.makedirs(CARPETA, exist_ok=True)
     hoy = datetime.date.today().isoformat()
     base = f"{hoy}-{_slug(caso['titulo'] if not caso.get('libre') else caso['organismo'])}"

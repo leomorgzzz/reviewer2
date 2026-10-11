@@ -188,6 +188,9 @@ def kits(lab):
                            dis["extras"].remove(e) if not v and e in dis["extras"] else None))
 
     def ficha_kit(v):
+        if v is None:
+            return ["<titulo!>Kit de biblioteca</>", "Usa ←→ para ver cada caja: qué mide, "
+                    "cuánto cuesta y cuándo conviene."]
         b = datos.BIBLIOTECAS[v]
         return [f"<titulo!>{b['nombre']}</>  <tenue>${b['costo']} por muestra</>", b["resumen"],
                 "", f"<bien>Cuándo:</> {b['cuando']}", f"<mal>Ojo:</> {b['malo']}",
@@ -197,7 +200,8 @@ def kits(lab):
              dict(tipo="opcion", etiqueta="Caja del estante",
                   opciones=[(k, datos.BIBLIOTECAS[k]["nombre"]) for k in datos.ORDEN_BIBLIOTECAS],
                   get=lambda: dis["biblioteca"], set=lambda v: dis.__setitem__("biblioteca", v),
-                  costo=lambda: f"${datos.BIBLIOTECAS[dis['biblioteca']]['costo']} por muestra"
+                  costo=lambda: dis["biblioteca"] and
+                                f"${datos.BIBLIOTECAS[dis['biblioteca']]['costo']} por muestra"
                                 f" → ${X.costo_etapa(exp, caso, 4):,} esta etapa",
                   ficha=ficha_kit),
              dict(tipo="seccion", etiqueta="AGREGADOS")]
@@ -223,8 +227,12 @@ def kits(lab):
     pie = lambda: [f"Costo de esta etapa: <titulo>${X.costo_etapa(exp, caso, 4):,.0f}</> · "
                    f"gastado ${exp['gastado']:,} de ${lab.tope:,} · proyectado total "
                    f"${X.proyeccion(exp, caso):,}"]
-    if Formulario(lab.win, "Estante de kits de biblioteca", filas, pie).jugar() != "hacer":
-        return
+    while True:
+        if Formulario(lab.win, "Estante de kits de biblioteca", filas, pie).jugar() != "hacer":
+            return
+        if dis["biblioteca"] is not None:
+            break
+        decir(lab, "Primero elige qué kit vas a usar.", TECNICO)
     sc = dis["biblioteca"] in ("sc10x", "snrna", "smartseq")
     if sc != met["celulas"]:
         decir(lab, ("Para célula única necesitas células o núcleos vivos, no ARN extraído."
