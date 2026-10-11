@@ -65,4 +65,8 @@ T = {
     "92c8d60bd8": "Projected: ${0}",
     "74edfade39": "Extra funds: +${0}",
     "e3d6614a35": "↑↓ choose · Enter run · Esc exit",
+    "d667808f49": "  <mal>−{0}</> for errors that went past their area cap",
+    "00af225db0": "<mal!>Case not solved:</> Reviewer 2 asked for MAJOR REVISION. Fix what was marked MAJOR and resubmit.",
+    "c8a203fd00": "<mal!>Wrong again.</> That spot was: <titulo>{0}</>",
+    "0ca34b9758": "<mal!>No, that one does not go here.</> Think about what the sample needs first and choose again.",
 }

@@ -7,7 +7,10 @@ La calificación parte de 100 y descuenta:
   · resultados: sensibilidad por debajo de la meta y FDR alto;
   · eficiencia: fondos extra pedidos, regresos a etapas anteriores y gasto
     muy por encima del diseño ideal.
-Un caso queda resuelto con 60 o más y sin dictamen de RECHAZO.
+Lo que un área pierde de más (por debajo de 0) se resta del total: acumular
+errores en el laboratorio no sale gratis.
+Un caso queda resuelto con 60 o más y sin comentarios FATALES ni MAYORES: con
+REVISIÓN MAYOR el manuscrito no se acepta y hay que corregirlo.
 """
 
 from idioma import tr
@@ -191,16 +194,19 @@ def calificar(exp, caso, res, comentarios, meta):
         descuentos.append(("eficiencia", -d, f"Gastaste ${exp['gastado']:,}; el diseño ideal "
                            f"costaba ~${ideal:,}. El resto pudo ir a más réplicas o a otro "
                            "experimento."))
+    exceso = sum(-v for v in por_area.values() if v < 0)
     for a in por_area:
         por_area[a] = max(0, por_area[a])
-    total = sum(por_area.values())
-    letra = ("A" if total >= 90 else "B" if total >= 80 else "C" if total >= 70 else
-             "D" if total >= 60 else "F")
+    total = max(0, sum(por_area.values()) - exceso)
     rechazado = any(c["grav"] == "fatal" for c in comentarios)
-    resuelto = total >= 60 and not rechazado
+    mayor = any(c["grav"] == "mayor" for c in comentarios)
+    resuelto = total >= 60 and not rechazado and not mayor
+    letra = ("F" if not resuelto else "A" if total >= 90 else "B" if total >= 80 else
+             "C" if total >= 70 else "D")
     estrellas = 0 if not resuelto else (3 if total >= 90 else 2 if total >= 75 else 1)
     return dict(total=total, letra=letra, por_area=por_area, descuentos=descuentos,
-                resuelto=resuelto, estrellas=estrellas, rechazado=rechazado)
+                resuelto=resuelto, estrellas=estrellas, rechazado=rechazado, mayor=mayor,
+                exceso=exceso)
 
 
 def pantalla(win, exp, caso, res, comentarios, nota, nombre):
@@ -214,6 +220,9 @@ def pantalla(win, exp, caso, res, comentarios, nota, nombre):
     elif nota["rechazado"]:
         l.append("<mal!>Caso no resuelto:</> el Revisor 2 rechazó el manuscrito (hay un error "
                  "FATAL). Corrígelo y reenvía.")
+    elif nota["mayor"]:
+        l.append("<mal!>Caso no resuelto:</> el Revisor 2 pidió REVISIÓN MAYOR. Corrige lo que "
+                 "marcó como MAYOR y reenvía.")
     else:
         l.append("<mal!>Caso no resuelto:</> hace falta 60/100. Revisa abajo dónde perdiste "
                  "puntos y reenvía.")
@@ -223,6 +232,8 @@ def pantalla(win, exp, caso, res, comentarios, nota, nombre):
         barra = "█" * round(20 * v / tope) + "░" * (20 - round(20 * v / tope))
         color = "bien" if v >= tope * 0.85 else "titulo" if v >= tope * 0.5 else "mal"
         l.append(f"  {tr(nombre_a):<12} <{color}>{barra}</> {v}/{tope}")
+    if nota.get("exceso"):
+        l.append(tr(f"  <mal>−{nota['exceso']}</> por errores que rebasaron el tope de su área"))
     if nota["descuentos"]:
         l += ["", "<titulo!>Dónde perdiste puntos</>"]
         for area, pts, texto in sorted(nota["descuentos"], key=lambda x: x[1]):

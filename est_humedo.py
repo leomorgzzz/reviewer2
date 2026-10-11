@@ -100,7 +100,8 @@ def _barra_tiempo(lab, titulo, explicacion):
     lab.dibujar()
     ancho_b = 40
     zona = (0.4, 0.7)
-    pos, paso = 0.0, 0.025
+    pos, paso = random.random(), random.choice((0.025, -0.025))
+    inicio = time.monotonic()
     win.nodelay(True)
     curses.flushinp()
     try:
@@ -120,7 +121,7 @@ def _barra_tiempo(lab, titulo, explicacion):
             win.refresh()
             d.pausa(45, t)
             k = win.getch()
-            if k == ord(" ") or k in (10, 13):
+            if mj.detener(k, inicio):
                 break
             pos += paso
             if pos >= 1 or pos <= 0:

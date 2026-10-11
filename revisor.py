@@ -342,9 +342,15 @@ def revisar_lab(exp, caso, res):
                         "KER98"))
     elif exp.get("hipotesis") not in (None, 0) and not caso.get("libre"):
         h = info["hipotesis"][exp["hipotesis"]]
-        c.append(_c("menor", f"La hipótesis «{h}» es vaga, no se puede refutar o no es "
-                    "algo que mida un RNA-seq. Una buena hipótesis dice qué genes o vías "
-                    "esperas que cambien y en qué dirección.", ""))
+        # la última opción de cada caso es una afirmación que el RNA-seq no mide
+        if exp["hipotesis"] == len(info["hipotesis"]) - 1:
+            c.append(_c("mayor", f"La hipótesis «{h}» no es algo que un RNA-seq pueda poner a "
+                        "prueba: no predice qué genes cambian. Sin una hipótesis medible el "
+                        "experimento no responde nada.", ""))
+        else:
+            c.append(_c("menor", f"La hipótesis «{h}» es vaga o no se puede refutar. Una "
+                        "buena hipótesis dice qué genes o vías esperas que cambien y en qué "
+                        "dirección.", ""))
     # unidad experimental
     _area("diseño")
     if exp.get("unidad") not in (None, info["unidad"]):
@@ -399,7 +405,7 @@ def revisar_lab(exp, caso, res):
              if q["estado"] == "aprobada" and X.problemas(q, caso)]
     if malas:
         nombres = ", ".join(_nombre(k, caso) for k in malas[:6])
-        c.append(_c("mayor" if len(malas) > 1 else "menor",
+        c.append(_c("mayor",
                     f"Aprobaste en el QC muestras con problemas ({nombres}). El RNA-seq "
                     "necesita ARN íntegro, puro y sin ADN: hay que re-extraerlas o "
                     "excluirlas.", ""))
@@ -439,17 +445,30 @@ def revisar_lab(exp, caso, res):
         c.append(_c("menor", f"Usaste {clo:.2f} mL de cloroformo por mL de TRIzol (lo indicado "
                     "es 0.2): peor separación de fases o menos rendimiento.", "CHO93"))
     if mjs.get("nanodrop", 0) >= 2:
-        c.append(_c("menor", "El procedimiento del NanoDrop tuvo varios errores (blanco, gota, "
+        c.append(_c("mayor" if mjs["nanodrop"] >= 4 else "menor",
+                    "El procedimiento del NanoDrop tuvo varios errores (blanco, gota, "
                     "limpieza): las lecturas de pureza pierden confianza.", ""))
-    if mjs.get("biblioteca", 0) >= 3:
-        c.append(_c("menor", "Te equivocaste en el orden de varios pasos de la biblioteca.",
+    if mjs.get("gel", 0) >= 2:
+        c.append(_c("menor", "Varios carriles del gel se cargaron fuera del pozo: la "
+                    "integridad de esas muestras no se puede juzgar bien.", ""))
+    if mjs.get("biblioteca", 0) >= 2:
+        c.append(_c("mayor" if mjs["biblioteca"] >= 4 else "menor",
+                    f"Te equivocaste {mjs['biblioteca']} veces en el orden de los pasos de la "
+                    "biblioteca: un paso fuera de orden arruina la biblioteca entera.",
                     "CON16"))
     if "perlas" in mjs and not 0.75 <= mjs["perlas"] <= 0.95:
         c.append(_c("menor", f"Limpieza con {mjs['perlas']:.2f}× perlas: fuera del rango que "
                     "quita dímeros sin perder biblioteca (~0.8-0.9×).", "DEA95"))
     if "carga" in mjs and not 85 <= mjs["carga"] <= 115:
-        c.append(_c("menor", f"La celda se cargó al {mjs['carga']} % de lo recomendado: "
+        c.append(_c("menor" if 70 <= mjs["carga"] <= 130 else "mayor",
+                    f"La celda se cargó al {mjs['carga']} % de lo recomendado: "
                     "perdiste lecturas.", "ILLDD"))
+    # muchos descuidos juntos: el revisor ya no confía en el laboratorio
+    descuidos = [x for x in c if x["area"] == "laboratorio" and x["grav"] == "menor"]
+    if len(descuidos) >= 3:
+        c.append(_c("mayor", f"{len(descuidos)} descuidos en la mesa (ver arriba). Cada uno "
+                    "por separado es menor, pero juntos hacen dudar de todos los datos: "
+                    "repite lo necesario con más cuidado.", ""))
     _area("análisis")
     s = mjs.get("hebra_s")
     if s is not None:

@@ -118,6 +118,27 @@ revisar("los comentarios del Revisor citan fuentes que existen", not comentarios
         "\n".join(sorted(set(comentarios_rotos))[:10]))
 
 
+# ---------------------------------- 5b. reprobar es posible
+# El recorrido de un probador que daba Enter a todo (hipótesis «cura la
+# diabetes», celda al 54 %, cloroformo de más) no puede contar como resuelto.
+import calificacion  # noqa: E402
+caso = casos.CASOS[0]
+exp = dict(X.nuevo(caso), extraccion="trizol")
+res = sim.simular(exp["dis"], caso, random.Random(1))
+meta = revisor.meta(caso, "normal")
+nota_limpia = calificacion.calificar(exp, caso, res, revisor.revisar(exp["dis"], caso, res,
+                                                                   "normal", exp), meta)
+exp_mal = dict(exp, hipotesis=3, minijuegos=dict(carga=54, biblioteca=3),
+               pasos=dict(cloroformo=0.4))
+com_mal = revisor.revisar(exp_mal["dis"], caso, res, "normal", exp_mal)
+nota_mal = calificacion.calificar(exp_mal, caso, res, com_mal, meta)
+revisar("una REVISIÓN MAYOR no resuelve el caso",
+        nota_limpia["resuelto"] and not nota_mal["resuelto"]
+        and revisor.dictamen(com_mal)[0] == "REVISIÓN MAYOR" and nota_mal["total"] < 60,
+        f"limpio {nota_limpia['total']} {nota_limpia['resuelto']} · "
+        f"descuidado {nota_mal['total']} {nota_mal['resuelto']}")
+
+
 # ------------------------------------- 6. código del protocolo exportado
 def bloques_de_codigo(ruta):
     codigo, dentro = [], False

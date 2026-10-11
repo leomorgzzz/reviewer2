@@ -29,14 +29,24 @@ def _caja(win, h, w, titulo):
 
 
 # ================================================================ deslizador
+ARMADO = 0.4        # segundos en que el cursor no se puede detener al empezar
+
+
+def detener(k, inicio):
+    """Solo ESPACIO detiene un cursor, y no en cuanto aparece: dejar Enter o
+    ESPACIO presionados ya no pasa el minijuego."""
+    return k == ord(" ") and time.monotonic() - inicio >= ARMADO
+
+
 def deslizador(lab, titulo, texto, minimo, maximo, unidad, zona, paso=None, formato="{:.2f}"):
-    """Un cursor recorre la escala de `minimo` a `maximo`; ESPACIO lo detiene.
-    Devuelve (valor, dentro_de_la_zona)."""
+    """Un cursor recorre la escala de `minimo` a `maximo` desde un punto al
+    azar; ESPACIO lo detiene. Devuelve (valor, dentro_de_la_zona)."""
     win = lab.win
     lab.dibujar()
     ancho_b = 50
     paso = paso or (maximo - minimo) / 70
-    pos, dir_ = minimo, 1
+    pos, dir_ = random.uniform(minimo, maximo), random.choice((1, -1))
+    inicio = time.monotonic()
     lineas = d.envolver(texto, ancho_b + 4)
     win.nodelay(True)
     curses.flushinp()
@@ -61,7 +71,7 @@ def deslizador(lab, titulo, texto, minimo, maximo, unidad, zona, paso=None, form
             win.refresh()
             d.pausa(40, t)
             k = win.getch()
-            if k in (ord(" "), 10, 13):
+            if detener(k, inicio):
                 break
             pos += paso * dir_
             if pos >= maximo or pos <= minimo:
@@ -75,12 +85,13 @@ def deslizador(lab, titulo, texto, minimo, maximo, unidad, zona, paso=None, form
 
 # ================================================================== ordenar
 def ordenar(lab, titulo, intro, pasos):
-    """El jugador elige, uno por uno, el siguiente paso. Si se equivoca se le
-    dice cuál era y sigue. Devuelve el número de errores."""
+    """El jugador elige, uno por uno, el siguiente paso. Si se equivoca, el
+    paso no se coloca y vuelve a elegir; solo al segundo error en el mismo
+    paso se le dice cuál era. Devuelve el número de errores."""
     win = lab.win
     restantes = list(pasos)
     random.shuffle(restantes)
-    hechos, errores = [], 0
+    hechos, errores, fallos_paso = [], 0, 0
     while restantes:
         lab.dibujar()
         texto = tr(intro) + "\n\n" + "\n".join(f"<bien>{i + 1}. {tr(p)}</>" for i, p in enumerate(hechos))
@@ -88,12 +99,18 @@ def ordenar(lab, titulo, intro, pasos):
         op = d.menu(win, f"Paso {len(hechos) + 1} de {len(pasos)}: ¿qué sigue?", restantes,
                     y=win.getmaxyx()[0] - len(restantes) - 4)
         if op is None:
-            op = 0
+            continue
         correcto = pasos[len(hechos)]
         if restantes[op] != correcto:
             errores += 1
+            fallos_paso += 1
             lab.dibujar()
-            d.popup(win, f"<mal!>No.</> Antes va: <titulo>{correcto}</>", titulo, ancho=70)
+            if fallos_paso < 2:
+                d.popup(win, "<mal!>No, ese no va aquí.</> Piensa qué necesita la muestra "
+                             "antes y vuelve a elegir.", titulo, ancho=70)
+                continue
+            d.popup(win, f"<mal!>Tampoco.</> Ahí iba: <titulo>{correcto}</>", titulo, ancho=70)
+        fallos_paso = 0
         hechos.append(correcto)
         restantes.remove(correcto)
     lab.dibujar()
