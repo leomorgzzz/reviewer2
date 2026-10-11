@@ -1,7 +1,7 @@
 """Genera el protocolo completo de un experimento en Markdown, más la hoja de
 muestras en CSV, a partir del diseño de la mesa.
 
-Se guarda en ~/Documentos/revisor2-protocolos/. Cada sección se adapta a la
+Se guarda en ~/Documents/reviewer2-protocols/ (o ~/Documentos/ si existe). Cada sección se adapta a la
 biblioteca, la lectura, la ruta de análisis, la fórmula y los extras
 elegidos, y lleva las fuentes al final.
 """
@@ -15,7 +15,12 @@ import datos
 import simulacion as sim
 from idioma import tr
 
-CARPETA = os.path.expanduser("~/Documentos/revisor2-protocolos")
+_DOCS = os.path.expanduser("~/Documentos")
+if not os.path.isdir(_DOCS):
+    _DOCS = os.path.expanduser("~/Documents")
+CARPETA = os.path.join(_DOCS, "reviewer2-protocols")
+if os.path.isdir(os.path.expanduser("~/Documentos/revisor2-protocolos")):   # nombre anterior
+    CARPETA = os.path.expanduser("~/Documentos/revisor2-protocolos")
 
 FORMULA_R = {
     "cond": "~ condicion", "lote": "~ lote + condicion", "par": "~ donante + condicion",

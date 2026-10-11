@@ -10,20 +10,20 @@
 
 [Setup]
 AppId={{536CD333-C142-50AC-BFB7-C55A9A24A1F1}
-AppName=Revisor 2
+AppName=Reviewer 2
 AppVersion={#Version}
 AppPublisher=leomorgzzz
-AppPublisherURL=https://github.com/leomorgzzz/revisor2
-DefaultDirName={autopf}\Revisor 2
-DefaultGroupName=Revisor 2
+AppPublisherURL=https://github.com/leomorgzzz/reviewer2
+DefaultDirName={autopf}\Reviewer 2
+DefaultGroupName=Reviewer 2
 DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 OutputDir=.
-OutputBaseFilename=Revisor2-Instalador-Windows
+OutputBaseFilename=Reviewer2-Windows-Setup
 SetupIconFile=icono.ico
-UninstallDisplayIcon={app}\Revisor2.exe
+UninstallDisplayIcon={app}\Reviewer2.exe
 WizardStyle=modern
 Compression=lzma2
 SolidCompression=yes
@@ -36,13 +36,19 @@ Name: "en"; MessagesFile: "compiler:Default.isl"
 Name: "escritorio"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
 
 [Files]
-Source: "dist\Revisor2\*"; DestDir: "{app}"; Flags: recursesubdirs ignoreversion
+Source: "dist\Reviewer2\*"; DestDir: "{app}"; Flags: recursesubdirs ignoreversion
+
+[InstallDelete]
+; versiones anteriores se llamaban Revisor 2: se quitan el ejecutable y los accesos viejos
+Type: files; Name: "{app}\Revisor2.exe"
+Type: files; Name: "{autoprograms}\Revisor 2.lnk"
+Type: files; Name: "{autodesktop}\Revisor 2.lnk"
 
 [Icons]
-Name: "{autoprograms}\Revisor 2"; Filename: "{sys}\conhost.exe"; Parameters: """{app}\Revisor2.exe"""; WorkingDir: "{app}"; IconFilename: "{app}\Revisor2.exe"
-Name: "{autodesktop}\Revisor 2"; Filename: "{sys}\conhost.exe"; Parameters: """{app}\Revisor2.exe"""; WorkingDir: "{app}"; IconFilename: "{app}\Revisor2.exe"; Tasks: escritorio
+Name: "{autoprograms}\Reviewer 2"; Filename: "{sys}\conhost.exe"; Parameters: """{app}\Reviewer2.exe"""; WorkingDir: "{app}"; IconFilename: "{app}\Reviewer2.exe"
+Name: "{autodesktop}\Reviewer 2"; Filename: "{sys}\conhost.exe"; Parameters: """{app}\Reviewer2.exe"""; WorkingDir: "{app}"; IconFilename: "{app}\Reviewer2.exe"; Tasks: escritorio
 
 [Run]
-Filename: "{sys}\conhost.exe"; Parameters: """{app}\Revisor2.exe"""; WorkingDir: "{app}"; Description: "{cm:LaunchProgram,Revisor 2}"; Flags: nowait postinstall skipifsilent
+Filename: "{sys}\conhost.exe"; Parameters: """{app}\Reviewer2.exe"""; WorkingDir: "{app}"; Description: "{cm:LaunchProgram,Reviewer 2}"; Flags: nowait postinstall skipifsilent
 ; al actualizar desde el juego (instalador en modo silencioso) se vuelve a abrir solo
-Filename: "{sys}\conhost.exe"; Parameters: """{app}\Revisor2.exe"""; WorkingDir: "{app}"; Flags: nowait; Check: WizardSilent
+Filename: "{sys}\conhost.exe"; Parameters: """{app}\Reviewer2.exe"""; WorkingDir: "{app}"; Flags: nowait; Check: WizardSilent

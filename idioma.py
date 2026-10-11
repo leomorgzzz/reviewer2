@@ -9,8 +9,8 @@ Los textos se escriben en español en el código. En inglés, la capa de dibujo
      traduce, así un texto armado con datos queda traducido completo.
   3. Si nada coincide, se deja el español.
 
-El idioma se elige en Opciones o al abrir con `revisor2 --en` / `--es`; se
-recuerda en ~/.revisor2_idioma. La primera vez se usa el del sistema: español
+El idioma se elige en Opciones o al abrir con `reviewer2 --en` / `--es`; se
+recuerda en ~/.reviewer2_idioma. La primera vez se usa el del sistema: español
 si está en español, inglés en cualquier otro caso.
 """
 
@@ -20,8 +20,23 @@ import re
 import subprocess
 import sys
 
-ARCHIVO = os.path.expanduser("~/.revisor2_idioma")
+ARCHIVO = os.path.expanduser("~/.reviewer2_idioma")
 IDIOMAS = ("es", "en")
+
+
+def migrar(viejo, nuevo):
+    """El juego se llamaba Revisor 2: sus archivos (~/.revisor2…) pasan al
+    nombre nuevo la primera vez."""
+    viejo, nuevo = os.path.expanduser(viejo), os.path.expanduser(nuevo)
+    if os.path.exists(viejo) and not os.path.exists(nuevo):
+        try:
+            os.replace(viejo, nuevo)
+        except OSError:
+            return viejo
+    return nuevo
+
+
+migrar("~/.revisor2_idioma", ARCHIVO)
 
 
 def _del_sistema():

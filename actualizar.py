@@ -24,8 +24,8 @@ import tempfile
 import threading
 import urllib.request
 
-REPO = "leomorgzzz/revisor2"
-INSTALADOR = "Revisor2-Instalador-Windows.exe"
+REPO = "leomorgzzz/reviewer2"
+INSTALADOR = "Reviewer2-Windows-Setup.exe"
 PAGINA = f"https://github.com/{REPO}/releases/latest"
 CARPETA = os.path.dirname(os.path.abspath(__file__))
 NUEVA = None              # "v1.8" cuando hay una versión más nueva
@@ -63,7 +63,7 @@ def _revisar():
         return
     try:
         pedido = urllib.request.Request(f"https://api.github.com/repos/{REPO}/releases/latest",
-                                        headers={"User-Agent": "revisor2"})
+                                        headers={"User-Agent": "reviewer2"})
         with urllib.request.urlopen(pedido, timeout=4) as r:
             ultima = json.load(r)["tag_name"]
     except Exception:  # noqa: BLE001  sin red, sin aviso

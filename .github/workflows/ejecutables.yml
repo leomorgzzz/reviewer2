@@ -20,9 +20,9 @@ jobs:
       matrix:
         include:
           - os: windows-latest
-            archivo: Revisor2-Instalador-Windows.exe
+            archivo: Reviewer2-Windows-Setup.exe
           - os: macos-latest
-            archivo: Revisor2-macOS.zip
+            archivo: Reviewer2-macOS.zip
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -43,16 +43,16 @@ jobs:
             ffi=FixedFileInfo(filevers=($numeros), prodvers=($numeros)),
             kids=[StringFileInfo([StringTable('040A04B0', [
               StringStruct('CompanyName', 'leomorgzzz'),
-              StringStruct('FileDescription', 'Revisor 2'),
-              StringStruct('ProductName', 'Revisor 2'),
+              StringStruct('FileDescription', 'Reviewer 2'),
+              StringStruct('ProductName', 'Reviewer 2'),
               StringStruct('FileVersion', '$version'),
               StringStruct('ProductVersion', '$version'),
               StringStruct('LegalCopyright', 'MIT · leomorgzzz'),
-              StringStruct('OriginalFilename', 'Revisor2.exe')])]),
+              StringStruct('OriginalFilename', 'Reviewer2.exe')])]),
               VarFileInfo([VarStruct('Translation', [0x040A, 1200])])])
           FIN
-          pyinstaller --onedir --noconfirm --name Revisor2 --icon icono.ico \
-            --version-file version.txt --add-data=traduccion:traduccion revisor2.py
+          pyinstaller --onedir --noconfirm --name Reviewer2 --icon icono.ico \
+            --version-file version.txt --add-data=traduccion:traduccion reviewer2.py
           if ! command -v iscc >/dev/null; then
             [ -f "/c/Program Files (x86)/Inno Setup 6/ISCC.exe" ] || choco install innosetup -y --no-progress
             export PATH="$PATH:/c/Program Files (x86)/Inno Setup 6"
@@ -60,8 +60,8 @@ jobs:
           iscc "//DVersion=$version" instalador.iss
       - if: runner.os == 'macOS'
         run: |
-          pyinstaller --onefile --name Revisor2 --add-data=traduccion:traduccion revisor2.py
-          cd dist && zip "../${{ matrix.archivo }}" Revisor2
+          pyinstaller --onefile --name Reviewer2 --add-data=traduccion:traduccion reviewer2.py
+          cd dist && zip "../${{ matrix.archivo }}" Reviewer2
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.archivo }}
@@ -77,6 +77,6 @@ jobs:
       - env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" Revisor2-Instalador-Windows.exe Revisor2-macOS.zip \
-            --repo "$GITHUB_REPOSITORY" --title "Revisor2 $GITHUB_REF_NAME" \
-            --notes "Windows: descarga el instalador y ábrelo. macOS: descarga el .zip y abre Revisor2."
+          gh release create "$GITHUB_REF_NAME" Reviewer2-Windows-Setup.exe Reviewer2-macOS.zip \
+            --repo "$GITHUB_REPOSITORY" --title "Reviewer 2 $GITHUB_REF_NAME" \
+            --notes "Windows: download the installer and open it. macOS: download the .zip and open Reviewer2. · Windows: descarga el instalador y ábrelo. macOS: descarga el .zip y abre Reviewer2."

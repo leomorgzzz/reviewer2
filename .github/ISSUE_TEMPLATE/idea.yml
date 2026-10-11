@@ -1,0 +1,15 @@
+name: Idea / Feedback
+description: What worked, what didn't, what you'd add.
+labels: [feedback]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: Your feedback / Tu comentario
+    validations:
+      required: true
+  - type: input
+    id: quien
+    attributes:
+      label: Background (optional) / Contexto (opcional)
+      description: e.g. wet-lab biologist, bioinformatician, student, teacher.

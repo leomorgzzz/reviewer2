@@ -246,6 +246,6 @@ T = {
     # mensajes fuera del juego (instalación y errores)
     "f89879a6a7": "Installing windows-curses (first time only)...",
     "1a972cb090": "Could not install windows-curses. Try in a terminal:\n    py -m pip install windows-curses",
-    "8d4c2081d0": "The game closed because of an error. It was saved to ~/revisor2-error.txt",
+    "3c588efd9f": "The game closed because of an error. It was saved to ~/reviewer2-error.txt",
     "f5399e2ff3": "Press Enter to exit...",
 }

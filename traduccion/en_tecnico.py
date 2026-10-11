@@ -5,7 +5,7 @@
 # Así `extraer.py --faltan` solo lista lo que de verdad falta traducir.
 T = {
     # actualizar.py
-    "cb466f82c8": "Revisor2-Instalador-Windows.exe",
+    "522a6e96d2": "Reviewer2-Windows-Setup.exe",
     "ed45dae21a": "https://github.com/{0}/releases/latest",
     "42da53d671": "https://api.github.com/repos/{0}/releases/latest",
     "e383d32bc8": "--tags",
@@ -516,6 +516,7 @@ T = {
     # progreso.py
     "f25474324b": ".tmp",
     # protocolo.py
+    "e16b5ac8f1": "reviewer2-protocols",
     "541e5ec484": "áéíóúñü",
     "1f472c45af": "UDI{0}",
     "33ce96889f": " -I fastq/{m}_R2.fastq.gz -O trim/{m}_R2.fq.gz",
@@ -671,6 +672,7 @@ T = {
     "6b6d6c4839": "BH95 LEE10",
     "3114a13994": "WAN12 LIA14",
     # revisor2.py
+    "da42427d08": "reviewer2.py",
     "dcc4b6f55b": "--update",
     "d525fcb9dd": "--actualizar",
     "8eb2f7811d": "Consolas",

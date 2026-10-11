@@ -44,7 +44,7 @@ def revisar(nombre, condicion, detalle=""):
 
 def modulos():
     return sorted(os.path.basename(f)[:-3] for f in glob.glob(os.path.join(RAIZ, "*.py"))
-                  if not os.path.basename(f).startswith("revisor2"))
+                  if not os.path.basename(f).startswith("reviewer2"))
 
 
 # ------------------------------------------------------------ 1. importar

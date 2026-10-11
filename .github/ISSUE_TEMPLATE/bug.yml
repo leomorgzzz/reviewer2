@@ -1,0 +1,27 @@
+name: Bug / Error
+description: Something broke, looks wrong or closed the game.
+labels: [bug]
+body:
+  - type: textarea
+    id: que
+    attributes:
+      label: What happened? / ¿Qué pasó?
+      description: What you did, what you expected and what you saw. A screenshot helps.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version / Versión
+      description: Bottom-left corner of the title screen (e.g. v2.0).
+  - type: dropdown
+    id: sistema
+    attributes:
+      label: System / Sistema
+      options: [Windows, macOS, Linux]
+  - type: textarea
+    id: error
+    attributes:
+      label: Error text / Texto del error
+      description: If the game closed, paste the contents of ~/reviewer2-error.txt.
+      render: text

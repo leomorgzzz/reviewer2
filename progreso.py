@@ -1,9 +1,11 @@
-"""Estado de la partida (guardado en ~/.revisor2.json) y repaso espaciado."""
+"""Estado de la partida (guardado en ~/.reviewer2.json) y repaso espaciado."""
 
 import json
 import os
 
-ARCHIVO = os.path.expanduser("~/.revisor2.json")
+import idioma
+
+ARCHIVO = idioma.migrar("~/.revisor2.json", "~/.reviewer2.json")
 
 
 def nuevo_juego():
