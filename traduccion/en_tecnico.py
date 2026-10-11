@@ -4,6 +4,19 @@
 # de la hoja de muestras que el jugador escribe en la terminal de R.
 # Así `extraer.py --faltan` solo lista lo que de verdad falta traducir.
 T = {
+    # actualizar.py
+    "cb466f82c8": "Revisor2-Instalador-Windows.exe",
+    "ed45dae21a": "https://github.com/{0}/releases/latest",
+    "42da53d671": "https://api.github.com/repos/{0}/releases/latest",
+    "e383d32bc8": "--tags",
+    "fe68278c9f": "--abbrev=0",
+    "4b3b503e8f": ".git",
+    "c65d7325b5": "--ff-only",
+    "b11201d639": "{0}/download/{1}",
+    "632bf2fdef": "DETACHED_PROCESS",
+    "170c6d2e56": "User-Agent",
+    "e00716943d": "--sin-actualizar",
+    "a68b400880": "--no-update",
     # animaciones.py
     "ba444f849c": "ACGTTGCA",
     "63808157b3": "GGATCCAT",
@@ -413,6 +426,12 @@ T = {
     # expediente.py
     "a5aa9b2d30": "DV200 < 30 %",
     # idioma.py
+    "5e30f55f19": "LC_ALL",
+    "200bab83e3": "LC_MESSAGES",
+    "e6e6ef4e9f": "LANG",
+    "2a3ffd9ebb": "LANGUAGE",
+    "1abc9f6ab9": "c.utf-8",
+    "244f769579": "AppleLocale",
     "64a7cd966b": "[A-Za-zÁÉÍÓÚáéíóúÑñ]",
     "5a10982b3b": "--es",
     "bf53c010d2": "--en",
@@ -652,6 +671,8 @@ T = {
     "6b6d6c4839": "BH95 LEE10",
     "3114a13994": "WAN12 LIA14",
     # revisor2.py
+    "dcc4b6f55b": "--update",
+    "d525fcb9dd": "--actualizar",
     "8eb2f7811d": "Consolas",
     "859d44d104": "REVIEWER 2",
     "970fdf7e2e": "REVISOR 2",

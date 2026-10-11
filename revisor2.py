@@ -155,6 +155,7 @@ _asegurar_curses()
 
 import curses  # noqa: E402
 
+import actualizar
 import animaciones as anim
 import casos
 import datos
@@ -177,6 +178,7 @@ FUENTE = {
     "W": ["█   █", "█ █ █", "▀▄▀▄▀"],
 }
 MENTORA = tutorial.MENTORA
+INSTALAR = None           # instalador descargado: se corre al cerrar el juego
 
 
 def nombre_juego():
@@ -266,17 +268,48 @@ def pedir_nombre(win, juego):
             return
 
 
+def actualizar_juego(win):
+    """Opción «Actualizar» de la pantalla de inicio. Devuelve True si hay que
+    cerrar el juego (para correr el instalador o abrir la versión nueva)."""
+    global INSTALAR
+    d.popup(win, f"Descargando {actualizar.NUEVA}...", esperar=False)
+    res = actualizar.preparar()
+    if res == "pagina":
+        d.popup(win, "Se abrió la página de descarga en el navegador.")
+        return False
+    if res is None:
+        d.popup(win, f"No se pudo actualizar. Descarga la versión nueva de:\n{actualizar.PAGINA}")
+        return False
+    if res == "git":
+        d.popup(win, "Listo. El juego se va a cerrar; vuelve a abrirlo para usar la versión "
+                     "nueva. Tu partida se conserva.")
+    else:
+        INSTALAR = res
+        d.popup(win, "El juego se va a cerrar para instalar la versión nueva y se abrirá "
+                     "solo al terminar. Tu partida se conserva.")
+    return True
+
+
 def titulo(win):
     hay = progreso.cargar() is not None
+    actualizar.esperar()
     while True:
         alto, _ = win.getmaxyx()
         win.erase()
         y0 = max(1, alto // 2 - 9)
         portada(win, y0)
-        opciones = (["Continuar"] if hay else []) + ["Nueva partida", "Salir"]
+        d.put(win, alto - 1, 1, f"v{actualizar.version()}", d.c("tenue"))
+        opciones = (["Continuar"] if hay else []) + ["Nueva partida"]
+        if actualizar.NUEVA:
+            opciones.append(f"Actualizar a {actualizar.NUEVA}")
+        opciones.append("Salir")
         sel = d.menu(win, None, opciones, y=y0 + 9)
         if sel is None or opciones[sel] == "Salir":
             return None
+        if opciones[sel].startswith("Actualizar"):
+            if actualizar_juego(win):
+                return None
+            continue
         if opciones[sel] == "Nueva partida" and hay:
             if d.menu(win, "¿Borrar la partida guardada?", ["No", "Sí, empezar de cero"]) != 1:
                 continue
@@ -573,6 +606,13 @@ def main(win):
 
 
 if __name__ == "__main__":
+    if "--update" in sys.argv or "--actualizar" in sys.argv:
+        bien, salida = actualizar.git_pull()
+        print(salida)
+        sys.exit(0 if bien else 1)
+    actualizar.revisar_en_fondo()
     locale.setlocale(locale.LC_ALL, "")
     _pantalla_completa()
     _con_aviso_de_error(lambda: curses.wrapper(main))
+    if INSTALAR:
+        actualizar.correr_instalador(INSTALAR)

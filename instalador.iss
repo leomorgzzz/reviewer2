@@ -44,3 +44,5 @@ Name: "{autodesktop}\Revisor 2"; Filename: "{sys}\conhost.exe"; Parameters: """{
 
 [Run]
 Filename: "{sys}\conhost.exe"; Parameters: """{app}\Revisor2.exe"""; WorkingDir: "{app}"; Description: "{cm:LaunchProgram,Revisor 2}"; Flags: nowait postinstall skipifsilent
+; al actualizar desde el juego (instalador en modo silencioso) se vuelve a abrir solo
+Filename: "{sys}\conhost.exe"; Parameters: """{app}\Revisor2.exe"""; WorkingDir: "{app}"; Flags: nowait; Check: WizardSilent

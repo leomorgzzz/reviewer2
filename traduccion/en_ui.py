@@ -2,6 +2,13 @@
 # hash del texto en español (ver traduccion/extraer.py) -> texto en inglés
 T = {
     # revisor2.py
+    "51cae30a55": "Downloading {0}...",
+    "36fa363252": "The download page was opened in your browser.",
+    "3840569977": "Could not update. Download the new version from:\n{0}",
+    "1abaaba8d2": "Done. The game will close; open it again to use the new version. Your progress is kept.",
+    "9fef53a11a": "The game will close to install the new version and will reopen on its own when it finishes. Your progress is kept.",
+    "c725f8bffa": "Update",
+    "c2fe2c8a06": "Update to {0}",
     "dfc7db0b6b": "· design RNA-seq experiments that survive peer review ·",
     "d909a0e527": "Tip: make the terminal full screen (F11 or Alt+Enter). Now: {0}×{1}",
     "d9f3bb6131": "Free lab: describe YOUR experiment. You design it at the desk, Reviewer 2 critiques it with general rules (no hidden traps) and you export the complete protocol.",

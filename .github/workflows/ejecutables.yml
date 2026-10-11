@@ -30,6 +30,8 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install pyinstaller
+      - shell: bash
+        run: echo "VERSION = \"${GITHUB_REF_NAME#v}\"" > version.py
       - if: runner.os == 'Windows'
         shell: bash
         run: |
