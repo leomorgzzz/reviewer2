@@ -30,6 +30,9 @@ ACCIONES = {
     "cuaderno": E.cuaderno,
 }
 PERSONAS = {"investigador", "replica", "tecnico"}
+# estaciones que no preguntan antes de rehacer una etapa terminada (las demás
+# ya ofrecen «Volver» primero)
+SIN_AVISO_PROPIO = {"unidades", "nanodrop", "gel", "bioanalizador", "computadora"}
 DEPURAR = os.environ.get("REVISOR2_POS")      # solo para pruebas automáticas
 
 
@@ -119,11 +122,12 @@ class Lab:
 
     # --------------------------------------------------------------- dibujo
     def estacion_cerca(self):
+        """La estación más cercana a dos pasos de lado o uno arriba/abajo: el
+        rótulo sigue al símbolo y es fácil quedar a dos casillas."""
         px, py = self.exp["pos"]
-        for nombre, (x, y, *_r) in L.ESTACIONES.items():
-            if abs(x - px) <= 1 and abs(y - py) <= 1:
-                return nombre
-        return None
+        cerca = [(abs(x - px) + abs(y - py), nombre) for nombre, (x, y, *_r) in L.ESTACIONES.items()
+                 if abs(x - px) <= 2 and abs(y - py) <= 1]
+        return min(cerca)[1] if cerca else None
 
     def dibujar(self):
         win = self.win
@@ -275,6 +279,12 @@ class Lab:
         if not cerca:
             self.mensaje = "Aquí no hay nada. Acércate a una estación o persona."
             return
+        etapa = L.ESTACIONES[cerca][5]
+        if etapa is not None and etapa < self.exp["etapa"] and cerca in SIN_AVISO_PROPIO:
+            # un Enter de más no debe rehacer (ni cobrar otra vez) una etapa terminada
+            if d.menu(self.win, tr(f"{tr(L.ESTACIONES[cerca][4])}: esta etapa ya está hecha"),
+                      ["No, sigo con lo que toca", "Sí, volver a abrirla"]) != 1:
+                return
         ACCIONES[cerca](self)
         if cerca == "papel" and self.exp["etapa"] >= 1:
             self.mensaje = f"Siguiente: unidades en el {self.lugar.lower()}."
@@ -335,6 +345,8 @@ class Lab:
             elif d.es(k, "h", "?"):
                 self.ayuda()
             elif d.es(k, "q") or k == d.ESC:
-                self.guardar()
-                return
+                if d.menu(self.win, "¿Salir del laboratorio?",
+                          ["No, sigo aquí", "Sí, guardar y volver al menú"]) == 1:
+                    self.guardar()
+                    return
         self.guardar()

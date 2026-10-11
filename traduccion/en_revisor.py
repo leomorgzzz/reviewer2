@@ -208,4 +208,7 @@ T = {
     "f39f5c2ac6": "Each case is a question with a budget and a trap. Move with arrows/WASD and use each station with E.",
     "5ebf3befcb": "Errors carry over between stages, and Reviewer 2 reads your notebook. With <mal!>MAJOR REVISION</> or under 60/100 the case is not solved: fix it and resubmit.",
     "cfe68ea9b5": "Hi, <titulo!>{0}</>. I am Dr. Lazo. I will teach you to design RNA-seq experiments that survive <mal!>Reviewer 2</>: what goes wrong in the lab no software can fix.",
+    "c7b2b0d470": "Short homogenization: lysis was incomplete and yield dropped.",
+    "9b655af597": "Too much homogenization: the tissue heated up and the RNA started to degrade.",
+    "32b9ba5ad6": "The basics before the first case: how to design RNA-seq experiments that survive <mal!>Reviewer 2</>. What goes wrong in the lab no software can fix.",
 }

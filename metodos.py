@@ -412,8 +412,8 @@ MANUAL = {
         "",
         "  • <agua>Electroforesis</>: bandas nítidas de ARNr (28S/18S en animal, 26S/18S en "
         "planta). Barrido = degradación; banda arriba = ADN genómico.",
-        "  • <agua>Espectrofotometría</>: A260/A280 = 1.8-2.0 (proteína) y A260/A230 = 1.8-2.0 "
-        "(sales, fenol, guanidina, carbohidratos).",
+        "  • <agua>Espectrofotometría</>: en ARN puro A260/A280 ≈ 2.0 (si baja de 1.8: proteína) y "
+        "A260/A230 ≈ 2.0-2.2 (si baja: sales, fenol, guanidina, carbohidratos).",
         "  • <agua>Bioanalizador</> (microfluidos): electroferograma y <titulo>RIN</> de 0 "
         "(degradado) a 10 (intacto). Arriba de 8 se considera adecuado para RNA-seq.",
     ]),

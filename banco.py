@@ -50,7 +50,7 @@ PREGUNTAS = {
                  "Precipitación → separación → lisis → homogenización"],
                 "El mismo orden sirve para células, ratón o planta.", ""),
     "c_ratios": ("Fundamentos", "Valores esperados de A260/A280 y A260/A230 en ARN puro:",
-                 ["1.8-2.0 en ambos", "1.0 y 3.0", "0.5-1.0 en ambos", "2.5-3.0 en ambos"],
+                 ["~2.0 en ambos (preocupa por debajo de 1.8)", "1.0 y 3.0", "0.5-1.0 en ambos", "2.5-3.0 en ambos"],
                  "A260/280 bajo = proteína; A260/230 bajo = sales, fenol, guanidina o "
                  "carbohidratos.", ""),
     "c_rin": ("Fundamentos", "¿Qué RIN se considera adecuado para RNA-seq?",

@@ -110,8 +110,8 @@ def papel(lab):
         proy = X.proyeccion(exp, caso)
         color = "bien" if proy <= lab.tope else "mal"
         return [f"Costo proyectado del experimento completo: <{color}!>${proy:,}</> de "
-                f"${lab.tope:,} (se recalcula al cambiar réplicas; lecturas y kits se "
-                "eligen después)"]
+                f"${lab.tope:,}, contando {exp['dis']['profundidad']} M lecturas por muestra "
+                "(la profundidad y los kits se eligen después y pueden bajarlo)"]
 
     form = Formulario(lab.win, "Papel de diseño experimental", filas, pie,
                       subtitulo=caso["pregunta"] if exp["hallazgos"] else
@@ -161,8 +161,8 @@ def unidades(lab):
     nombre_lote = caso.get("lote_nombre", "lote")
     if info["aleatorizable"]:
         op = menu(lab, f"¿Cómo asignas los tratamientos a las {dis['replicas'] * len(caso['grupos'])} "
-                         "unidades?",
-                    ["Sorteo al azar (números aleatorios)",
+                         "unidades?", barajar=True,
+                    opciones=["Sorteo al azar (números aleatorios)",
                      "Por orden: las primeras al grupo 1, las siguientes al grupo 2…",
                      "A ojo: las que se ven más sanas/grandes al tratamiento",
                      "Volver"])

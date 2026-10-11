@@ -69,4 +69,7 @@ T = {
     "00af225db0": "<mal!>Case not solved:</> Reviewer 2 asked for MAJOR REVISION. Fix what was marked MAJOR and resubmit.",
     "c8a203fd00": "<mal!>Wrong again.</> That spot was: <titulo>{0}</>",
     "0ca34b9758": "<mal!>No, that one does not go here.</> Think about what the sample needs first and choose again.",
+    "0f94659126": "Cell line: little variation, so 6 independent cultures at 15 M give almost all the power and leave room in the budget.",
+    "1c3330a592": "<mal!>{0}/100 · {1}</>",
+    "da94008517": "NOT ENOUGH",
 }

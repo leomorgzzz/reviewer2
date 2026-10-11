@@ -130,9 +130,9 @@ LECCIONES = [
 def capacitacion(win, juego):
     win.erase()
     d.dialogo(win, [
-        f"Hola, <titulo!>{progreso.nombre(juego)}</>. Soy la Dra. Lazo. Te enseño a diseñar "
-        "experimentos de RNA-seq que sobrevivan al <mal!>Revisor 2</>: lo que se hace mal "
-        "en el laboratorio no lo arregla ningún programa.",
+        "Lo básico antes del primer caso: cómo diseñar experimentos de RNA-seq que "
+        "sobrevivan al <mal!>Revisor 2</>. Lo que se hace mal en el laboratorio no lo arregla "
+        "ningún programa.",
     ], MENTORA)
     i = 0
     while 0 <= i < len(LECCIONES):

@@ -261,7 +261,7 @@ LECTURAS = {
 }
 ORDEN_LECTURAS = list(LECTURAS)
 
-PROFUNDIDADES = [1, 2, 5, 10, 20, 30, 50, 80, 100]
+PROFUNDIDADES = [1, 2, 5, 8, 10, 15, 20, 25, 30, 50, 60, 80, 100]
 
 # --------------------------------------------------------- fórmulas
 # columnas que necesita cada fórmula (ver simulacion.matriz_diseno)

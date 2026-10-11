@@ -29,8 +29,8 @@ IDEALES = {
                        formula="cond", prueba="deseq2", ruta="salmon", extraccion="trizol",
                        extras={"filtro", "shrink"}, plataforma="nextseq",
                        porque="Línea celular: poca variación, así que 6 cultivos "
-                              "independientes a 15 M dan casi toda la potencia por menos de la "
-                              "mitad del presupuesto."),
+                              "independientes a 15 M dan casi toda la potencia y dejan margen "
+                              "en el presupuesto."),
     "dieta": dict(biblioteca="polyA", lectura="SE75", profundidad=15, replicas=6,
                   formula="lote", prueba="deseq2", ruta="salmon", extraccion="trizol",
                   extras={"filtro", "shrink"}, plataforma="nextseq",
@@ -201,8 +201,8 @@ def calificar(exp, caso, res, comentarios, meta):
     rechazado = any(c["grav"] == "fatal" for c in comentarios)
     mayor = any(c["grav"] == "mayor" for c in comentarios)
     resuelto = total >= 60 and not rechazado and not mayor
-    letra = ("F" if not resuelto else "A" if total >= 90 else "B" if total >= 80 else
-             "C" if total >= 70 else "D")
+    letra = ("A" if total >= 90 else "B" if total >= 80 else "C" if total >= 70 else
+             "D" if total >= 60 else "F")
     estrellas = 0 if not resuelto else (3 if total >= 90 else 2 if total >= 75 else 1)
     return dict(total=total, letra=letra, por_area=por_area, descuentos=descuentos,
                 resuelto=resuelto, estrellas=estrellas, rechazado=rechazado, mayor=mayor,
@@ -213,8 +213,14 @@ def pantalla(win, exp, caso, res, comentarios, nota, nombre):
     """Boleta con la calificación, el desglose y la retroalimentación."""
     import dibujo as d
     colores = {"A": "bien", "B": "bien", "C": "titulo", "D": "titulo", "F": "mal"}
-    l = [f"<{colores[nota['letra']]}!>{nota['total']}/100 · {nota['letra']}</>   "
-         + d.estrellas(nota["estrellas"]), ""]
+    # sin resolver, la letra confunde (un 86 con REVISIÓN MAYOR): va el dictamen
+    if nota["resuelto"]:
+        cabeza = f"<{colores[nota['letra']]}!>{nota['total']}/100 · {nota['letra']}</>"
+    else:
+        veredicto = tr("RECHAZADO" if nota["rechazado"] else
+                       "REVISIÓN MAYOR" if nota["mayor"] else "NO ALCANZA")
+        cabeza = tr(f"<mal!>{nota['total']}/100 · {veredicto}</>")
+    l = [cabeza + "   " + d.estrellas(nota["estrellas"]), ""]
     if nota["resuelto"]:
         l.append(f"<bien!>Caso resuelto.</> Buen trabajo, {nombre}.")
     elif nota["rechazado"]:

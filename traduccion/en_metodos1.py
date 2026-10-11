@@ -268,4 +268,5 @@ T = {
     "11ee24a2b7": "  2006  Massive sequencing with 454 (Roche)",
     "fb229093a1": "  2008  First RNA-seq: Denoeud (grapevine, Solexa 32 nt), Mortazavi (mouse, 32 nt), Nagalakshmi (yeast, Illumina 35 nt)",
     "a8cb5e37b4": "9 · RNA extraction and quality",
+    "db59f648e7": "  • <agua>Spectrophotometry</>: in pure RNA A260/A280 ≈ 2.0 (if below 1.8: protein) and A260/A230 ≈ 2.0-2.2 (if low: salts, phenol, guanidine, carbohydrates).",
 }

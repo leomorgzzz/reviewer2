@@ -232,6 +232,7 @@ def terminal(lab, titulo, contexto, prompt, opciones, validar, solucion, intento
     qué hace)]. validar(texto) -> (valor o None, mensaje). Tras `intentos`
     fallos se marca la solución. Devuelve (valor, errores)."""
     win = lab.win
+    opciones = random.sample(opciones, len(opciones))     # la correcta no siempre primero
     historia = list(contexto)
     errores, sel, fallidas = 0, 0, set()
     while True:

@@ -406,7 +406,7 @@ def _decidir(lab, res):
         resumen = (f"{res['sig']} genes significativos (↑{res['subidos']} ↓{res['bajados']}).")
     else:
         resumen = "El análisis no dio resultados válidos."
-    op = menu(lab, "¿Tus datos apoyan tu hipótesis?", ["Sí", "No", "No es concluyente"],
+    op = menu(lab, "¿Tus datos apoyan tu hipótesis?", ["Sí", "No", "No es concluyente"], barajar=True,
                 ayuda=resumen[:70])
     exp["apoyo"] = ["si", "no", "inconcluso"][op or 0]
     opciones = ["Escribir el manuscrito y llevarlo al buzón del Revisor 2",
@@ -439,7 +439,7 @@ def _decidir(lab, res):
                 continue
             exp["hipotesis"] = otras[e]
             exp["harking"] = True
-            exp["exploratorio"] = menu(lab, "¿Cómo lo reportas en el manuscrito?", [
+            exp["exploratorio"] = menu(lab, "¿Cómo lo reportas en el manuscrito?", barajar=True, opciones=[
                 "Como si fuera la hipótesis original",
                 "Como hallazgo exploratorio, aclarando que surgió de los datos"]) == 1
             continue

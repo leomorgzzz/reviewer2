@@ -214,4 +214,5 @@ T = {
     "10fbfa6727": "The amount of mRNA does not always predict the amount of protein.",
     "f7e84f71cf": "The same order works for cells, mouse or plant.",
     "ece1fac11b": "What RIN is considered suitable for RNA-seq?",
+    "1eea2f2021": "~2.0 in both (worrying below 1.8)",
 }

@@ -84,7 +84,7 @@ def _mj_nanodrop(lab):
     errores = mj.ordenar(lab, "NanoDrop", "Ordena el procedimiento para medir una muestra:", [
         "Limpiar el pedestal con agua y papel sin pelusa",
         "Blanco: 1.5 µL del mismo buffer en que eluiste el ARN",
-        "Limpiar el pedestal",
+        "Quitar el blanco del pedestal con papel",
         "Cargar 1.5 µL de la muestra",
         "Medir y anotar ng/µL, A260/280 y A260/230",
         "Limpiar el pedestal antes de la siguiente",
@@ -132,8 +132,8 @@ def _tabla_nanodrop(win, exp, caso, celulas):
                                  (f"{q['viabilidad']:>3} % viables", "agua")])
             y += 1
         return
-    d.put(win, y, 2, "NanoDrop: absorbancia a 230, 260 y 280 nm (esperado 1.8-2.0 en ambos "
-          "cocientes)", d.c("agua", curses.A_BOLD))
+    d.put(win, y, 2, "NanoDrop: absorbancia a 230, 260 y 280 nm (ARN puro: ~2.0 en ambos "
+          "cocientes; preocupa por debajo de 1.8)", d.c("agua", curses.A_BOLD))
     if X.info(caso).get("biofluido"):
         d.put(win, y + 2 + len(exp["qc"]) + 3, 2, "Ojo: el ARN de plasma está por debajo del "
               "límite del NanoDrop y viene fragmentado: ni los cocientes ni el RIN son "
@@ -222,9 +222,22 @@ def _bioanalyzer(win, exp, caso, k, celulas, planta):
           "RNA-seq.", d.c("tenue"))
 
 
+def _medidas(q, caso):
+    """Lo medido de una muestra, para decidir sin ir y venir entre pestañas
+    (sin juzgarlo: eso le toca al jugador)."""
+    if "viabilidad" in q:
+        return f"viabilidad {q['viabilidad']} %"
+    partes = [f"{q['ng']:>6.1f} ng/µL", f"260/280 {q['r280']:.2f}", f"260/230 {q['r230']:.2f}"]
+    if caso.get("rin", 9) < 4:                 # FFPE: el DV200 importa más que el RIN
+        partes.append(f"DV200 {q['dv200']} %")
+    if "rin" in q:
+        partes.append(f"RIN {q['rin']}")
+    return "   ".join(partes)
+
+
 def _decisiones(win, exp, caso, claves, sel):
     y = 3
-    d.put(win, y, 2, "Decide qué pasa con cada muestra. Mira las otras pestañas.",
+    d.put(win, y, 2, "Decide qué pasa con cada muestra. El gel (pestaña 2) muestra si hay ADN genómico.",
           d.c("agua", curses.A_BOLD))
     y += 2
     colores = {"pendiente": "tenue", "aprobada": "bien", "excluida": "mal"}
@@ -234,7 +247,8 @@ def _decisiones(win, exp, caso, claves, sel):
         q = exp["qc"][k]
         marca = "► " if i == sel else "  "
         d.trozos(win, y, 4, [(marca, "titulo"), (f"{_nombre(caso, k):<6}", "texto"),
-                             (f"{q['estado']:<10}", colores[q["estado"]], curses.A_BOLD)])
+                             (f"{q['estado']:<10}", colores[q["estado"]], curses.A_BOLD),
+                             (_medidas(q, caso), "tenue")])
         y += 1
 
 

@@ -2,6 +2,7 @@
 
 import curses
 import os
+import random
 import textwrap
 import time
 
@@ -388,10 +389,20 @@ def dialogo(win, paginas, titulo=None, ancho=64, fondo=None):
 
 
 def menu(win, titulo, opciones, y=None, x=None, ancho=None, ayuda=None,
-         inicial=0, colores=None):
+         inicial=0, colores=None, barajar=False):
     """Menú vertical. opciones: lista de str. Devuelve índice o None (Esc).
     colores: lista opcional con el color de cada opción. Las opciones largas
-    se parten en varias líneas en vez de recortarse; `ancho` es el mínimo."""
+    se parten en varias líneas en vez de recortarse; `ancho` es el mínimo.
+    barajar: las opciones salen en otro orden (salvo «Volver», al final) para
+    que la correcta no sea siempre la primera; devuelve el índice original."""
+    if barajar:
+        fijas = [i for i, o in enumerate(opciones) if o == "Volver"]
+        orden = [i for i in range(len(opciones)) if i not in fijas]
+        random.shuffle(orden)
+        orden += fijas
+        op = menu(win, titulo, [opciones[i] for i in orden], y, x, ancho, ayuda, inicial,
+                  [colores[i] for i in orden] if colores else None)
+        return None if op is None else orden[op]
     titulo = tr(titulo) if titulo else titulo
     opciones = [tr(o) for o in opciones]
     ayuda = tr(ayuda) if ayuda else ayuda

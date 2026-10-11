@@ -108,7 +108,7 @@ CASOS = [
         organismo="Humano (pacientes)", muestra="Tumor colorrectal y mucosa normal adyacente, RIN 7.5",
         pregunta="¿Qué vías cambian en el tumor respecto a la mucosa sana del mismo paciente?",
         grupos=["Mucosa normal", "Tumor"], abrev=["N", "T"], objetivo="genes",
-        pareado=True, capacidad=8, presupuesto=7000, max_replicas=12, rin=7.5,
+        pareado=True, capacidad=8, presupuesto=8500, max_replicas=12, rin=7.5,
         intro=[
             "De cada paciente operado tengo <titulo!>dos muestras</>: el tumor y la mucosa "
             "normal adyacente. Tengo hasta 12 pacientes.",
@@ -136,7 +136,7 @@ CASOS = [
         organismo="Humano (biopsias de melanoma)", muestra="FFPE de 2015-2020 · RIN 2.3 · DV200 45 %",
         pregunta="¿Qué distingue a quienes respondieron a anti-PD-1 de quienes no?",
         grupos=["No respondedores", "Respondedores"], abrev=["N", "R"], objetivo="genes",
-        capacidad=None, presupuesto=9000, max_replicas=14, rin=2.3, poco_material=True,
+        capacidad=None, presupuesto=10000, max_replicas=14, rin=2.3, poco_material=True,
         intro=[
             "Tengo un tesoro: <titulo!>biopsias en parafina (FFPE)</> de pacientes con "
             "melanoma tratados con anti-PD-1. Ya sabemos quién respondió.",
@@ -221,7 +221,7 @@ CASOS = [
         organismo="Humano (plasma)", muestra="500 µL de plasma · ~5 ng de ARN total",
         pregunta="¿Qué miRNA circulantes distinguen la preeclampsia del embarazo normal?",
         grupos=["Embarazo normal", "Preeclampsia"], abrev=["E", "P"], objetivo="mirna",
-        capacidad=None, presupuesto=5000, max_replicas=16, rin=6, poco_material=True,
+        capacidad=None, presupuesto=5500, max_replicas=16, rin=6, poco_material=True,
         intro=[
             "Quiero <titulo!>microARN</> en el plasma de embarazadas. Son de 21-23 nt. "
             "Tengo muy poco ARN: unos 5 ng por muestra.",

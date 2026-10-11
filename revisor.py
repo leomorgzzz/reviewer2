@@ -396,6 +396,11 @@ def revisar_lab(exp, caso, res):
         c.append(_c("mayor", "Disociaste a 37 °C durante una hora: la disociación induce "
                     "genes de estrés (FOS, JUN, HSP) en todas las células y contamina los "
                     "perfiles. Disociación en frío y corta, o núcleos.", "LUE19"))
+    h = p.get("homogenizacion")
+    if h is not None and not 0.4 <= h <= 0.7:
+        c.append(_c("menor", "Homogenización corta: la lisis quedó incompleta y bajó el "
+                    "rendimiento." if h < 0.4 else "Homogenización de más: el tejido se "
+                    "calentó y el ARN empezó a degradarse.", ""))
     if met and not L.EXTRACCIONES[met]["celulas"]:
         if not p.get("dnasa") and dis["biblioteca"] in ("ribo", "tag3", "polyA"):
             c.append(_c("menor", "Sin DNasa: el ADN genómico contamina la biblioteca "

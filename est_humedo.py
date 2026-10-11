@@ -27,8 +27,8 @@ def campana(lab):
         X.regresar(exp, 2)
     win = lab.win
     claves = L.ORDEN_EXTRACCIONES
-    op = menu(lab, "Campana de extracción · ¿qué método?",
-                [L.EXTRACCIONES[k]["nombre"] for k in claves] + ["Volver"])
+    op = menu(lab, "Campana de extracción · ¿qué método?", barajar=True,
+                opciones=[L.EXTRACCIONES[k]["nombre"] for k in claves] + ["Volver"])
     if op is None or op == len(claves):
         return
     met = claves[op]
@@ -37,7 +37,7 @@ def campana(lab):
     decir(lab, f"{e['texto']}\n\n<tenue>{datos.cita(*e['fuente'].split())}</>", e["nombre"])
     p = {}
     if e["celulas"]:
-        op = menu(lab, "Disociación del tejido", ["En frío (4-6 °C), enzimas activas en frío, "
+        op = menu(lab, "Disociación del tejido", barajar=True, opciones=["En frío (4-6 °C), enzimas activas en frío, "
                                                      "≤ 30 min", "A 37 °C durante 1 h para "
                                                      "que se suelten bien"])
         p["calor"] = op == 1
@@ -45,7 +45,7 @@ def campana(lab):
         p["dnasa"] = True
         p["homogenizacion"] = 0.5
     else:
-        op = menu(lab, "Antes de empezar", [
+        op = menu(lab, "Antes de empezar", barajar=True, opciones=[
             "Limpio la mesa con RNaseZap, guantes nuevos y puntas con filtro",
             "Así está bien: limpié ayer"])
         p["limpieza"] = op == 0
@@ -65,21 +65,21 @@ def campana(lab):
                              "<mal!>Demasiado cloroformo:</> la fase acuosa queda más chica y "
                              "pierdes ARN."), TECNICO)
             p["fase"] = _fases(lab)
-            al = menu(lab, "Precipitación de la fase acuosa", [
+            al = menu(lab, "Precipitación de la fase acuosa", barajar=True, opciones=[
                 "Isopropanol, 10 min en hielo, centrifugar", "Etanol al 100 %",
                 "No precipito: paso directo al tubo"])
             p["alcohol"] = ["isopropanol", "etanol100", "ninguno"][al or 0]
             if caso.get("poco_material"):
-                p["glucogeno"] = menu(lab, "Hay muy poco ARN…", [
+                p["glucogeno"] = menu(lab, "Hay muy poco ARN…", barajar=True, opciones=[
                     "Agrego glucógeno como acarreador", "No hace falta"]) == 0
-            sec = menu(lab, "Lavado con etanol al 75 % y secado", [
+            sec = menu(lab, "Lavado con etanol al 75 % y secado", barajar=True, opciones=[
                 "Seco 5-10 min hasta que el pellet se vea transparente",
                 "Seco hasta que el pellet esté blanco y quebradizo"])
             p["secado"] = "bien" if sec == 0 else "seco"
         else:
             p["fase"] = "acuosa"
             p["alcohol"] = "isopropanol"
-        p["dnasa"] = menu(lab, "¿Y el ADN genómico?", [
+        p["dnasa"] = menu(lab, "¿Y el ADN genómico?", barajar=True, opciones=[
             "Tratamiento con DNasa I (en columna)", "No hace falta"]) == 0
     exp["pasos"] = p
     exp["dis"]["pierde_pequenos"] = not e["guarda_pequenos"]
@@ -156,7 +156,7 @@ def _fases(lab):
     ]
     lab.dibujar()
     d.popup(lab.win, "\n".join(tr(l) for l in tubo), "Separación de fases", ancho=62, esperar=False)
-    op = d.menu(lab.win, "¿Qué fase tomas?", y=lab.win.getmaxyx()[0] - 7,
+    op = d.menu(lab.win, "¿Qué fase tomas?", barajar=True, y=lab.win.getmaxyx()[0] - 7,
                 opciones=["1 · Superior acuosa (transparente)",
                                                "2 · Interfase", "3 · Inferior orgánica (rosa)"])
     fase = ["acuosa", "interfase", "organica"][op or 0]
@@ -299,12 +299,12 @@ def _traza_biblioteca(lab):
     lab.dibujar()
     d.popup(win, "\n".join(traza) + "\n\n" + tr("Perfil de una biblioteca en el Bioanalyzer "
                                                  "(High Sensitivity DNA)."), "QC de la biblioteca", ancho=66, esperar=False)
-    op = d.menu(win, "¿Qué ves?", y=win.getmaxyx()[0] - 7,
+    op = d.menu(win, "¿Qué ves?", barajar=True, y=win.getmaxyx()[0] - 7,
                 opciones=["Un pico pequeño a ~125 pb: dímeros de adaptador",
                                    "Todo bien: un solo pico a 300-400 pb",
                                    "ARN degradado"])
     if op == 0:
-        limpia = menu(lab, "¿Qué haces?", ["Otra limpieza con perlas 0.8×",
+        limpia = menu(lab, "¿Qué haces?", barajar=True, opciones=["Otra limpieza con perlas 0.8×",
                                              "Secuenciar así"]) == 0
         decir(lab, tr("Bien visto: los dímeros se secuencian igual y gastan lecturas.")
                + (tr(" Con la limpieza desaparecen.") if limpia else ""), TECNICO)

@@ -16,7 +16,7 @@ DIAS = {0: 1, 1: 2, 2: 1, 3: 1, 4: 2, 5: 0, 6: 1, 7: 0}
 
 
 def nuevo(caso):
-    dis = dict(biblioteca="polyA", lectura="PE100", profundidad=30, replicas=3, tecnicas=1,
+    dis = dict(biblioteca="polyA", lectura="PE100", profundidad=20, replicas=3, tecnicas=1,
                extras=[], ruta="star", entrada="crudas", prueba="deseq2", correccion="bh",
                formula="cond", lotes={}, excluidas=[], calidad={})
     dis["lotes"] = sim.lotes_por_orden(dis, caso)
