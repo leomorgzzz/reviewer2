@@ -212,12 +212,12 @@ def portada(win, y0):
     for i, l in enumerate(filas):
         d.put(win, y0 + i, x0, l, d.c(["g0", "texto", "g1"][i], curses.A_BOLD))
     sub = "· diseña experimentos de RNA-seq que sobrevivan a la revisión ·"
-    d.put(win, y0 + 4, (ancho - len(sub)) // 2, sub, d.c("titulo", curses.A_BOLD))
+    d.put(win, y0 + 4, (ancho - len(idioma.tr(sub))) // 2, sub, d.c("titulo", curses.A_BOLD))
     lecturas = "@lectura_1  ACGTTGCAGGATCCATTGCA  +  IIIIIHHHGGFFF"
-    d.put(win, y0 + 6, (ancho - len(lecturas)) // 2, lecturas, d.c("tenue"))
+    d.put(win, y0 + 6, (ancho - len(idioma.tr(lecturas))) // 2, lecturas, d.c("tenue"))
     if ancho < 120 or alto < 36:
         aviso = f"Consejo: pon la terminal en pantalla completa (F11 o Alt+Enter). Ahora: {ancho}×{alto}"
-        d.put(win, alto - 2, (ancho - len(aviso)) // 2, aviso, d.c("agua"))
+        d.put(win, alto - 2, (ancho - len(idioma.tr(aviso))) // 2, aviso, d.c("agua"))
 
 
 def elegir_dificultad(win, actual="normal"):
