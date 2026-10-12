@@ -2,6 +2,8 @@
 
 *English · [Español](README.es.md)*
 
+![Lab map](capturas/mapa.png)
+
 A terminal game for learning to design RNA-seq experiments. Each case is a
 researcher with a question, a budget and a hidden problem. You run the whole
 experiment in a lab you walk around, from the design on paper to the analysis,
@@ -10,18 +12,23 @@ and at the end Reviewer 2 grades the manuscript and the lab notebook.
 Mistakes carry over: degraded RNA you let through QC shows up as noise in the
 results.
 
+Every fact comes with a citation: Conesa 2016, Schurch 2016, Love 2014
+(DESeq2), Leek 2010, among others ([Sources](#sources)).
+
+**Play:**
+
+- **Windows:** [Reviewer2-Windows-Setup.exe](https://github.com/leomorgzzz/reviewer2/releases/latest/download/Reviewer2-Windows-Setup.exe), install and play.
+- **macOS:** [Reviewer2-macOS.zip](https://github.com/leomorgzzz/reviewer2/releases/latest/download/Reviewer2-macOS.zip), unzip and double-click.
+- **Linux:** `git clone https://github.com/leomorgzzz/reviewer2.git && cd reviewer2 && ./instalar.sh && reviewer2`
+
 > **Work in progress.** The game keeps getting updated: when you open it, it
 > tells you if there's a new version and updates from the title screen, no
 > reinstall needed. Your save is kept. Bugs, ideas, or science that's wrong:
 > [Issues](https://github.com/leomorgzzz/reviewer2/issues).
 
-**Download:** [Windows](https://github.com/leomorgzzz/reviewer2/releases/latest/download/Reviewer2-Windows-Setup.exe) · [macOS](https://github.com/leomorgzzz/reviewer2/releases/latest/download/Reviewer2-macOS.zip) · install and play.
-
 ## Screenshots
 
 ![Title screen](capturas/pantalla-de-inicio.png)
-
-![Lab map](capturas/mapa.png)
 
 ![Design sheet](capturas/papel-diseno.png)
 
